@@ -51,10 +51,14 @@ class SiteController extends Controller
               return response()->json(['code'=>400,'status'=>false,'message'=>'background is not updated']);
             }
           }
-          $rows=\DB::select("SELECT id,cover_image_thumbnail,address as business_address,lat as business_lat,lng as business_lng,company_id,(3959 * acos(cos(radians('".$lat."')) * cos(radians(lat)) * cos( radians(lng) - radians('".$lng."')) + sin(radians('".$lat."')) *
+          /*$rows=\DB::select("SELECT id,cover_image_thumbnail,address as business_address,lat as business_lat,lng as business_lng,company_id,(3959 * acos(cos(radians('".$lat."')) * cos(radians(lat)) * cos( radians(lng) - radians('".$lng."')) + sin(radians('".$lat."')) *
 					sin(radians(lat))))
 					AS distance
-					FROM sites WHERE ST_Within(ST_GeomFromText('POINT($lng $lat)'),polygon) HAVING distance<=$distance");
+					FROM sites WHERE ST_Within(ST_GeomFromText('POINT($lng $lat)'),polygon)");*/
+          $rows=\DB::select("SELECT id,name,address,cover_image,cover_image_thumbnail,lat,lng,company_id,(3959 * acos(cos(radians('".$lat."')) * cos(radians(lat)) * cos( radians(lng) - radians('".$lng."')) + sin(radians('".$lat."')) *
+          sin(radians(lat))))
+          AS distance
+          FROM sites HAVING distance<=$distance");
           if(count($rows)>0){
             foreach($rows as $k=>$site){
               //unset($rows[$k]->distance);
