@@ -1,0 +1,28 @@
+<?php
+return [
+  'welcome_login'=>'Login',
+  'welcome_register'=>'Register',
+  'welcome_home'=>'Home',
+  'sidebar_dashboard'=>'Dashboard',
+  'sidebar_location'=>'Locations',
+  'common_listing'=>'Listing',
+  'common_add'=>'Add',
+  'sidebar_order_qr'=>'Order QR',
+  'sidebar_order_menu_qr'=>'Menu QR',
+  'sidebar_reports'=>'Reports',
+  'sidebar_help'=>'Help',
+  'save_changes_btn'=>'Save changes',
+  'cancel_btn'=>'Cancel',
+  'top_menu_dropdown_profile'=>'Profile',
+  'top_menu_dropdown_settings'=>'Settings',
+  'top_menu_dropdown_help'=>'Help',
+  'top_menu_dropdown_logout'=>'Logout',
+  'table_list_actions'=>'Actions',
+  'close_btn_txt'=>'Close',
+  'save_btn_txt'=>'Save',
+  'common_warning'=>'warning',
+  'sidebar_setup'=>'Setup',
+  'sidebar_menus'=>'Menus',
+  'sidebar_taxes'=>'Taxes',
+];
+?>
