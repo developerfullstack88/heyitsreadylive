@@ -232,8 +232,9 @@ class OrderController extends Controller
               /*geofence section*/
               $lat=$postedData['lat'];
               $lng=$postedData['lng'];
+              $this->checkUserIsLocate($lat,$lng,$order->company->site,$order->id);
               if($order->status=='ready'){
-                $this->checkUserIsLocate($lat,$lng,$order->company->site,$order->id);
+                //$this->checkUserIsLocate($lat,$lng,$order->company->site,$order->id);
               }
               /*geofence section*/
 
@@ -513,6 +514,37 @@ class OrderController extends Controller
         }
       }else{
         return response()->json(['code'=>400,'status'=>false,'message'=>'Required field order id is missing']);
+      }
+    }
+
+    /*This method will set user locate order*/
+    public function setUserLocate(Request $request){
+      if($request->all()){
+        $postedData = $request->all();
+        if(auth()->user()->id!=$postedData['user_id']){
+          return response()->json(['code'=>400,'status'=>false,'message'=>'Unauthorized user id']);
+        }else{
+          $orderInfo=Order::with(['company.site'])->where([['user_id',$postedData['user_id']],['status','!=','complete'],
+        ['cancel',0],['eta','!=',null],['confirm','=',1],['deleted',0]])
+          ->select('id','user_id','company_id','locate')->orderBy('eta','asc');
+          if($orderInfo->count()>0){
+            $orderArr=array();
+            foreach($orderInfo->get() as $order){
+              /*geofence section*/
+              $lat=$postedData['lat'];
+              $lng=$postedData['lng'];
+              $this->checkUserIsLocate($lat,$lng,$order->company->site,$order->id);
+              /*geofence section*/
+              $orderArr[]=Order::find($order->id,['id','user_id','company_id','locate']);
+            }
+            return response()->json(['code'=>200,'status'=>true,
+            'data'=>$orderArr]);
+          }else{
+            return response()->json(['code'=>200,'status'=>true,'data'=>[]]);
+          }
+        }
+      }else{
+        return response()->json(['code'=>400,'status'=>false,'message'=>'Please enter required fields']);
       }
     }
 }

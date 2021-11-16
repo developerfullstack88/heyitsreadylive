@@ -75,5 +75,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
   Route::get('card/set-default/{id}', 'Api\CardController@setDefault');
 
   Route::put('order/add-spot-number/{oid}', 'Api\OrderController@addSpotNumber');
+
+  Route::post('order/set-user-locate', 'Api\OrderController@setUserLocate');
   /*****************Version 2*********************/
 });
