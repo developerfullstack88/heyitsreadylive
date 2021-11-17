@@ -95,19 +95,19 @@
                                   @if(Auth::user()->role=='super admin')
                                   <td>
                                     <a href="{{route('business-users.edit',$user->id)}}" class="btn btn-primary btn-sm">
-                                      <i class="fa fa-pencil"></i>
+                                      <i class="fas fa-edit"></i>
                                     </a>
                                     @if(userValidForDelete($user->created_at))
                                       <a href="{{route('business-users.delete',['id'=>$user->id,'type'=>1])}}"
                                         class="btn btn-danger btn-sm"
                                         onclick="return Confirm_Delete({{$user->id}});">
-                                        <i class="fa fa-trash-o"></i>
+                                        <i class="far fa-trash-alt"></i>
                                       </a>
                                     @else
                                     <a href="{{route('business-users.delete',['id'=>$user->id,'type'=>0])}}"
                                       class="btn btn-danger btn-sm"
                                       onclick="return Confirm_Delete({{$user->id}});">
-                                      <i class="fa fa-trash-o"></i>
+                                      <i class="far fa-trash-alt"></i>
                                     </a>
                                     @endif
                                   </td>

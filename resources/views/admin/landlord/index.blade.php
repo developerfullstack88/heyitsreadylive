@@ -40,12 +40,12 @@
                                 <td>
                                   <a href="javascript:void(0);" class="btn btn-primary btn-sm edit-landlord-action"
                                   data-name="{{$landlord->name}}" data-email="{{$landlord->email}}" data-id="{{$landlord->id}}">
-                                    <i class="fa fa-pencil"></i>
+                                    <i class="fas fa-edit"></i>
                                   </a>
                                   <a href="{{route('admin.landlord.delete',[$landlord->id])}}"
                                     class="btn btn-danger btn-sm"
                                     onclick="return Confirm_Delete({{$landlord->id}});">
-                                    <i class="fa fa-trash-o"></i>
+                                    <i class="far fa-trash-alt"></i>
                                   </a>
                                 </td>
                                 @endif
