@@ -6615,6 +6615,7 @@ input.largerCheckbox {width: 20px;height: 20px;}
 #dashboardTable .actions-table-th{width:27%;}
 #dashboardTable .chkbox-table-th{width:1%;}
 #dashboardTable .locate-order-th{width:2%;}
+#dashboardTable .spot-color-th{width:7%;}
 #startFreeTrialRow{margin-bottom:10px;}
 #startFreeTrialRow span{font-size:14px;margin-bottom:10px;font-weight:bold;}
 .form-control.custom-select{padding:5px;}
@@ -6645,4 +6646,6 @@ input.largerCheckbox {width: 20px;height: 20px;}
 #warningPopModal .modal-body p{font-size:18px;}
 .tooltip-inner {max-width: 900px !important;}
 .hey-download-website-p{font-size:19px;}
-#show-profile-edit-profile-link{color:#fff;}
+#show-profile-edit-profile-link{color:#fff;font-weight:bold;}
+#track-order-taxi-img{max-width:40rem;}
+#payoutsTable_wrapper .dt-buttons{float:right;margin-right:82rem;}

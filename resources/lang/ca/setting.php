@@ -18,6 +18,10 @@ return [
   'card_list_exp_year_label'=>'Expiry Year',
   'card_list_make_default_label'=>'Make Default',
   'need_full_soft_label'=>'Need Full software',
-
+  'stripe_connect_p_label'=>'Stripe Connect accounts has been setup',
+  'delete_account_label'=>'Delete Account',
+  'just_menu_qr_code_label'=>'just the Menu QR Code',
+  'disable_label'=>'Disable',
+  'enable_label'=>'Enable',
 ];
 ?>

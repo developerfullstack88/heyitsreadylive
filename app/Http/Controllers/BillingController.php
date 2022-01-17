@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Company;
 use App\Subscription;
+use App\Payment;
 use Session;
 use Stripe;
 use Carbon\Carbon;
@@ -14,6 +15,7 @@ class BillingController extends Controller
 {
     public function __construct(){
       \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+      $this->stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
     }
 
     /*
@@ -42,13 +44,40 @@ class BillingController extends Controller
        if($stripeCustomerId){
          $customerDetail=\Stripe\Customer::retrieve($stripeCustomerId);
          $allCards=$this->allCards($stripeCustomerId);
+         //echo "<pre>";print_r($allCards);die;
        }
        $companyInfo=array();
        if($companyId){
          $companyInfo=Company::find($companyId);
        }
 
-       return view('billing.index',compact('customerDetail','allCards','companyInfo'));
+       $stripeAccessToken=auth()->user()->stripe_access_token;
+       $payouts=array();
+       if($stripeAccessToken){
+         $stripe = new \Stripe\StripeClient($stripeAccessToken);
+         $payouts=$stripe->charges->all(['limit' => 10]);
+       }
+
+       $payments=Payment::whereHas('order', function($query) {
+         $query->where('company_id', auth()->user()->company_id);
+       })->where([['amount','>',0]])->orderBy('id', 'DESC')->limit(10)->get();
+       $paymentsArr=array();
+       if($payments->count()>0){
+         foreach ($payments as $key => $value) {
+           $value->transaction_detail='';
+           $value->payment_type='Cash';
+           if(strpos($value->transaction_id, 'cash')===false){
+             $value->transaction_detail=$this->stripe->balanceTransactions->retrieve($value->transaction_id);
+             $value->payment_type='Card';
+             $stripeDetail=$this->stripe->charges->retrieve($value->transaction_detail->source);
+             $value->card_number=$stripeDetail->payment_method_details->card->last4;
+           }
+           $paymentsArr[]=$value;
+         }
+       }
+       $payments=$paymentsArr;
+
+       return view('billing.index',compact('customerDetail','allCards','companyInfo','payouts','payments'));
 
      }
 
@@ -60,7 +89,7 @@ class BillingController extends Controller
       $stripeCustomerId=auth()->user()->stripe_customer_id;
       if($stripeCustomerId){
         $userDetail=User::with(['company'])->find(auth()->user()->id);
-        $postedData['address_line1']=$userDetail->company->address;
+        //$postedData['address_line1']=$userDetail->company->address;
         $card=\Stripe\Customer::createSource(
           $stripeCustomerId,
           ['source' => $source],
@@ -68,10 +97,10 @@ class BillingController extends Controller
         );
         if($card){
           Session::flash('success', 'Card has been added successfully');
-          return redirect()->route('settings.index');
+          return redirect()->route('settings.index',['type'=>'billing']);
         }else{
           Session::flash('success', 'There is some problem in adding card');
-          return redirect()->route('settings.index');
+          return redirect()->route('settings.index',['type'=>'billing']);
         }
       }
     }
@@ -94,7 +123,7 @@ class BillingController extends Controller
         $customer->save();
       }
       Session::flash('success', 'Card has been updated successfully');
-      return redirect()->route('settings.index');
+      return redirect()->route('settings.index',['type'=>'billing']);
     }
 
     /**
@@ -287,14 +316,14 @@ class BillingController extends Controller
             $userInfo->delete_complete_order=$postedData['delete_complete_order'];
             if($userInfo->save()){
               Session::flash('success', 'Settings has been updated successfully');
-              return redirect()->route('settings.index');
+              return redirect()->route('settings.index',['type'=>'general']);
             }else{
               Session::flash('warning', 'There is some problem in updation.');
-              return redirect()->route('settings.index');
+              return redirect()->route('settings.index',['type'=>'general']);
             }
           }else{
             Session::flash('warning', 'user info not found in database.');
-            return redirect()->route('settings.index');
+            return redirect()->route('settings.index',['type'=>'general']);
           }
         }
       }

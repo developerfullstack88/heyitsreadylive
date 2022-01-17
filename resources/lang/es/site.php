@@ -19,5 +19,7 @@ return [
   'site_delete_success'=>'El sitio se ha eliminado correctamente',
   'site_cover_image'=>'Imagen de portada',
   'site_category'=>'Categoría',
+  'site_manager_label'=>'Gerente',
+  'site_set_default_label'=>'Establecer predeterminado',
 ];
 ?>

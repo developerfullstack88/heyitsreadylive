@@ -24,5 +24,8 @@ return [
   'sidebar_setup'=>'Setup',
   'sidebar_menus'=>'Menus',
   'sidebar_taxes'=>'Taxes',
+  'edit_label'=>'Edit',
+  'sidebar_payouts_label'=>'Payouts',
+  'sidebar_payments_label'=>'Payments',
 ];
 ?>

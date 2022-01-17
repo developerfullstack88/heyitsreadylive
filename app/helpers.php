@@ -5,12 +5,17 @@ use App\Order;
 use App\Subscription;
 use App\Category;
 use App\Country;
+use App\Country2;
+use App\State;
+use App\City;
 use App\RestaurantMenu;
 use App\Cart;
 use App\Menu;
 use App\Extra;
 use App\Tax;
 use App\Payment;
+use App\CompanyPayment;
+use App\Site;
 use Carbon\Carbon;
 
   //this will get all company from db
@@ -72,6 +77,34 @@ use Carbon\Carbon;
       "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States Minor Outlying Islands", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Virgin Islands (British)", "Virgin Islands (U.S.)", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Yugoslavia", "Zambia",
       "Zimbabwe");
     }
+}
+
+if(!function_exists('all_countries_latest')){
+  function all_countries_latest(){
+    return Country2::all();
+  }
+}
+
+if(!function_exists('all_states')){
+  function all_states($name){
+    if(!$name){ $name=auth()->user()->country; }
+    $country=Country2::where('name',$name);
+    if($country->count()>0){
+      $countryInfo=$country->first();
+      return State::where('country_id',$countryInfo->id)->get();
+    }
+  }
+}
+
+if(!function_exists('all_cities')){
+  function all_cities($name){
+    if(!$name){ $name=auth()->user()->state; }
+    $state=State::where('name',$name);
+    if($state->count()>0){
+      $stateInfo=$state->first();
+      return City::where('state_id',$stateInfo->id)->get();
+    }
+  }
 }
 
 /*This method will get company order id*/
@@ -296,7 +329,9 @@ if(! function_exists('getaddress')){
   function getaddress(){
      $userInfo=User::with(['company'])->find(Auth::user()->id);
      if($userInfo->has('company')){
-       $addr=$userInfo->company->address;
+       $addr=$userInfo->city.','.$userInfo->state.','.$userInfo->country;
+       //$addr=$userInfo->company->address;
+
        $addr = preg_replace('/\s+/', '', $addr);
        $url = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBOB2S7yoLqno0FIagdBu7X0PpuU5ggsiY&address=".$addr."&sensor=false";
        $json = @file_get_contents($url);
@@ -684,6 +719,20 @@ if(!function_exists('randomPassword')){
 if(!function_exists('getUserInfo')){
   function getUserInfo($id) {
     if($id){
+      $userInfo=User::find($id);
+      if($userInfo->role!=COMPANY){
+        $userInfo=User::where(['company_id'=>$userInfo->company_id,'role'=>COMPANY])->first();
+      }
+      return $userInfo;
+    }else{
+      return false;
+    }
+  }
+}
+
+if(!function_exists('getNormalUserInfo')){
+  function getNormalUserInfo($id) {
+    if($id){
       return User::find($id);
     }else{
       return false;
@@ -702,9 +751,9 @@ if(!function_exists('getcurrentUserWithRelation')){
 if(!function_exists('getInprogressOrders')){
   function getInprogressOrders() {
     $currentDate=Timezone::convertToLocal(Carbon::now(),'Y-m-d');
-    $pendingOrders=Order::where(['new_order'=>0,'status'=>'pending','company_id'=>Auth::user()->company_id,'deleted'=>0,'cancel'=>0])
+    $pendingOrders=Order::where(['new_order'=>0,'status'=>'pending','company_id'=>Auth::user()->company_id,'deleted'=>0,'cancel'=>0,'location_id'=>getDefaultLocationLoggedUser()])
     ->whereDate('created_at',$currentDate)->count();
-    $confirmOrders=Order::where(['new_order'=>0,'status'=>'confirm','company_id'=>Auth::user()->company_id,'deleted'=>0,'cancel'=>0])
+    $confirmOrders=Order::where(['new_order'=>0,'status'=>'confirm','company_id'=>Auth::user()->company_id,'deleted'=>0,'cancel'=>0,'location_id'=>getDefaultLocationLoggedUser()])
     ->whereDate('created_at',$currentDate)->count();
     return $pendingOrders+$confirmOrders;
   }
@@ -714,7 +763,7 @@ if(!function_exists('getInprogressOrders')){
 if(!function_exists('getReadyOrders')){
   function getReadyOrders() {
     $currentDate=Timezone::convertToLocal(Carbon::now(),'Y-m-d');
-    return $inProgressOrders=Order::where(['company_id'=>Auth::user()->company_id,'status'=>'ready','deleted'=>0])
+    return $inProgressOrders=Order::where(['company_id'=>Auth::user()->company_id,'status'=>'ready','deleted'=>0,'location_id'=>getDefaultLocationLoggedUser()])
     ->whereDate('created_at',$currentDate)->count();
   }
 }
@@ -723,7 +772,7 @@ if(!function_exists('getReadyOrders')){
 if(!function_exists('getCompletedOrders')){
   function getCompletedOrders() {
     $currentDate=Timezone::convertToLocal(Carbon::now(),'Y-m-d');
-    return $inProgressOrders=Order::where(['company_id'=>Auth::user()->company_id,'status'=>'complete','deleted'=>0])
+    return $inProgressOrders=Order::where(['company_id'=>Auth::user()->company_id,'status'=>'complete','deleted'=>0,'location_id'=>getDefaultLocationLoggedUser()])
     ->whereDate('created_at',$currentDate)->count();
   }
 }
@@ -732,6 +781,12 @@ if(!function_exists('getCompletedOrders')){
 if(! function_exists('getBusinessInfo')){
   function getBusinessInfo($id){
     return Company::find($id);
+  }
+}
+
+if(! function_exists('getBusinessSiteInfo')){
+  function getBusinessSiteInfo($id){
+    return Site::find($id);
   }
 }
 
@@ -916,7 +971,11 @@ if(! function_exists('checkFreeSoftwareExpire')){
       $userInfo=User::find($uid);
       $currentDate=Carbon::now();
       $NextMonthUserDate=Carbon::create($userInfo->created_at->format('Y-m-d'))->addDay(60)->format('Y-m-d');
-      return ($currentDate>$NextMonthUserDate)?true:false;
+      if(paidCurrentBillingPeriod()>0){
+        return false;
+      }else{
+        return ($currentDate>$NextMonthUserDate)?true:false;
+      }
     }
   }
 }
@@ -1977,7 +2036,7 @@ if(!function_exists('getGeofenceCustomers')){
     return Order::where([
       ['status','<>','complete'],
       'company_id'=>auth()->user()->company_id,
-      'cancel'=>0,'locate'=>1])->count();
+      'cancel'=>0,'locate'=>1,'location_id'=>getDefaultLocationLoggedUser()])->count();
   }
 }
 
@@ -2026,4 +2085,174 @@ if(!function_exists('categories_options')){
     );
   }
 }
+
+if(!function_exists('all_company_managers')){
+  function all_company_managers(){
+    if(auth()->user()->role==COMPANY){
+      return User::select(['id','name'])
+      ->whereIn('role',[MANAGER])
+      ->orWhere('id',auth()->user()->id)
+      ->where(['company_id'=>auth()->user()->company_id,'deleted'=>0])->get();
+    }else if(auth()->user()->role==MANAGER){
+      return User::select(['id','name'])
+      ->whereIn('role',[SUPERVISOR])
+      ->where(['company_id'=>auth()->user()->company_id,'deleted'=>0])->get();
+    }
+  }
+}
+
+/*this will get default location of logged user*/
+if(!function_exists('getDefaultLocationLoggedUser')){
+  function getDefaultLocationLoggedUser(){
+    $userInfo=User::find(auth()->user()->id);
+    return $userInfo->location_id;
+  }
+}
+
+/*this will return default site name for logged user*/
+if(!function_exists('getDefaultSiteName')){
+  function getDefaultSiteName(){
+    if($id=getDefaultLocationLoggedUser()){
+      return Site::find($id)->address;
+    }
+  }
+}
+
+if(!function_exists('convertEmailTime')){
+  function convertEmailTime($date){
+    $date=Carbon::create($date);
+    return Timezone::convertToLocal($date,'Y-m-d h:i:s a');
+  }
+}
+
+/*stripe Billing month code start*/
+
+/*currency amount array according to main website*/
+if(!function_exists('getCurrencyAmount')){
+  function getCurrencyAmount(){
+    return array(
+      'USD'=>35,
+      'AUD'=>48.08,
+      'GBP'=>27.35,
+      'CAD'=>46.12,
+      'NZD'=>52.51,
+    );
+  }
+}
+
+/*get from and to date according to signup date*/
+if(!function_exists('getSignupFromToDate')){
+  function getSignupFromToDate(){
+    $signupDate=auth()->user()->created_at;
+    $date=Carbon::parse($signupDate)->format('d');
+    $month = Carbon::now()->month;
+    $year = Carbon::now()->year;
+    $to=$year.'-'.$month.'-'.$date;
+    $from=Carbon::create($to)->subDays(29)->format('Y-m-d');
+    return array('to'=>$to,'from'=>$from);
+  }
+}
+
+//count all company Orders
+if(!function_exists('countAllCompanyOrders')){
+  function countAllCompanyOrders(){
+    extract(getSignupFromToDate());
+    return Order::where(['company_id'=>auth()->user()->company_id])
+    ->whereDate('created_at', '>',$from)->whereDate('created_at', '<=',$to)
+    ->count();
+  }
+}
+
+if(!function_exists('paidCurrentBillingPeriod')){
+  function paidCurrentBillingPeriod(){
+    extract(getSignupFromToDate());
+    return CompanyPayment::where(['billing_from'=>$from,'billing_to'=>$to,'company_id'=>auth()->user()->company_id])->count();
+  }
+}
+/*check stripe amount is paid for
+current billing period or not*/
+if(!function_exists('checkStripeAmountPaidForMonth')){
+  function checkStripeAmountPaidForMonth(){
+    if(paidCurrentBillingPeriod()==0 && checkFreeSoftwareExpire()){
+      if(countAllCompanyOrders()>env('FREEORDERS') && checkFreeSoftwareExpire() && dateIsSignupDate()){
+        return true;
+      }
+    }
+    return false;
+  }
+}
+
+/*This will check current date is matched with signup date*/
+if(! function_exists('dateIsSignupDate')){
+  function dateIsSignupDate(){
+    if(checkFreeSoftwareExpire() && countAllCompanyOrders()>env('FREEORDERS')) {
+      $currentDate = Carbon::now()->format('d');
+      $signupDate=auth()->user()->created_at;
+      $anniversaryDate=Carbon::parse($signupDate)->format('d');
+      if($anniversaryDate==$currentDate){
+        return true;
+      }
+    }
+    return false;
+  }
+}
+
+/*This will return stripe plan id*/
+if(!function_exists('getPlanId')){
+  function getPlanId($code){
+    $priceId='';
+    $currencyCode=getCurrencyCode($code);
+    switch($currencyCode){
+      case 'CAD':
+        $priceId=env('PRICE_CAD');
+      break;
+      case 'NZD':
+        $priceId=env('PRICE_NZD');
+      break;
+      case 'GBP':
+        $priceId=env('PRICE_GBP');
+      break;
+      case 'AUD':
+        $priceId=env('PRICE_AUD');
+      break;
+      case 'USD':
+        $priceId=env('PRICE_US');
+      break;
+      default:
+        $priceId=env('PRICE_CAD');
+      break;
+    }
+    return $priceId;
+  }
+}
+
+/*get logged subscription*/
+if(! function_exists('getLoggedSubscriptionInfo')){
+  function getLoggedSubscriptionInfo(){
+    $uid=auth()->user()->id;
+    if($uid){
+      $subscriptionInfo=Subscription::where('user_id',$uid)->get();
+      if($subscriptionInfo->count()>0){
+        return $subscriptionInfo->last();
+      }else{
+        return true;
+      }
+    }
+  }
+}
+
+if(! function_exists('getCompanySubscriptionInfo')){
+  function getCompanySubscriptionInfo($cid){
+    if($cid){
+      $userInfo=User::where(['company_id'=>$cid,'role'=>COMPANY])->first();
+      $subscriptionInfo=Subscription::where('user_id',$userInfo->id)->get();
+      if($subscriptionInfo->count()>0){
+        return $subscriptionInfo->last();
+      }else{
+        return true;
+      }
+    }
+  }
+}
+/*stripe Billing month code end*/
 ?>

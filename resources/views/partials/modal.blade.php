@@ -39,6 +39,23 @@
                     ['class'=>'form-control','placeholder'=>trans('dashboard.eput_modal_eta_placeholder'),'id'=>'etaMinutesTxt2']
                   )}}
                 </div>
+                <div class="form-group">
+                  	{{Form::label('amount', trans('dashboard.table_th_amount'))}}
+      							<div class="input-group mb-3">
+      						  <div class="input-group-prepend">
+      						    <span class="input-group-text">$</span>
+      						  </div>
+      							@php
+      							$userInfo=getUserInfo(auth()->user()->id);
+      							@endphp
+      							{{Form::text('amount','',
+      								['class'=>'form-control',
+      								'placeholder'=>trans('add_order.placeholder_amount'),
+      								'disabled'=>($userInfo->connect_account_id)?false:true
+      								]
+      							)}}
+      						</div>
+      					</div>
             </div>
             <div class="modal-footer">
                 {{Form::button(trans('common.close_btn_txt'),["class"=>"btn btn-secondary","data-dismiss"=>"modal"])}}
@@ -115,7 +132,9 @@
                   </h5>
                 </div>
                 <div class="col-md-4">
-                  <a href="" class="order-edit-detail hide-print-link">Edit</a>
+                  <a href="" class="order-edit-detail hide-print-link">
+                    @lang('common.edit_label')
+                  </a>
                 </div>
                 <div class="col-md-4">
                   <a id="printOut" href="javascript:void(0);" class="order-edit-detail hide-print-link">@lang('dashboard.table_print_action_btn')</a>
@@ -194,6 +213,7 @@ aria-hidden="true">
                     ['class'=>'form-control','placeholder'=>trans('dashboard.eput_modal_eta_placeholder'),'id'=>'etaMinutesTxt2']
                   )}}
                 </div>
+
             </div>
             <div class="modal-footer">
                 {{Form::button(trans('common.close_btn_txt'),["class"=>"btn btn-secondary","data-dismiss"=>"modal"])}}

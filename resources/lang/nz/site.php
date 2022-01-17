@@ -19,5 +19,7 @@ return [
   'site_delete_success'=>'Site has been deleted successfully',
   'site_cover_image'=>'Cover Image',
   'site_category'=>'Category',
+  'site_manager_label'=>'Manager',
+  'site_set_default_label'=>'Set Default',
 ];
 ?>

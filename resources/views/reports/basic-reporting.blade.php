@@ -60,8 +60,8 @@
                           <th>@lang('dashboard.table_th_order_confirm')</th>
                           <th>@lang('report.table_order_delayed_th')</th>
                           <th>@lang('report.table_total_time_th')</th>
-                          <th>Payment Type</th>
-                          <th>Delayed Time</th>
+                          <th>@lang('report.table_payment_type')</th>
+                          <th>@lang('report.table_delayed_time')</th>
                           <th class="d-none">@lang('report.table_order_amount_th')</th>
                         </tr>
                     </thead>

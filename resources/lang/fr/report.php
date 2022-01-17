@@ -16,5 +16,7 @@
     'table_total_amount_th'=>'Montant total',
     'table_total_phone_number_th'=>'Numéro de téléphone',
     'filteration_heading'=>'Chercher',
+    'table_payment_type'=>'Type de paiement',
+    'table_delayed_time'=>'Temps de retard',
   ];
 ?>

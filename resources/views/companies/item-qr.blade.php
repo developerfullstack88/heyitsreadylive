@@ -8,6 +8,8 @@
   	    <section class="card">
   				<header class="card-header">
   						@lang('qr.upload_item_qr_img_heading')
+              <i class="fas fa-question-circle"
+  						data-toggle="tooltip" data-placement="right" title="Add content here." data-container="body"></i>
   				</header>
           <div class="card-body">
             {{ Form::open(array('action'=> 'CompanyController@UploadMenuImage','id'=>'UploadMenuImage','files'=>true)) }}
@@ -25,7 +27,7 @@
   	    </section>
   	  </div>
   	</div>
-    <div class="row">
+    <!--<div class="row">
       <div class="col-lg-6 col-12">
         <section class="card">
           <header class="card-header">
@@ -38,7 +40,7 @@
           </div>
         </section>
       </div>
-    </div>
+    </div>-->
   @else
   <div class="row">
     <div class="col-lg-6 col-12">
@@ -66,7 +68,7 @@ $(document).ready(function(){
     var file, img;
     if ((file = this.files[0])) {
         img = new Image();
-        img.onload = function() {
+        /*img.onload = function() {
             if(this.width<1000){
               alert('image width must be 1000 or greater');
               $('#UploadMenuImage button').attr('disabled',true);
@@ -79,7 +81,7 @@ $(document).ready(function(){
             if(this.width>=1000 && this.height>=1000){
               $('#UploadMenuImage button').attr('disabled',false);
             }
-        };
+        };*/
         if ( /\.(jpe?g|png|gif)$/i.test(file.name) === false ) {
           $('#UploadMenuImage button').attr('disabled',true);
           alert('please upload only jpg and png files');

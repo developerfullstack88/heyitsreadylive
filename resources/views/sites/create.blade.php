@@ -31,7 +31,7 @@
 						{{Form::file('cover_image',['required'=>false])}}
 					</div>
 					<div>
-            {{Form::label('category', 'Category')}}
+            {{Form::label('category', trans('site.site_category'))}}
 						<i class="fas fa-question-circle"
 						data-toggle="tooltip" data-placement="right" title="Add content here." data-container="body"></i>
 						<select class="form-control custom-select mb-3" name="category" required="true">
@@ -41,10 +41,23 @@
 								@endforeach
               </select>
           </div>
+					<div>
+            {{Form::label('manager_id', trans('site.site_manager_label'))}}
+						<i class="fas fa-question-circle"
+						data-toggle="tooltip" data-placement="right" title="Add content here." data-container="body"></i>
+						<select class="form-control custom-select mb-3" name="manager_id">
+							<option value="">Select Manager</option>
+								@foreach(all_company_managers() as $manager)
+									<option value="{{$manager->id}}" {{ old('manager_id') == $manager->id ? 'selected' : '' }}>
+										{{$manager->name}}
+									</option>
+								@endforeach
+              </select>
+          </div>
 					<div class="form-group d-none">
             {{Form::label('radius',trans('Radius'))}}
             {{Form::text('radius',75,
-              ['class'=>'form-control','placeholder'=>'Enter radius','required'=>true,'onchange'=>'getaddress(event);']
+              ['class'=>'form-control','placeholder'=>'Enter radius','required'=>true,'onblur'=>'getaddress(event);']
             )}}
           </div>
           <div class="form-group">
@@ -52,7 +65,7 @@
 						<i class="fas fa-question-circle"
 						data-toggle="tooltip" data-placement="right" title="Add content here." data-container="body"></i>
             {{Form::text('address','',
-              ['class'=>'form-control','placeholder'=>trans('site.placeholder_location'),'onblur'=>'getaddress(event);','required'=>true]
+              ['class'=>'form-control','placeholder'=>trans('site.placeholder_location'),'required'=>true]
             )}}
           </div>
           <span style="display:none;">
@@ -93,22 +106,9 @@
 
   //get address
   function getaddress(e){
-		  var radius=$('#radius').val();
-      var address = $('#address').val();
-			var geocoder = new google.maps.Geocoder();
-			if(!radius){
+		  if(!radius){
 				alert('Radius is required field');
 				return false;
-			}
-			if(address && radius){
-				geocoder.geocode( { 'address': address}, function(results, status) {
-					if (status == google.maps.GeocoderStatus.OK) {
-		    		var lat = results[0].geometry.location.lat();
-		    		var lng = results[0].geometry.location.lng();
-						generateCircleMap(lat,lng,radius);
-		      }
-
-				});
 			}
 			//generateMap(address);
   }

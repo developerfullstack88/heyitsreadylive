@@ -48,7 +48,7 @@ class JWTAuthController extends Controller
           $postedArr['password']=bcrypt($postedArr['password']);
           $postedArr['disabled']=0;
           if(User::where('id',$phoneUser->id)->update($postedArr)) {
-            $user=getUserInfo($phoneUser->id);
+            $user=getNormalUserInfo($phoneUser->id);
             $token = auth()->login($user);//get jwt token
             $user->token=$token;
             return response()->json(['code'=>200,'status'=>true,'message' => 'Regsitered successfully',
@@ -60,7 +60,7 @@ class JWTAuthController extends Controller
           $postedArr['password']=bcrypt($postedArr['password']);
           $postedArr['disabled']=0;
           if(User::where('id',$user->id)->update($postedArr)){
-            $user=getUserInfo($user->id);
+            $user=getNormalUserInfo($user->id);
             $token = auth()->login($user);//get jwt token
             $user->token=$token;
             return response()->json(['code'=>200,'status'=>true,'message' => 'Regsitered successfully',
@@ -153,10 +153,11 @@ class JWTAuthController extends Controller
         if($userDetail){
           $phoneNumber=$userDetail->phone_number;
           $phoneArr=explode(" ",$phoneNumber);
+          //echo "<pre>";print_r($phoneArr);die;
           if(count($phoneArr)>1){
-            $userDetail->country_code=$phoneArr[0];
-            $userDetail->phone_number=$phoneArr[1];
-            $countryInfo=Country::where('phone_code',$userDetail->country_code)->pluck('country_code');
+            $countryCode=$phoneArr[0];
+            $countryInfo=Country::where('phone_code',$countryCode)->pluck('country_code');
+            //echo "<pre>";print_r($phoneArr);die;
             //$userDetail->country='ca';
             if($countryInfo->count()>0){
               $userDetail->country=strtolower($countryInfo[0]);

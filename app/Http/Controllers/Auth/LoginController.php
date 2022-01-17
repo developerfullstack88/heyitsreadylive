@@ -62,5 +62,13 @@ class LoginController extends Controller
         Auth::logout();
         return redirect()->route('heyItsReadyHome');
       }
+      $request->session()->put('default-site-modal',1);
+    }
+
+    public function logout(Request $request){
+        $request->session()->flush();
+        $request->session()->regenerate();
+        $request->session()->put('default-site-modal',0);
+        return redirect()->route('heyItsReadyHome');
     }
 }

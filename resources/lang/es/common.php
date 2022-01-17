@@ -24,5 +24,8 @@ return [
   'sidebar_setup'=>'Preparar',
   'sidebar_menus'=>'Menús',
   'sidebar_taxes'=>'Impuestos',
+  'edit_label'=>'Editar',
+  'sidebar_payouts_label'=>'Pagos',
+  'sidebar_payments_label'=>'Pagos',
 ];
 ?>

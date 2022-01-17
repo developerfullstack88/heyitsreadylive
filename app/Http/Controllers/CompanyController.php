@@ -118,7 +118,8 @@ class CompanyController extends Controller
     /*generate order qr code*/
     public function orderQr(){
       $company_id=Auth::user()->company_id;
-      $qrUrl=url('/').'/users/order-create?company_id='.$company_id.'&type=order';
+      $locationId=getDefaultLocationLoggedUser();
+      $qrUrl=url('/').'/users/order-create?location_id='.$locationId.'&company_id='.$company_id.'&type=order';
       // instantiate the barcode class
       $barcode = new \Com\Tecnick\Barcode\Barcode();
       // generate a barcode
@@ -143,10 +144,10 @@ class CompanyController extends Controller
       $data['bobj'] = $barcode->getBarcodeObj(
           'QRCODE,H',                     // barcode type and additional comma-separated parameters
           $qrUrl,          // data string to encode
-          -8,                             // bar width (use absolute or negative value as multiplication factor)
-          -8,                             // bar height (use absolute or negative value as multiplication factor)
+          -4,                             // bar width (use absolute or negative value as multiplication factor)
+          -4,                             // bar height (use absolute or negative value as multiplication factor)
           'black',                        // foreground color
-          array(-2, -2, -2, -20)           // padding (use absolute or negative values as multiplication factors)
+          array(-2, -2, -2, -60)           // padding (use absolute or negative values as multiplication factors)
           )->setBackgroundColor('white'); // background color
       view()->share('bobj',$data['bobj']);
 
@@ -155,10 +156,10 @@ class CompanyController extends Controller
       $data['googleplay'] = $barcode->getBarcodeObj(
           'QRCODE,H',                     // barcode type and additional comma-separated parameters
           $qrUrl,          // data string to encode
-          -7,                             // bar width (use absolute or negative value as multiplication factor)
-          -7,                             // bar height (use absolute or negative value as multiplication factor)
+          -4,                             // bar width (use absolute or negative value as multiplication factor)
+          -4,                             // bar height (use absolute or negative value as multiplication factor)
           'black',                        // foreground color
-          array(-2, -2, -2, -20)           // padding (use absolute or negative values as multiplication factors)
+          array(-2, -2, -2, -25)           // padding (use absolute or negative values as multiplication factors)
           )->setBackgroundColor('white'); // background color
 
       view()->share('googleplay',$data['googleplay']);
@@ -168,10 +169,10 @@ class CompanyController extends Controller
       $data['appleplay'] = $barcode->getBarcodeObj(
           'QRCODE,H',                     // barcode type and additional comma-separated parameters
           $qrUrl1,          // data string to encode
-          -7,                             // bar width (use absolute or negative value as multiplication factor)
-          -7,                             // bar height (use absolute or negative value as multiplication factor)
+          -4,                             // bar width (use absolute or negative value as multiplication factor)
+          -4,                             // bar height (use absolute or negative value as multiplication factor)
           'black',                        // foreground color
-          array(-2, -2, -2, -20)             // padding (use absolute or negative values as multiplication factors)
+          array(-2, -2, -2, -25)             // padding (use absolute or negative values as multiplication factors)
           )->setBackgroundColor('white'); // background color
 
       view()->share('appleplay',$data['appleplay']);

@@ -16,7 +16,18 @@
 							<p><span class="bold">@lang('site.address_label'):</span> <?= ($site->address) ?></p>
 						</div>
 						<div class="bio-row bio-row-width100">
-							<p><span class="bold">@lang('site.site_cover_image'):</span> <img class="menu-edit-img" src="{{asset($site->cover_image_thumbnail)}}"/></p>
+							<p><span class="bold">@lang('site.site_manager_label'):</span>
+								@if($site->manager)
+									<?= ($site->manager->name) ?>
+								@endif
+							</p>
+						</div>
+						<div class="bio-row bio-row-width100">
+							<p><span class="bold">@lang('site.site_cover_image'):</span>
+								@if($site->cover_image_thumbnail)
+									<img class="menu-edit-img" src="{{asset($site->cover_image_thumbnail)}}"/>
+								@endif
+							</p>
 						</div>
 					 </div>
 				  </div>

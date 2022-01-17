@@ -60,7 +60,7 @@ label,.extra-bold-black{color: #000000;font-weight: 800;}
 		<section class="card">
 			<div class="card-body">
 				<div class="col-md-12 text-center">
-					<img src="{{asset('img/hey-its-ready-track-order.png')}}" style="max-width:40rem;">
+					<img id="track-order-taxi-img" src="{{asset('img/hey-its-ready-track-order.png')}}"/>
 				</div>
 			</div>
 		</section>

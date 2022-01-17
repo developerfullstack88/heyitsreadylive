@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Subscription;
+use App\CompanyPayment;
 use App\User;
 use Mail;
 use App\Mail\BilledEmail;
@@ -12,6 +13,7 @@ class PaymentController extends Controller
     public function __construct()
     {
         $this->middleware('auth:web', ['except' => ['success','failed']]);
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
     }
 
     /*will send billed email to customer*/
@@ -84,6 +86,41 @@ class PaymentController extends Controller
                   $startDate = date('Y-m-d H:i:s', $value->period->start);
               }
           }*/
+      }
+    }
+
+    /*This will insert payment into company payment table*/
+    public function doCompanyStripePayment(){
+      $companyUserInfo=getBusinessUserInfo(auth()->user()->company_id);
+      $countryCode=getCountryCode($companyUserInfo->country);
+      $currencyCode=getCurrencyCode($countryCode);
+      $customerInfo=\Stripe\Customer::retrieve(auth()->user()->stripe_customer_id);
+      $currencyAmountArr=getCurrencyAmount();
+      $amountPaid=$currencyAmountArr[$currencyCode];
+      try {
+        $charge = \Stripe\Charge::create([
+          "amount" => $amountPaid*100,
+          "currency" => $currencyCode,
+          "customer"=>auth()->user()->stripe_customer_id,
+          "source" => $customerInfo->default_source
+        ]);
+      } catch(Stripe_CardError $e) {
+        return false;
+      }
+      extract(getSignupFromToDate());
+      $paymentTable=CompanyPayment::create([
+        'company_id'=>auth()->user()->company_id,
+        'charge_id'=>$charge->id,
+        'currency'=>$currencyCode,
+        'amount'=>$amountPaid,
+        'billing_from'=>$from,
+        'billing_to'=>$to,
+        'total_orders'=>countAllCompanyOrders()
+      ]);
+      if($paymentTable->id){
+        return true;
+      }else{
+        return false;
       }
     }
 }

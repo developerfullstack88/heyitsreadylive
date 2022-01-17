@@ -85,9 +85,10 @@ $(document).ready(function(){
           var locate = $(this).next().attr('data-locate');
           var oid=$(this).data('id');
           var spot_number=$(this).parents('tr').find('.home-order-spot-number').text();
+          var spot_color=$(this).parents('tr').find('.home-order-spot-color').text();
           if(status!='complete'){
             //getSpotNumber(oid,spot_number);
-            getSpotOrderLocate(oid,spot_number,locate);
+            getSpotOrderLocate(oid,spot_number,locate,spot_color);
           }
           var ms= moment(dbtime, "DD/MM/YYYY HH:mm:ss").diff(moment(current_time, 'DD/MM/YYYY HH:mm:ss'));
           var diff = moment.duration(ms);
@@ -726,6 +727,19 @@ function autocompleteLocation() {
 
   autocomplete.addListener('place_changed', function() {
     var place = autocomplete.getPlace();
+    var radius=$('#radius').val();
+    var address = $('#address').val();
+    var geocoder = new google.maps.Geocoder();
+    if(address && radius){
+      geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          var lat = results[0].geometry.location.lat();
+          var lng = results[0].geometry.location.lng();
+          generateCircleMap(lat,lng,radius);
+        }
+
+      });
+    }
     if (!place.geometry) { }
   });
 }
@@ -796,7 +810,7 @@ function updateAjaxOrders(){
 }
 
 /*Get spot number for order if exist*/
-var getSpotOrderLocate=(oid,spot_number='',locate)=>{
+var getSpotOrderLocate=(oid,spot_number='',locate,spot_color)=>{
   $.ajax({
     url:APP_URL+'/orders/check-spot-exist/'+oid,
     datatype:'json',
@@ -805,11 +819,14 @@ var getSpotOrderLocate=(oid,spot_number='',locate)=>{
       if(json.spot_number && !spot_number){
         $('#home_order_'+oid+' td:nth-child(3)').text(json.spot_number);
       }
-      $('#home_order_'+oid+' td:nth-child(10)').html(json.order_locate);
+      if(json.spot_color){
+        $('#home_order_'+oid+' td:nth-child(4)').text(json.spot_color);
+      }
+      $('#home_order_'+oid+' td:nth-child(11)').html(json.order_locate);
 
       $('#dashboardGeoFenceCount').text(json.geofence_count);
-      $('#home_order_'+oid+' td:nth-child(5)').html(json.order_paid);
-      $('#home_order_'+oid+' td:nth-child(6)').html(json.order_confirm);
+      $('#home_order_'+oid+' td:nth-child(6)').html(json.order_paid);
+      $('#home_order_'+oid+' td:nth-child(7)').html(json.order_confirm);
     }
   });
 }

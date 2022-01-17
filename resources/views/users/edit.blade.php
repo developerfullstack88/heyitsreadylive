@@ -58,11 +58,6 @@
                       </span>
                     @enderror
                   </div>
-                  {{Form::label('country', trans('profile.country_label'))}}
-                  <div>
-                    {{Form::text('country',$userInfo->country,['class'=>'form-control','autofocus'=>true,'readonly'=>true])}}
-                  </div>
-
                   {{Form::label('company_name', trans('profile.company_name_label'))}}
                   <i class="fas fa-question-circle"
       						data-toggle="tooltip" data-placement="right" title="Add content here." data-container="body"></i>
@@ -74,17 +69,7 @@
                       </span>
                     @enderror
                   </div>
-
-                  {{Form::label('company_website', trans('profile.company_website_label'))}}
-                  <div>
-                    {{Form::text('company_website',$userInfo->company->company_website,['class'=>'form-control','required'=>true,'autofocus'=>true])}}
-                    @error('company_website')
-                      <span class="invalid-feedback" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                    @enderror
-                  </div>
-                  {{Form::label('address', trans('profile.billing_address_label'))}}
+                  {{Form::label('address', 'House #')}}
                   <i class="fas fa-question-circle"
       						data-toggle="tooltip" data-placement="right" title="Add content here." data-container="body"></i>
                   <div class="">
@@ -95,24 +80,43 @@
                       </span>
                     @enderror
                   </div>
-
+                  {{Form::label('country', trans('profile.country_label'))}}
+                  <div>
+                    {{Form::text('country',$userInfo->country,['class'=>'form-control','autofocus'=>true,'readonly'=>true])}}
+                  </div>
+                  {{Form::label('state', 'State')}}
+                  <div>
+                    {{Form::text('state',$userInfo->state,['class'=>'form-control','autofocus'=>true,'readonly'=>true])}}
+                  </div>
+                  {{Form::label('city', 'City')}}
+                  <div>
+                    {{Form::text('city',$userInfo->city,['class'=>'form-control','autofocus'=>true,'readonly'=>true])}}
+                  </div>
+                  {{Form::label('street_address', 'Street')}}
+                  <div>
+                    {{Form::text('street_address',$userInfo->street_address,['class'=>'form-control','autofocus'=>true])}}
+                  </div>
+                  {{Form::label('line2_address', 'Line2')}}
+                  <div>
+                    {{Form::text('line2_address',$userInfo->line2_address,['class'=>'form-control','autofocus'=>true])}}
+                  </div>
+                  {{Form::label('zip_code', 'Zip/Postal Code')}}
+                  <div>
+                    {{Form::text('zip_code',$userInfo->zip_code,['class'=>'form-control','autofocus'=>true])}}
+                  </div>
+                  {{Form::label('company_website', trans('profile.company_website_label'))}}
+                  <div>
+                    {{Form::text('company_website',$userInfo->company->company_website,['class'=>'form-control','required'=>true,'autofocus'=>true])}}
+                    @error('company_website')
+                      <span class="invalid-feedback" role="alert">
+                          <strong>{{ $message }}</strong>
+                      </span>
+                    @enderror
+                  </div>
                   {{Form::label('phone_code', trans('profile.phone_label'))}}
                   <div class="row">
                     <div class="col-md-3">
-                      <select class="form-control custom-select mb-3" name="phone_code" required="true" autofocus>
-      									<option value="">Select</option>
-      										@php
-      											$phonCode=getPhoneCode();
-      										@endphp
-      										@foreach(allPhoneCode() as $code)
-                          <option value="{{$code}}" {{ old('phone_code') || $userInfo->phone_code== $code ? 'selected' : '' }}>{{$code}}</option>
-      										@endforeach
-      		              </select>
-                      @error('phone_code')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                      @enderror
+                      {{Form::text('phone_code',$userInfo->phone_code,['class'=>'form-control','autofocus'=>true,'readonly'=>true])}}
                     </div>
                     <div class="col-md-9">
                       {{Form::text('phone_number',$userInfo->phone_number,['class'=>'form-control','required'=>true,'autofocus'=>true,'id'=>'phone_number'])}}
@@ -200,6 +204,6 @@
   source: availableTags
   });
   $('#phone_number').mask('(000) 000-0000');
-  google.maps.event.addDomListener(window, 'load', autocompleteLocation);
+  //google.maps.event.addDomListener(window, 'load', autocompleteLocation);
   </script>
 @endsection

@@ -3,18 +3,18 @@
 <div class="row">
   <div class="col-lg-12">
       <section class="card">
-	        <header class="card-header font-title">Staff Listing</header>
+	        <header class="card-header font-title">@lang('staff.staff_list_heading')</header>
           <div class="card-body">
                <div class="table-responsive">
 	                 <table class="table table-bordered">
 		                   <thead>
               			       <tr>
-                             <th class="">Name</th>
-              							  <th class="">First Name</th>
-                              <th class="">Last Name</th>
-                              <th class="">Email</th>
-                              <th class="">Phone Number</th>
-              							  <th class="">Profile Image</th>
+                             <th class="">@lang('staff.staff_list_name_label')</th>
+              							  <th class="">@lang('staff.staff_list_first_name_label')</th>
+                              <th class="">@lang('staff.staff_list_last_name_label')</th>
+                              <th class="">@lang('staff.staff_list_email_label')</th>
+                              <th class="">@lang('staff.staff_list_phone_number_label')</th>
+              							  <th class="">@lang('staff.staff_list_profile_image_label')</th>
               							  <th class="">@lang('common.table_list_actions')</th>
               						 </tr>
 		                   </thead>

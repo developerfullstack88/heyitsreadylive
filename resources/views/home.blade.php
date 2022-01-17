@@ -58,9 +58,11 @@
 <div class="row">
   <div class="col-lg-12">
     <center>
-      <a id="addNewOrderBtn" class="btn btn-info btn-lg btn-huge font-title" href="{{route('orders.create')}}">@lang('dashboard.add_new_order_btn')</a>
+      @if(getDefaultLocationLoggedUser())
+        <a id="addNewOrderBtn" class="btn btn-info btn-lg btn-huge font-title" href="{{route('orders.create')}}">@lang('dashboard.add_new_order_btn')</a>
+      @endif
       @if(currentUser() && currentUser()->delete_complete_order == 1
-      && (isset($OrdersComplete) && $OrdersComplete->count()>0) && Request::get('type')=='complete')
+      && (isset($OrdersComplete) && $OrdersComplete->count()>0) && Request::get('type')=='completed')
         <a id="home-delete-complete-btn" class="btn btn-info btn-lg btn-huge ml-2 font-title"
         href="{{route('orders.delete-complete')}}" onclick="return confirm('Do you want to delete complete orders?')">@lang('dashboard.delete_complete_order_btn')</a>
       @elseif(currentUser() && currentUser()->delete_complete_order == 1)
@@ -82,16 +84,16 @@
             <div class="col-lg-12">
               <div class="float-right mb-2">
                 <a class="btn btn-md font-title {{Request::get('type')=='all'?'btn-secondary':'btn-info'}}" href="{{Request::get('type')!='all'?route('home',['type'=>'all']):'javascript:void(0);'}}">
-                  All
+                  @lang('dashboard.all_filter_label')
                 </a>
                 <a class="btn btn-md font-title {{Request::get('type')=='' || Request::get('type')=='active'?'btn-secondary':'btn-info'}}" href="{{Request::get('type')!='active'?route('home',['type'=>'active']):'javascript:void(0);'}}">
-                  Active
+                  @lang('dashboard.active_filter_label')
                 </a>
                 <a class="btn btn-md font-title {{Request::get('type')=='completed'?'btn-secondary':'btn-info'}}" href="{{Request::get('type')!='completed'?route('home',['type'=>'completed']):'javascript:void(0);'}}">
-                  Completed
+                  @lang('dashboard.completed_filter_label')
                 </a>
                 <a class="btn btn-md font-title {{Request::get('type')=='future'?'btn-secondary':'btn-info'}}" href="{{Request::get('type')!='future'?route('home',['type'=>'future']):'javascript:void(0);'}}">
-                  Future
+                  @lang('dashboard.future_filter_label')
                 </a>
               </div>
             </div>
@@ -102,6 +104,7 @@
                         <th class="chkbox-table-th"><input type="checkbox" id="all-dashboard-chkbox"></th>
                         <th class="font-title order-number-th">@lang('dashboard.table_th_order_number')</th>
                         <th class="font-title spot-number-th">@lang('dashboard.table_th_spot_number')</th>
+                        <th class="font-title spot-color-th">Car Color</th>
                         <th class="font-title customer-name-th">@lang('dashboard.table_th_customer_name')</th>
                         <th class="font-title paid-order-th">@lang('dashboard.table_th_paid_order')</th>
                         <th class="font-title order-time-user-th">@lang('dashboard.table_th_order_confirm')</th>
@@ -110,7 +113,9 @@
                           @lang('dashboard.table_th_timer')
                         </th>
                         <th class="font-title locate-order-th">@lang('dashboard.table_th_located')</th>
-                        <th class="font-title actions-table-th">@lang('dashboard.table_th_order_status')</th>
+                        <th class="font-title actions-table-th">
+                          @lang('dashboard.quick_actions_filter_label')
+                        </th>
                       </tr>
                   </thead>
                   <tbody id="dashboardOrder">
@@ -124,6 +129,7 @@
                              <span class="d-none hidden-order-number">{{$order->order_number}}</span>
                            </td>
                            <td class="home-order-spot-number">{{$order->spot_number}}</td>
+                           <td class="home-order-spot-color">{{$order->spot_color}}</td>
                            <td>{{$order->user->name}}</td>
                            <td>
                              @if(checkPrePaidOrder($order->id))
@@ -247,6 +253,9 @@
       </section>
   </div>
 </div>
+@if($defaultSiteModal)
+  @include('partials.default-site-modal')
+@endif
 @endsection
 @section('myScripts')
 <style>
@@ -268,6 +277,70 @@
     background-image: none;
     cursor: default;
     padding: 4px;
+}
+.order-number-th.tablesorter-header{
+  background-position:105% 54%;
+}
+.spot-number-th.tablesorter-header{
+  background-position:102% 54%;
+}
+.spot-color-th.tablesorter-header{
+  background-position:90% 54%;
+}
+.customer-name-th.tablesorter-header{
+  background-position:92% 54%;
+}
+.paid-order-th.tablesorter-header{
+  background-position:104% 54%;
+}
+.order-time-user-th.tablesorter-header{
+  background-position:98% 54%;
+}
+.eput-table-th.tablesorter-header{
+  background-position:61% 54%;
+}
+.timer-table-th.tablesorter-header{
+  background-position:62% 54%;
+}
+.locate-order-th.tablesorter-header{
+  background-position:112% 54%;
+}
+@media (max-width: 1024px) and (max-height: 1366px) {
+  .order-number-th.tablesorter-header{
+    background-position:110% 70%;
+  }
+  .spot-number-th.tablesorter-header{
+    background-position:94% 70%;
+  }
+  .spot-color-th.tablesorter-header{
+    background-position:115% 70%;
+  }
+  .customer-name-th.tablesorter-header{
+    background-position:88% 70%;
+  }
+  .paid-order-th.tablesorter-header{
+    background-position:110% 70%;
+  }
+  .order-time-user-th.tablesorter-header{
+    background-position:110% 68%;
+  }
+  .eput-table-th.tablesorter-header{
+    background-position:110% 67%;
+  }
+  .timer-table-th.tablesorter-header{
+    background-position:110% 70%;
+  }
+  .locate-order-th.tablesorter-header{
+    background-position:114% 70%;
+  }
+}
+@media (max-width: 768px) and (max-height: 1024px) {
+  .tablesorter-header {
+      background-position:105% 54%;
+  }
+  .timer-table-th.tablesorter-header{
+    background-position:115% 70%;
+  }
 }
 </style>
 <link href="{{URL::asset('css/theme.bootstrap_4.min.css')}}"/>
@@ -294,11 +367,20 @@ var CURRENTLANG='{!! Config::get('app.locale') !!}';
 if(FREESOFTWAREEXPIRE && SUBSCRIPTIONEXPIRE){
   $('#freeTrialExpire').modal('show');
 }
-
 /*dashboard count*/
+var DEFAULTSITEMODAL='{!! $defaultSiteModal !!}';
+var DEFAULTLOGGEDSITE='{!! getDefaultLocationLoggedUser() !!}';
 </script>
 <script type="text/javascript">
     $(function(){
+      /*set default or change default location*/
+        if(DEFAULTSITEMODAL==1 && DEFAULTLOGGEDSITE){
+          $('#defaultSiteModal').modal('show');
+        }
+        if(DEFAULTSITEMODAL==1 && !DEFAULTLOGGEDSITE){
+          $('#defaultNoSiteModal').modal('show');
+        }
+      /*set default or change default location*/
         $('#printOut').click(function(e){
             e.preventDefault();
             $('#viewOrderDetail').find('.hide-print-link').hide();
@@ -329,15 +411,16 @@ if(FREESOFTWAREEXPIRE && SUBSCRIPTIONEXPIRE){
           theme : "bootstrap",
           headers: {
               0: {sorter: false},
-              1: {sorter: false},
-              2: {sorter: false},
-              3: {sorter: false},
-              4: {sorter: false},
-              5: {sorter: false},
-              6: {sorter: false},
+              1: {sorter: true},
+              2: {sorter: true},
+              3: {sorter: true},
+              4: {sorter: true},
+              5: {sorter: true},
+              6: {sorter: true},
               7: {sorter: true},
-              8: {sorter: false},
-              9: {sorter: false},
+              8: {sorter: true},
+              9: {sorter: true},
+              10: {sorter: false},
           },
           sortList: [[7,0]]
         });

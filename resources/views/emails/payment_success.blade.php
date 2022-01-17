@@ -46,7 +46,11 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-9"><strong>Order Placed</strong></td>
-                                    <td class="col-md-3">{{convertDirectToLocal($userData->order->actual_order_time)}}</td>
+                                    <td class="col-md-3">
+                                      @if($userData->order->actual_order_time)
+                                        {{convertEmailTime($userData->order->actual_order_time)}}
+                                      @endif
+                                    </td>
                                 </tr>
                                 <tr style="display:none;">
                                     <td class="col-md-9"><strong>Created Date</strong></td>

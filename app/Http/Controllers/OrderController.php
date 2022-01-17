@@ -20,10 +20,14 @@ use App\QrItem;
 use App\Country;
 use App\Payment;
 use App\Cart;
+use App\Http\Controllers\PaymentController;
 
-class OrderController extends Controller
-{
+class OrderController extends Controller{
+    public $paymentController;
 
+    public function __construct(){
+      $this->paymentController = new PaymentController;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -54,6 +58,15 @@ class OrderController extends Controller
           }
         }
         /*fetch phone code*/
+
+        /*old code stripe month billing will work
+        if(checkStripeAmountPaidForMonth()) {
+          if(!$this->paymentController->doCompanyStripePayment()){
+            Session::flash('warning', 'Stripe Monthly payment not paid due to some problem!');
+            return redirect()->route('home');
+          }
+        }
+        /*stripe month billing will work*/
         return view('orders.create',compact('orderId','phoneCode'));
     }
 
@@ -173,6 +186,7 @@ class OrderController extends Controller
           $postedData = $userData = $emailData = $request->all();
           $postedData['app_used']=1;
           $userData['app_used']=1;
+          //$postedData['phone_code']=$userData['phone_code']='+1';
           if($postedData['phone_code']){
             $userData['phone_number']=str_replace(array('(',')','-'),'',$userData['phone_number']);
             $userData['phone_number']=preg_replace("/\s+/", "", $userData['phone_number']);
@@ -180,7 +194,6 @@ class OrderController extends Controller
             $userData['phone_number']=$userData['phone_code'].' '.$userData['phone_number'];
             unset($postedData['phone_code'],$userData['phone_code'],$emailData['phone_code']);
           }
-
           //call helper method
           $postedData['user_id']=checkUserExistByPhone($userData['phone_number']);
 
@@ -265,7 +278,19 @@ class OrderController extends Controller
             }else{
               unset($postedData['amount']);
             }
+
+            /*set default location id to order*/
+            $postedData['location_id']=getDefaultLocationLoggedUser();
+            /*set default location id to order*/
             if($insertedOrder=Order::create($postedData)) {
+              /*Record usage API*/
+              $subscriptionInfo=getLoggedSubscriptionInfo();
+              $subscriptionInfo = \Stripe\Subscription::retrieve($subscriptionInfo->subscription_id);
+              $subscriptionItem=$subscriptionInfo->items->data[0]->id;
+              $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+              $stripe->subscriptionItems->createUsageRecord($subscriptionItem,['quantity' => 1]);
+              /*Record usage API*/
+
               //if($userData['email'] && getUserInfo($postedData['user_id'])->email_enable==1) {
               if($userData['app_used']==0){
                 unset($userData['app_used']);
@@ -288,7 +313,7 @@ class OrderController extends Controller
                   'amount'=>($insertedOrder->amount)?$insertedOrder->amount:0,
                   'actual_order_time'=>($insertedOrder->actual_order_time)?convertDirectToLocal($insertedOrder->actual_order_time):null,
                   'business_name'=>getBusinessName(),
-                  'business_address'=>getBusinessInfo(auth()->user()->company_id)->address,
+                  'business_address'=>getBusinessSiteInfo($insertedOrder->location_id)->address,
                   'type'=>'confirm_push'
                 );
                 if($insertedOrder->eta){
@@ -303,7 +328,6 @@ class OrderController extends Controller
                 sendPushNotification($data,$postedData['user_id'],$extraData);
               }
               /*push will send or not*/
-
               Session::flash('success', 'Order has been added successfully');
               return redirect()->route('home');
             }
@@ -328,8 +352,7 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id){
       $phoneCode='';
       $ipInfo=ipInfo();
       if($ipInfo){
@@ -343,6 +366,10 @@ class OrderController extends Controller
       if($id){
         $orderInfo=Order::with(['user'])->find($id);
         if($orderInfo){
+          if($orderInfo->status=='complete'){
+            Session::flash('warning', 'You can not update completed order.');
+            return redirect()->route('home');
+          }
           $phoneNumber='';
           if($orderInfo->user->phone_number){
             $phoneNumber=explode(" ",$orderInfo->user->phone_number);
@@ -404,13 +431,13 @@ class OrderController extends Controller
           if($postedData['status']=='ready'){
             $data['subject']="Hey, your order number ".$orderInfo->order_number." at ".getBusinessName()." is ready for pickup now.";
             $data['message']="Your order number ".$orderInfo->order_number." at ".getBusinessName()." is ready for pickup now.";
-            if(!getUserInfo($orderInfo->user_id)->device_token && $orderInfo->user->email) {
+            if(!getNormalUserInfo($orderInfo->user_id)->device_token && $orderInfo->user->email) {
               Mail::to($orderInfo->user->email)->send(new OrderReady($data));
             }
           }else{
             $data['subject']='Hey, your order number '.$orderInfo->order_number.' at '.getBusinessName().' has been completed.';
             $data['message']='Your order number '.$orderInfo->order_number.' at '.getBusinessName().' has been completed.';
-            if(!getUserInfo($orderInfo->user_id)->device_token && $orderInfo->user->email) {
+            if(!getNormalUserInfo($orderInfo->user_id)->device_token && $orderInfo->user->email) {
               Mail::to($orderInfo->user->email)->send(new OrderComplete($data));
             }
           }
@@ -483,6 +510,10 @@ class OrderController extends Controller
           $order->eta=$this->updateEtaTime($postedData,$order->eta);
         }
 
+        if(isset($postedData['amount']) && $postedData['amount']) {
+          $order->amount=$postedData['amount'];
+        }
+
         $order->status='confirm';
         if($order->save()){
           /*set email data for eta*/
@@ -494,7 +525,7 @@ class OrderController extends Controller
             'order_date'=>date('F d,Y',strtotime($order->eta)),
             'order_time'=>date('h:i A',strtotime($order->eta))
           );
-          if(!getUserInfo($order->user_id)->device_token && $order->user->email) {
+          if(!getNormalUserInfo($order->user_id)->device_token && $order->user->email) {
             $this->sendEtaEmail($emailData);
           }
 
@@ -569,9 +600,9 @@ class OrderController extends Controller
     /*This will get new orders for business
     and return to jquery ajax*/
     public function ajaxOrders($cid){
-      $orders=Order::with(['user'])->where(['company_id'=>$cid,'new_order'=>1])->get();
+      $orders=Order::with(['user'])->where(['company_id'=>$cid,'new_order'=>1,
+      'location_id'=>getDefaultLocationLoggedUser()])->get();
       if($orders->count()>0){
-        //Order::where('company_id',$cid)->update(['new_order'=>0]);
         return View::make('orders.ajax_orders',compact('orders'));
       }else{
         return '';
@@ -582,13 +613,16 @@ class OrderController extends Controller
     /*This will get new orders for business
     and return to jquery ajax*/
     public function updateAjaxOrders($cid){
-      Order::where('company_id',$cid)->update(['new_order'=>0]);
+      Order::where(['company_id'=>$cid,
+      'location_id'=>getDefaultLocationLoggedUser()])->update(['new_order'=>0]);
     }
 
     /*This will check any calls user using app*/
     public function ajaxCallsOrders($cid){
-      $orders=Order::with(['user'])->where(['company_id'=>$cid,'cancel'=>1,['status','<>','complete']])->get();
-      $orderConfirm=Order::with(['user'])->where(['company_id'=>$cid,'confirm'=>1,['status','<>','complete']])->get();
+      $orders=Order::with(['user'])->where(['company_id'=>$cid,'cancel'=>1,'deleted'=>0,['status','<>','complete'],
+      'location_id'=>getDefaultLocationLoggedUser()])->get();
+      $orderConfirm=Order::with(['user'])->where(['company_id'=>$cid,'confirm'=>1,'deleted'=>0,['status','<>','complete'],
+      'location_id'=>getDefaultLocationLoggedUser()])->get();
       if($orders->count()>0 || $orderConfirm->count()>0){
         if($orderConfirm->count()>0){
           $orders=$orders->merge($orderConfirm);
@@ -640,7 +674,7 @@ class OrderController extends Controller
       $order=TmpOrder::where(['company_id'=>$cid,'new_order'=>0])->get();
       if($order->count()>0){
         $order=$order->first();
-        $userInfo=getUserInfo($order->user_id);
+        $userInfo=getNormalUserInfo($order->user_id);
         if($userInfo){
           $orderArr['name']=$userInfo->name;
           $orderArr['email']=$userInfo->email;
@@ -695,7 +729,8 @@ class OrderController extends Controller
 
     /*delete complete orders*/
     public function deleteCompleteOrder(){
-      $deleted=Order::where(['status'=>'complete','company_id'=>auth()->user()->company_id])->update(['deleted'=>1]);
+      $deleted=Order::where(['status'=>'complete','company_id'=>auth()->user()->company_id,
+      'location_id'=>getDefaultLocationLoggedUser()])->update(['deleted'=>1]);
       if($deleted){
         Session::flash('success', 'Completed orders has been successfully deleted');
         return redirect()->route('home');
@@ -711,7 +746,9 @@ class OrderController extends Controller
       if($postedData){
         extract($postedData);
         $hiddenOrderId=explode(",",$hiddenOrderId);
-        $deleted=Order::whereIn('id',$hiddenOrderId)->where(['company_id'=>auth()->user()->company_id])->update(['deleted'=>1]);
+        /*$deleted=Order::whereIn('id',$hiddenOrderId)
+        ->where(['company_id'=>auth()->user()->company_id])->update(['deleted'=>1]);*/
+        $deleted=Order::whereIn('id',$hiddenOrderId)->update(['deleted'=>1]);
         if($deleted){
           Session::flash('success', 'Orders has been successfully deleted');
           return redirect()->route('home');
@@ -727,7 +764,7 @@ class OrderController extends Controller
       if($id){
         $orderInfo=Order::with(['user'])->find($id);
         if($orderInfo){
-          $userInfo=getUserInfo($orderInfo->user_id);
+          $userInfo=getNormalUserInfo($orderInfo->user_id);
           $orderInfo->update(array('friendly_reminder'=>1));
           if($userInfo->notification==1){
             $pushMessage='Just a friendly reminder that your order is ready for pick up at '.getBusinessName();
@@ -850,6 +887,7 @@ class OrderController extends Controller
     public function checkSpotExist($oid){
       $returnData['order_locate']='';
       $returnData['spot_number']='';
+      $returnData['spot_color']='';
       $returnData['order_paid']='<button class="btn btn-danger">No</button>';
       $returnData['order_confirm']='<button class="btn btn-danger">No</button>';
       $returnData['geofence_count']=getGeofenceCustomers();
@@ -864,6 +902,7 @@ class OrderController extends Controller
             $returnData['order_confirm']='<button class="btn btn-success">Yes</button>';
           }
           $returnData['spot_number']=$orderInfo->spot_number;
+          $returnData['spot_color']=$orderInfo->spot_color;
         }
         $paymentQuery=Payment::where(['order_id'=>$oid]);
         if($paymentQuery->count()>0){

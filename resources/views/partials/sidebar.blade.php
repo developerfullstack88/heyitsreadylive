@@ -7,42 +7,47 @@
             <span>@lang('common.sidebar_dashboard')</span>
           </a>
         </li>
-        @if(auth()->user()->role==COMPANY)
-          <li class="sub-menu">
-            <a href="javascript:void(0);" >
-              <i class="fa fa-map-marker"></i>
-              <span>@lang('common.sidebar_location')</span>
-            </a>
-            <ul class="sub">
-    				  <li><a href="{{route('sites.index')}}" >@lang('common.common_listing')</a></li>
-    				  <li><a href="{{route('sites.create')}}" >@lang('common.common_add')</a></li>
-    			  </ul>
-          </li>
-        @endif
+        <li class="sub-menu">
+          <a href="javascript:void(0);" >
+            <i class="fa fa-map-marker"></i>
+            <span>@lang('common.sidebar_location')</span>
+          </a>
+          <ul class="sub">
+  				  <li><a href="{{route('sites.index')}}" >@lang('common.common_listing')</a></li>
+            @if(auth()->user()->role==COMPANY)
+  				     <li><a href="{{route('sites.create')}}" >@lang('common.common_add')</a></li>
+            @endif
+  			  </ul>
+        </li>
         @if(auth()->user()->role!=SUPERVISOR)
-          <li class="sub-menu d-none">
+          <li class="sub-menu">
             <a href="javascript:void(0);" >
               <i class="fa fa-map-marker"></i>
               <span>Staff</span>
             </a>
             <ul class="sub">
     				  <li><a href="{{route('staffs.index')}}" >@lang('common.common_listing')</a></li>
-    				  <li><a href="{{route('staffs.create')}}" >@lang('common.common_add')</a></li>
+              @if(auth()->user()->role==COMPANY)
+    				     <li><a href="{{route('staffs.create')}}" >@lang('common.common_add')</a></li>
+              @endif
     			  </ul>
           </li>
         @endif
-        <li>
-          <a class="" href="{{route('QrOrder')}}">
-            <i class="fa fa-qrcode"></i>
-            <span>@lang('common.sidebar_order_qr')</span>
-          </a>
-        </li>
-        <li>
-          <a class="" href="{{route('itemQr',[0])}}">
-            <i class="fa fa-qrcode"></i>
-            <span>@lang('common.sidebar_order_menu_qr')</span>
-          </a>
-        </li>
+
+        @if(getDefaultLocationLoggedUser())
+          <li>
+            <a class="" href="{{route('QrOrder')}}">
+              <i class="fa fa-qrcode"></i>
+              <span>@lang('common.sidebar_order_qr')</span>
+            </a>
+          </li>
+          <li>
+            <a class="" href="{{route('itemQr',[0])}}">
+              <i class="fa fa-qrcode"></i>
+              <span>@lang('common.sidebar_order_menu_qr')</span>
+            </a>
+          </li>
+        @endif
         <!--<li class="sub-menu">
           <a href="javascript:void(0);" >
             <i class="fa fa-coffee"></i>
@@ -61,8 +66,12 @@
             </a>
             <ul class="sub">
     				  <li><a href="{{route('reports.index')}}" >@lang('common.sidebar_reports')</a></li>
-              <li><a href="{{route('reports.payouts')}}" >Payouts</a></li>
-    				  <li><a href="{{route('reports.payments')}}" >Payments</a></li>
+              <li>
+                <a href="{{route('reports.payouts')}}" >@lang('common.sidebar_payouts_label')</a>
+              </li>
+    				  <li>
+                <a href="{{route('reports.payments')}}" >@lang('common.sidebar_payments_label')</a>
+              </li>
     			  </ul>
           </li>
         @endif

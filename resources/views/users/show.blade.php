@@ -46,7 +46,8 @@
                     @lang('profile.user_profile_label')
                   </div>
                   <div class="col-lg-6">
-                    <a href="{{route('users.edit',$userInfo->id)}}" id="show-profile-edit-profile-link">
+                    <a href="{{route('users.edit',$userInfo->id)}}" id="show-profile-edit-profile-link"
+                      class="btn btn-default btn-sm">
                       @lang('profile.edit_profile_label')
                     </a>
                   </div>
@@ -79,10 +80,35 @@
                           <p><span>@lang('profile.country_label')</span> : <span class="content-value">{{$userInfo->country}}</span></p>
                       </div>
                       <div class="bio-row">
+                          <p><span>State</span> : <span class="content-value">{{$userInfo->state}}</span></p>
+                      </div>
+                      <div class="bio-row">
+                          <p><span>Street</span> : <span class="content-value">{{$userInfo->street_address}}</span></p>
+                      </div>
+                      <div class="bio-row">
+                          <p><span>Line2</span> : <span class="content-value">{{$userInfo->line2_address}}</span></p>
+                      </div>
+                      <div class="bio-row">
+                          <p><span>State</span> : <span class="content-value">{{$userInfo->state}}</span></p>
+                      </div>
+                      <div class="bio-row">
+                          <p><span>City</span> : <span class="content-value">{{$userInfo->city}}</span></p>
+                      </div>
+                      <div class="bio-row">
+                          <p><span>Zipcode</span> : <span class="content-value">{{$userInfo->zip_code}}</span></p>
+                      </div>
+                      <div class="bio-row">
                         <p><span>@lang('profile.timezone_label')</span> : <span class="content-value">{{$userInfo->timezone}}</span></p>
                       </div>
                       <div class="bio-row">
-                        <p><span>@lang('profile.role_label')</span> : <span class="content-value">Admin</span></p>
+                        <p><span>@lang('profile.role_label')</span> :
+                          <span class="content-value">
+                            @if(auth()->user()->role=='company')
+                              {{'Admin'}}
+                            @else
+                              {{auth()->user()->role}}
+                            @endif
+                          </span></p>
                       </div>
                   </div>
               </div>

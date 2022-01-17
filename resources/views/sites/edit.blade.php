@@ -38,13 +38,26 @@
 						{{Form::file('cover_image',[])}}
 					</div>
 					<div>
-            {{Form::label('category', 'Category')}}
+            {{Form::label('category', trans('site.site_category'))}}
 						<i class="fas fa-question-circle"
 						data-toggle="tooltip" data-placement="right" title="Add content here." data-container="body"></i>
 						<select class="form-control custom-select mb-3" name="category" required="true">
 							<option value="">Select Category</option>
 								@foreach(categories_options() as $category)
 									<option value="{{$category}}" {{ old('category') == $category || $site->category == $category? 'selected' : '' }}>{{$category}}</option>
+								@endforeach
+              </select>
+          </div>
+					<div>
+            {{Form::label('manager_id', trans('site.site_manager_label'))}}
+						<i class="fas fa-question-circle"
+						data-toggle="tooltip" data-placement="right" title="Add content here." data-container="body"></i>
+						<select class="form-control custom-select mb-3" name="manager_id">
+							<option value="">Select Manager</option>
+								@foreach(all_company_managers() as $manager)
+									<option value="{{$manager->id}}" {{ old('manager_id') == $manager->id || $site->manager_id ? 'selected' : '' }}>
+										{{$manager->name}}
+									</option>
 								@endforeach
               </select>
           </div>
@@ -59,7 +72,7 @@
 						<i class="fas fa-question-circle"
 						data-toggle="tooltip" data-placement="right" title="Add content here." data-container="body"></i>
             {{Form::text('address',$site->address,
-              ['class'=>'form-control','placeholder'=>trans('site.placeholder_location'),'onblur'=>'getaddress(event);']
+              ['class'=>'form-control','placeholder'=>trans('site.placeholder_location')]
             )}}
           </div>
           <span style="display:none;">
@@ -134,7 +147,7 @@
 			alert('Radius is required field');
 			return false;
 		}
-		if(address && radius){
+		/*if(address && radius){
 			geocoder.geocode( { 'address': address}, function(results, status) {
 				if (status == google.maps.GeocoderStatus.OK) {
 					var lat = results[0].geometry.location.lat();
@@ -143,7 +156,7 @@
 				}
 
 			});
-		}
+		}*/
       //generateMap(address)
   }
 	google.maps.event.addDomListener(window, 'load', autocompleteLocation);

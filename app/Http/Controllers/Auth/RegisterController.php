@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Company;
+use App\State;
+use App\City;
+use App\Country;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -96,8 +99,7 @@ class RegisterController extends Controller
       This will add subscription for customer
       with trial peroid
     */
-    private function createSubscription($customerId,$uid){
-      $planId=env('STRIPE_PLAN_ID');
+    private function createSubscription($customerId,$uid,$planId){
       if($customerId){
         $subscriptionData=array(
           'customer' => $customerId,
@@ -145,6 +147,10 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
       extract($data);
+      //$state=State::find($state)->name;
+      ///$city=City::find($city)->name;
+      $countryCode=Country::where('countries_name',$country)->first()->country_code;
+      $planId=getPlanId($countryCode);
       $stripeCustomerId=$this->CreateStripeCustomerCard($data);
       $company=Company::create([
         'company_name'=>$company_name,
@@ -169,11 +175,16 @@ class RegisterController extends Controller
             'email' => $email,
             //'password' => bcrypt($password),
             'stripe_customer_id'=>$stripeCustomerId,
-            'timezone'=>$timezone
+            'street_address'=>$street_address,
+            'line2_address'=>$line2_address,
+            'city'=>$city,
+            'state'=>$state,
+            'zip_code'=>$zip_code,
+            'timezone'=>$timezone,
             //'need_billing'=>0
         ]);
         if($user->id && $stripeCustomerId){
-          $this->createSubscription($stripeCustomerId,$user->id);
+          $this->createSubscription($stripeCustomerId,$user->id,$planId);
           /*if($data['need_billing']==1){
 
           }*/

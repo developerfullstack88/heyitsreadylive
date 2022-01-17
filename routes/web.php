@@ -54,6 +54,9 @@ Route::get('admin-login', 'Admin\SuperController@login')->name('super-admin-logi
 Route::post('admin-login', 'Admin\SuperController@login')->name('super-admin-login-post');
 /*Super admin*/
 
+Route::post('fetch-states', 'DropdownController@fetchState')->name('fetchState');
+Route::post('fetch-cities', 'DropdownController@fetchCity')->name('fetchCity');
+
 /*AFTER LOGIN ROUTES*/
 Route::group(['middleware' => ['web','auth']], function () {
   Route::get('/home', 'HomeController@index')->name('home');
@@ -86,6 +89,7 @@ Route::group(['middleware' => ['web','auth']], function () {
   Route::resource('company','CompanyController');
 
   Route::get('sites/delete/{sites}', 'SiteController@destroy')->name('sites.delete');
+  Route::get('sites/set-default/{sites}', 'SiteController@setDefault')->name('sites.set-default');
   Route::resource('sites', 'SiteController');
 
   Route::get('reports', 'ReportController@index')->name('reports.index');

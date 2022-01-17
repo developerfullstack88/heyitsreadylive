@@ -35,17 +35,7 @@
               </span>
             @enderror
           </div>
-          <div>
-            {{Form::label('country', 'Country')}}
-						<select class="form-control custom-select mb-3" name="country" required="true">
-							<option value="">Select Country</option>
-								@foreach(all_countries() as $country)
-									<option value="{{$country}}" {{ old('country') == $country ? 'selected' : '' }}>{{$country}}</option>
-								@endforeach
-              </select>
-          </div>
-
-          <label for="company_name">{{ __('Company Name') }}</label>
+					<label for="company_name">{{ __('Company Name') }}</label>
           <div>
             <input id="company_name" type="text" class="form-control @error('country') is-invalid @enderror"
             name="company_name" required value="{{ old('company_name') }}"  autocomplete="company_name"
@@ -56,7 +46,97 @@
               </span>
             @enderror
           </div>
-          <label for="company_website">{{ __('Company Website') }}</label>
+					<p class="mb-0">{{ __('Billing Address') }}</p>
+					<label for="address">{{ __('House #') }}</label>
+          <div>
+            <input type="text" class="form-control @error('address') is-invalid @enderror"
+            name="address" required value="{{ old('address') }}"  autocomplete="false"
+            autofocus>
+            @error('address')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+            @enderror
+          </div>
+					<label for="street_address">{{ __('Street') }}</label>
+          <div>
+            <input type="text" class="form-control @error('street_address') is-invalid @enderror"
+            name="street_address" required value="{{ old('street_address') }}"  autocomplete="false"
+            autofocus>
+            @error('street_address')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+            @enderror
+          </div>
+					<label for="line2_address">{{ __('Line2') }}</label>
+          <div>
+            <input type="text" class="form-control @error('line2_address') is-invalid @enderror"
+            name="line2_address" value="{{ old('line2_address') }}"  autocomplete="false"
+            autofocus>
+            @error('street_address')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+            @enderror
+          </div>
+					<div>
+            {{Form::label('city', 'City')}}
+						<input type="text" class="form-control @error('city') is-invalid @enderror"
+            name="city" required value="{{ old('city') }}"  autocomplete="false"
+            autofocus>
+            @error('city')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+            @enderror
+          </div>
+					<div>
+            {{Form::label('state', 'State')}}
+						<input type="text" class="form-control @error('state') is-invalid @enderror"
+            name="state" required value="{{ old('state') }}"  autocomplete="false"
+            autofocus>
+            @error('state')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+            @enderror
+          </div>
+					<div>
+            {{Form::label('country', 'Country')}}
+						<select class="form-control custom-select mb-3" name="country" required="true"
+						id="register-select-country">
+							<option value="">Select Country</option>
+								@foreach(all_countries_latest() as $country)
+									<option data-code="{{$country->phonecode}}" data-id="{{$country->id}}" value="{{$country->name}}" {{ old('country') == $country->name ? 'selected' : '' }}>{{$country->name}}</option>
+								@endforeach
+              </select>
+          </div>
+
+					<label for="zip_code">{{ __('Zip/Postal Code') }}</label>
+          <div>
+            <input id="zip_code" type="text" class="form-control @error('zip_code') is-invalid @enderror"
+            name="zip_code" required value="{{ old('zip_code') }}"  autocomplete="zip_code"
+            autofocus>
+            @error('zip_code')
+              <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+              </span>
+            @enderror
+          </div>
+        </div>
+        <div class="col-md-6">
+          <p>Enter your account details below</p>
+          <label for="email">{{ __('E-Mail Address') }}</label>
+          <div>
+            <input id="email" type="email" required class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  autocomplete="email">
+            @error('email')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+          </div>
+					<label for="company_website">{{ __('Company Website') }}</label>
           <div>
             <input id="company_website" type="text" class="form-control @error('company_website') is-invalid @enderror"
             name="company_website" required value="{{ old('company_website') }}"  autocomplete="company_website"
@@ -67,21 +147,12 @@
               </span>
             @enderror
           </div>
-          <label for="address">{{ __('Billing Address') }}</label>
-          <div>
-            <input id="address" type="text" class="form-control @error('address') is-invalid @enderror"
-            name="address" required value="{{ old('address') }}"  autocomplete="false"
-            autofocus>
-            @error('address')
-              <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-            @enderror
-          </div>
           <label for="phone_code">{{ __('Phone Number') }}</label>
           <div class="row">
             <div class="col-md-3">
-								<select class="form-control custom-select mb-3" name="phone_code" required="true" autofocus>
+							<input type="hidden" class="form-control mb-3" id="phone-code-hidden" name="phone_code"/>
+								<select class="form-control custom-select mb-3" id="phone-code-register"
+								required="true" autofocus>
 									<option value="">Select</option>
 										@php
 											$phonCode=getPhoneCode();
@@ -106,18 +177,6 @@
                 </span>
               @enderror
             </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <p>Enter your account details below</p>
-          <label for="email">{{ __('E-Mail Address') }}</label>
-          <div>
-            <input id="email" type="email" required class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  autocomplete="email">
-            @error('email')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
           </div>
 					<div style="display:none">
 						<label for="password">{{ __('Password') }}</label>
@@ -196,7 +255,7 @@
   <script src="{{URL::asset('js/stripe.js')}}"></script>
   <script type="text/javascript">
       //Google map autocomplete location
-      function autocompleteLocation() {
+      /*function autocompleteLocation() {
         var input = document.getElementById('address');
         var autocomplete = new google.maps.places.Autocomplete(input);
         autocomplete.setFields(
@@ -206,7 +265,7 @@
           var place = autocomplete.getPlace();
           if (!place.geometry) { }
         });
-      }
+      }*/
 
       //code autocomplete
       /*var availableTags = [
@@ -219,8 +278,60 @@
 		$(document).on('click','#openTermsModal',function(){
 			$('#openTermsModalPop').modal('show');
 		});
+
+		$(document).on('change','#register-select-country',function(){
+			var code=$(this).find('option:selected').data('code');
+			if(code){ code='+'+code; }
+			$('#phone-code-register').val(code);
+			$('#phone-code-hidden').val(code);
+			$('#phone-code-register').attr('disabled',true);
+		});
+
+		$(document).ready(function(){
+			/*$('#register-select-country').on('change', function () {
+        var idCountry = $(this).find('option:selected').data('id');
+        $("#register-select-state").html('');
+        $.ajax({
+            url: "{{url('fetch-states')}}",
+            type: "POST",
+            data: {
+                country_id: idCountry,
+                _token: '{{csrf_token()}}'
+            },
+            dataType: 'json',
+            success: function (result) {
+                $('#register-select-state').html('<option value="">Select State</option>');
+                $.each(result.states, function (key, value) {
+                    $("#register-select-state").append('<option value="' + value
+                        .id + '">' + value.name + '</option>');
+                });
+                $('#register-select-city').html('<option value="">Select City</option>');
+            }
+        });
+      });
+      $('#register-select-state').on('change', function () {
+        var idState = this.value;
+        $("#register-select-city").html('');
+        $.ajax({
+            url: "{{url('fetch-cities')}}",
+            type: "POST",
+            data: {
+                state_id: idState,
+                _token: '{{csrf_token()}}'
+            },
+            dataType: 'json',
+            success: function (res) {
+                $('#register-select-city').html('<option value="">Select City</option>');
+                $.each(res.cities, function (key, value) {
+                    $("#register-select-city").append('<option value="' + value
+                        .id + '">' + value.name + '</option>');
+                });
+            }
+        });
+      });*/
+		});
   </script>
-  <script
+  <!--<script
       src="//maps.googleapis.com/maps/api/js?key=AIzaSyBOB2S7yoLqno0FIagdBu7X0PpuU5ggsiY&libraries=places&callback=autocompleteLocation">
-  </script>
+  </script>-->
 @endsection

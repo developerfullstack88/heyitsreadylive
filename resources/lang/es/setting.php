@@ -18,5 +18,10 @@ return [
   'card_list_exp_year_label'=>'Año de caducidad',
   'card_list_make_default_label'=>'Hacer por defecto',
   'need_full_soft_label'=>'Necesita software completo',
+  'stripe_connect_p_label'=>'Se han configurado las cuentas de Stripe Connect',
+  'delete_account_label'=>'Borrar cuenta',
+  'just_menu_qr_code_label'=>'solo el código QR del menú',
+  'disable_label'=>'Desactivar',
+  'enable_label'=>'Habilitar',
 ];
 ?>

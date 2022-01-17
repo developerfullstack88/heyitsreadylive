@@ -10,26 +10,26 @@
 				  <!--<h1>New Dashboard BS3 </h1>-->
 					<div class="row p-details">
 						<div class="bio-row bio-row-width100">
-							<p><span class="bold">First Name:</span> <?= ($user->first_name) ?></p>
+							<p><span class="bold">@lang('staff.staff_list_first_name_label'):</span> <?= ($user->first_name) ?></p>
 						</div>
             <div class="bio-row bio-row-width100">
-							<p><span class="bold">Last Name:</span> <?= ($user->last_name) ?></p>
+							<p><span class="bold">@lang('staff.staff_list_last_name_label'):</span> <?= ($user->last_name) ?></p>
 						</div>
             <div class="bio-row bio-row-width100">
-							<p><span class="bold">Email:</span> <?= ($user->email) ?></p>
+							<p><span class="bold">@lang('staff.staff_list_email_label'):</span> <?= ($user->email) ?></p>
 						</div>
             <div class="bio-row bio-row-width100">
-							<p><span class="bold">Phone Number:</span> <?= ($user->phone_number) ?></p>
+							<p><span class="bold">@lang('staff.staff_list_phone_number_label'):</span> <?= ($user->phone_number) ?></p>
 						</div>
             <div class="bio-row bio-row-width100">
-							<p><span class="bold">Country:</span> <?= ($user->country) ?></p>
+							<p><span class="bold">@lang('staff.staff_list_country_label'):</span> <?= ($user->country) ?></p>
 						</div>
             <div class="bio-row bio-row-width100">
-							<p><span class="bold">Timezone:</span> <?= ($user->timezone) ?></p>
+							<p><span class="bold">@lang('staff.staff_list_timezone_label'):</span> <?= ($user->timezone) ?></p>
 						</div>
             @if($user->profile_photo)
               <div class="bio-row bio-row-width100">
-  							<p><span class="bold">Profile Image:</span> <img class="menu-edit-img" src="{{asset($user->profile_photo)}}"/></p>
+  							<p><span class="bold">@lang('staff.staff_list_profile_image_label'):</span> <img class="menu-edit-img" src="{{asset($user->profile_photo)}}"/></p>
   						</div>
             @endif
 					 </div>

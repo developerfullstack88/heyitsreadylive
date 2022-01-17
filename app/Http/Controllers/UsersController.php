@@ -114,6 +114,13 @@ class UsersController extends Controller
         $postedData['new_order']=1;
         $postedData['status']='pending';
         if($orderInserted=Order::create($postedData)) {
+          /*Record usage API*/
+          $subscriptionInfo=getCompanySubscriptionInfo($postedData['company_id']);
+          $subscriptionInfo = \Stripe\Subscription::retrieve($subscriptionInfo->subscription_id);
+          $subscriptionItem=$subscriptionInfo->items->data[0]->id;
+          $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+          $stripe->subscriptionItems->createUsageRecord($subscriptionItem,['quantity' => 1]);
+          /*Record usage API*/
           Session::flash('success', 'Order has been added successfully');
           return redirect()->route('home.trackOrder',['id'=>$orderInserted]);
         }
@@ -247,6 +254,7 @@ class UsersController extends Controller
     /*create order of user*/
     public function orderCreate(Request $request){
       $companyId=$request->get('company_id');
+      $locationId=$request->get('location_id');
       $orderId=getRandomOrderNumber();
       /*fetch phone code*/
       $phoneCode='';
@@ -260,7 +268,7 @@ class UsersController extends Controller
         }
       }
       /*fetch phone code*/
-      return view('users.create',compact('orderId','companyId','phoneCode'));
+      return view('users.create',compact('orderId','companyId','phoneCode','locationId'));
     }
 
     /*

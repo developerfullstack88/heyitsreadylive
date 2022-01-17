@@ -31,41 +31,46 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request){
       $type=$request->get('type');
+      $defaultSiteModal=$request->session()->get('default-site-modal');
+      $request->session()->put('default-site-modal',0);
 
       if(Auth::user()->role=='super admin' || Auth::user()->role=='admin'){
         return redirect()->route('admin.dashboard');
       }
       if($type=='active'){
         $OrderWithoutComplete=Order::with(['user'])
-        ->where(['company_id'=>Auth::user()->company_id,'new_order'=>0,'deleted'=>0,'cancel'=>0,['status','!=','complete']])
+        ->where(['company_id'=>Auth::user()->company_id,'new_order'=>0,'deleted'=>0,'cancel'=>0,['status','!=','complete'],
+        'location_id'=>getDefaultLocationLoggedUser()])
         ->wheredate('eta',currentLocalDate())
         ->orderBy('created_at','desc')->get();
       }else if($type=='future'){
         $OrderWithoutComplete=Order::with(['user'])
-        ->where(['company_id'=>Auth::user()->company_id,'new_order'=>0,'deleted'=>0,'cancel'=>0,['status','!=','complete']])
+        ->where(['company_id'=>Auth::user()->company_id,'new_order'=>0,'deleted'=>0,'cancel'=>0,['status','!=','complete'],
+        'location_id'=>getDefaultLocationLoggedUser()])
         ->wheredate('eta','>',currentLocalDate())
         ->orderBy('created_at','desc')->get();
       }else{
         $OrderWithoutComplete=Order::with(['user'])
-        ->where(['company_id'=>Auth::user()->company_id,'new_order'=>0,'deleted'=>0,'cancel'=>0,['status','!=','complete']])
+        ->where(['company_id'=>Auth::user()->company_id,'new_order'=>0,'deleted'=>0,'cancel'=>0,['status','!=','complete'],
+        'location_id'=>getDefaultLocationLoggedUser()])
         ->orderBy('created_at','desc')->get();
       }
 
       if($type=='completed' || $type=='all'){
         $OrdersComplete=Order::with(['user'])
-        ->where(['company_id'=>Auth::user()->company_id,'new_order'=>0,'deleted'=>0,'cancel'=>0,'status'=>'complete'])
+        ->where(['company_id'=>Auth::user()->company_id,'new_order'=>0,'deleted'=>0,'cancel'=>0,'status'=>'complete',
+        'location_id'=>getDefaultLocationLoggedUser()])
         ->orderBy('created_at','desc')->get();
         if($type=='all')
           $orders=$OrderWithoutComplete->merge($OrdersComplete);
         else
           $orders=$OrdersComplete;
-        return view('home',compact('orders','OrdersComplete'));
+        return view('home',compact('orders','OrdersComplete','defaultSiteModal'));
       }else{
         $orders=$OrderWithoutComplete;
-        return view('home',compact('orders'));
+        return view('home',compact('orders','defaultSiteModal'));
       }
 
     }

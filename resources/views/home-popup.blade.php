@@ -92,6 +92,14 @@
                   </span>
                 </p>
               </div>
+              <div class="bio-row" style="width:100%">
+                <p>
+                    @lang('site.table_list_location'):
+                  <span class="bold text-dark">
+                    {{getDefaultSiteName()}}
+                  </span>
+                </p>
+              </div>
               @if($order->has('payment') && $order->payment)
               <div class="bio-row d-none" style="width:100%">
                 <p>

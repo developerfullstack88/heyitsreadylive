@@ -49,8 +49,10 @@ return [
   'order_detail_pop_extras'=>'Extras',
   'order_detail_pop_extras_name'=>'Name',
   'order_detail_pop_extras_amount'=>'Amount',
-
-
-
+  'all_filter_label'=>'All',
+  'active_filter_label'=>'Active',
+  'completed_filter_label'=>'Completed',
+  'future_filter_label'=>'Future',
+  'quick_actions_filter_label'=>'Quick Actions',
 ];
 ?>

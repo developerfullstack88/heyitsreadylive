@@ -22,21 +22,28 @@ class OrderController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(){
+      \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
     }
 
     /*This method will add order information of user*/
     public function add(Request $request){
       if($request->all()){
         $postedData = $request->all();
-        $postedData['status']='pending';
         $postedData['new_order']=1;
         $postedData['confirm']=1;
         $postedData['status']='confirm';
         if(auth()->user()->id!=$postedData['user_id']){
           return response()->json(['code'=>400,'status'=>false,'message'=>'Unauthorized user id']);
         }else if($orderInfo=Order::create($postedData)) {
+          /*Record usage API*/
+          $subscriptionInfo=getCompanySubscriptionInfo($postedData['company_id']);
+          $subscriptionInfo = \Stripe\Subscription::retrieve($subscriptionInfo->subscription_id);
+          $subscriptionItem=$subscriptionInfo->items->data[0]->id;
+          $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+          $stripe->subscriptionItems->createUsageRecord($subscriptionItem,['quantity' => 1]);
+          /*Record usage API*/
+
           $webPushData['body']='Order Confirmed';
           sendWebPushNotification($orderInfo,$webPushData,array('type'=>'order_confirmed'));
           return response()->json(['code'=>200,'status'=>true,'message' => 'Order added successfully']);
@@ -195,8 +202,7 @@ class OrderController extends Controller
     /*This method will check user is locate in site or not*/
     private function checkUserIsLocate($lat,$lng,$site,$oid){
       if($lat && $lng && $site){
-        if(isset($site[0])) {
-          $siteId=$site[0]->id;
+          $siteId=$site->id;
           $distance=75;
           /*$rows=\DB::select("SELECT id FROM sites WHERE ST_Within(ST_GeomFromText('POINT($lng $lat)'),polygon) AND id=".$siteId);*/
           $rows = \DB::select("SELECT id,name,address,cover_image,cover_image_thumbnail,lat,lng,company_id,(3959 * acos(cos(radians('".$lat."')) * cos(radians(lat)) * cos( radians(lng) - radians('".$lng."')) + sin(radians('".$lat."')) *
@@ -208,9 +214,8 @@ class OrderController extends Controller
           }else{
             Order::where(['id'=>$oid])->update(['locate'=>0]);
           }
-        }else{
-          Order::where(['id'=>$oid])->update(['locate'=>0]);
-        }
+      }else{
+        Order::where(['id'=>$oid])->update(['locate'=>0]);
       }
     }
 
@@ -221,10 +226,10 @@ class OrderController extends Controller
         if(auth()->user()->id!=$postedData['user_id']){
           return response()->json(['code'=>400,'status'=>false,'message'=>'Unauthorized user id']);
         }else{
-          $orderInfo=Order::with(['company.site'])->where([['user_id',$postedData['user_id']],['status','!=','complete'],
+          $orderInfo=Order::with(['company.site','location'])->where([['user_id',$postedData['user_id']],['status','!=','complete'],
         ['cancel',0],['eta','!=',null],['confirm','=',1],['deleted',0]])
-          //->whereDate('created_at', '>=', Carbon::now())
-          ->select('id','order_number','spot_number','user_id','company_id','eta','amount','status','confirm')
+          ->select('id','order_number','spot_number','user_id','company_id','eta','amount',
+          'status','confirm')
           ->orderBy('eta','asc');
           if($orderInfo->count()>0){
             $orderArr=array();
@@ -265,7 +270,7 @@ class OrderController extends Controller
                 $data['eta_diff']='';
               }
 
-              $companyInfo=getBusinessInfo($order->company_id);
+              /*$companyInfo=getBusinessInfo($order->company_id);
               $data['business_name']=$companyInfo->company_name;
               $data['business_address']=$companyInfo->address;
               $latLngInfo=getLatLng($companyInfo->address);
@@ -273,7 +278,12 @@ class OrderController extends Controller
                 list($lat,$lng)=explode(",",$latLngInfo);
                 $data['business_lat']=$lat;
                 $data['business_lng']=$lng;
-              }
+              }*/
+
+              $data['business_name']=$order->location->name;
+              $data['business_address']=$order->location->address;
+              $data['business_lat']=$order->location->lat;
+              $data['business_lng']=$order->location->lng;
               /*commented for second version
               $cartDetail=$this->cartDetail($postedData,$order->id);
               $data['cart_detail']=$cartDetail;*/
@@ -313,21 +323,21 @@ class OrderController extends Controller
           return response()->json(['code'=>400,'status'=>false,'message'=>'Unauthorized user id']);
         }else{
           if($type==0){
-            $orderInfo=Order::with(['company'])->where(['user_id'=>$postedData['user_id']])
+            $orderInfo=Order::with(['company','location'])->where(['user_id'=>$postedData['user_id']])
             ->select('id','order_number','user_id','company_id','eta','amount','status','cancel','confirm',
-            'actual_order_time','spot_number')
+            'actual_order_time','spot_number','spot_color','location_id')
             ->where(['deleted'=>0])
             ->orderBy('created_at','desc');
           }else if($type==1){
-            $orderInfo=Order::with(['company'])->where(['user_id'=>$postedData['user_id']])
+            $orderInfo=Order::with(['company','location'])->where(['user_id'=>$postedData['user_id']])
             ->select('id','order_number','user_id','company_id','eta','amount','status','cancel','confirm',
-            'actual_order_time','spot_number')
+            'actual_order_time','spot_number','spot_color','location_id')
             ->where(['deleted'=>0,'status'=>'complete','cancel'=>0])
             ->orderBy('created_at','desc');
           }else{
-            $orderInfo=Order::with(['company'])->where(['user_id'=>$postedData['user_id']])
+            $orderInfo=Order::with(['company','location'])->where(['user_id'=>$postedData['user_id']])
             ->select('id','order_number','user_id','company_id','eta','amount','status','cancel','confirm',
-            'actual_order_time','spot_number')
+            'actual_order_time','spot_number','spot_color','location_id')
             ->where(['deleted'=>0,'cancel'=>1])
             ->orderBy('created_at','desc');
           }
@@ -342,6 +352,7 @@ class OrderController extends Controller
               $data['payable_tax']=0;
               $data['order_number']=$order->order_number;
               $data['spot_number']=$order->spot_number;
+              $data['spot_color']=$order->spot_color;
               $data['amount']=number_format($order->amount,2);
               $data['user_id']=$order->user_id;
               $data['eta']=$order->eta;
@@ -389,14 +400,14 @@ class OrderController extends Controller
               }
               $data['status']=ucfirst($order->status);
               $companyInfo=getBusinessInfo($order->company_id);
-              $data['business_name']=$companyInfo->company_name;
-              $data['business_address']=$companyInfo->address;
-              $latLngInfo=getLatLng($companyInfo->address);
-              if($latLngInfo){
-                list($lat,$lng)=explode(",",$latLngInfo);
-                $data['business_lat']=$lat;
-                $data['business_lng']=$lng;
-              }
+              $data['business_name']=$order->location->name;
+              $data['business_address']=$order->location->address;
+              //$latLngInfo=getLatLng($companyInfo->address);
+              //if($latLngInfo){
+                //list($lat,$lng)=explode(",",$latLngInfo);
+                $data['business_lat']=$order->location->lat;
+                $data['business_lng']=$order->location->lng;
+              //}
               /*Commented for second version
               $cartDetail=$this->cartDetail($postedData,$order->id);
               $data['cart_detail']=$cartDetail;*/
@@ -451,7 +462,7 @@ class OrderController extends Controller
         }else {
           $orderInfo=Order::where(['order_number'=>$postedData['order_number'],'cancel'=>0])->get();
           if($orderInfo->count()>0){
-            $userInfo=getUserInfo($postedData['user_id']);
+            $userInfo=getNormalUserInfo($postedData['user_id']);
             $orderInfo=$orderInfo->first();
             if($orderInfo->eta){
               $orderInfo->eta=convertToLocal($orderInfo->eta,1);
@@ -524,16 +535,16 @@ class OrderController extends Controller
         if(auth()->user()->id!=$postedData['user_id']){
           return response()->json(['code'=>400,'status'=>false,'message'=>'Unauthorized user id']);
         }else{
-          $orderInfo=Order::with(['company.site'])->where([['user_id',$postedData['user_id']],['status','!=','complete'],
+          $orderInfo=Order::with(['location'])->where([['user_id',$postedData['user_id']],['status','!=','complete'],
         ['cancel',0],['eta','!=',null],['confirm','=',1],['deleted',0]])
-          ->select('id','user_id','company_id','locate')->orderBy('eta','asc');
+          ->select('id','user_id','company_id','locate','location_id')->orderBy('eta','asc');
           if($orderInfo->count()>0){
             $orderArr=array();
             foreach($orderInfo->get() as $order){
               /*geofence section*/
               $lat=$postedData['lat'];
               $lng=$postedData['lng'];
-              $this->checkUserIsLocate($lat,$lng,$order->company->site,$order->id);
+              $this->checkUserIsLocate($lat,$lng,$order->location,$order->id);
               /*geofence section*/
               $orderArr[]=Order::find($order->id,['id','user_id','company_id','locate']);
             }
@@ -545,6 +556,26 @@ class OrderController extends Controller
         }
       }else{
         return response()->json(['code'=>400,'status'=>false,'message'=>'Please enter required fields']);
+      }
+    }
+
+    /*add spot color*/
+    public function addSpotColor(Request $request,$oid){
+      $postedData=$request->all();
+      if($oid && $postedData){
+        $orderInfo=Order::find($oid);
+          if($orderInfo){
+            $orderInfo->spot_color=$postedData['spot_color'];
+            if($orderInfo->save()){
+              return response()->json(['code'=>200,'message'=>'Spot color has been set successfully']);
+            }else{
+              return response()->json(['code'=>200,'message'=>'There is some problem in settings spot color']);
+            }
+          }else{
+            return response()->json(['code'=>400,'message'=>'Order info not found in DB']);
+          }
+      }else{
+        return response()->json(['code'=>400,'status'=>false,'message'=>'Required field order id is missing']);
       }
     }
 }

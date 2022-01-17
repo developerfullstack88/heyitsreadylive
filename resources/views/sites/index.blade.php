@@ -10,7 +10,8 @@
 		                   <thead>
               			       <tr>
               							  <th class="">@lang('site.table_list_name')</th>
-              							  <th class="">@lang('site.table_list_location')</th>
+                              <th class="">@lang('site.table_list_location')</th>
+              							  <th class="">@lang('site.site_manager_label')</th>
               							  <th class="">@lang('common.table_list_actions')</th>
               						 </tr>
 		                   </thead>
@@ -19,7 +20,12 @@
                           @foreach($sites as $site)
   		                       <tr>
         							          <td>{{$site->name}}</td>
-        								        <td>{{$site->address}}</td>
+                                <td>{{$site->address}}</td>
+        								        <td>
+                                  @if($site->manager_id)
+                                    {{$site->manager->name}}
+                                  @endif
+                                </td>
                                 <td>
               									  <a href="{{route('sites.show',[$site->id])}}"
                                     class="btn btn-success btn-sm">
@@ -29,11 +35,20 @@
                                     class="btn btn-primary btn-sm">
                                     <i class="fas fa-edit"></i>
                                   </a>
-                                  <a href="{{route('sites.delete',[$site->id])}}"
-                                    class="btn btn-danger btn-sm"
-                                    onclick="return Confirm_Delete({{$site->id}});">
-                                    <i class="far fa-trash-alt"></i>
-                                  </a>
+                                  @if(auth()->user()->role==COMPANY)
+                                    <a href="{{route('sites.delete',[$site->id])}}"
+                                      class="btn btn-danger btn-sm"
+                                      onclick="return Confirm_Delete({{$site->id}});">
+                                      <i class="far fa-trash-alt"></i>
+                                    </a>
+                                  @endif
+
+                                  @if(getDefaultLocationLoggedUser()!=$site->id)
+                                    <a href="{{route('sites.set-default',[$site->id])}}"
+                                      class="btn btn-info btn-sm">
+                                      @lang('site.site_set_default_label')
+                                    </a>
+                                  @endif
                                 </td>
   		                       </tr>
                           @endforeach

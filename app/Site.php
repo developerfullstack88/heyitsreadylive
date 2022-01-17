@@ -16,4 +16,12 @@ class Site extends Model
   public function company(){
     return $this->belongsTo(Company::class);
   }
+
+  public function manager(){
+    return $this->belongsTo(User::class,'manager_id');
+  }
+
+  public function supervisor(){
+    return $this->belongsTo(User::class,'supervisor_id');
+  }
 }

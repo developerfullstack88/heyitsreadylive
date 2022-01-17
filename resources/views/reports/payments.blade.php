@@ -1,33 +1,33 @@
 @extends('layouts.default')
 @section('content')
 <section class="card" id="payoutsSection">
-    <header class="card-header font-title">Payouts Listing</header>
+    <header class="card-header font-title">@lang('payouts.list_heading_payments')</header>
     <div class="card-body">
         <div class="col-md-12">
           <div id="baseDateControl">
             <div class="dateControlBlock">
-                <label>Start Date </label>
+                <label>@lang('payouts.filter_start_date') </label>
                 <i class="fas fa-question-circle"
                 data-toggle="tooltip" data-placement="top" title="Add content here." data-container="body"></i>
                 <input type="text" name="dateStart" id="dateStart" class="datepicker" value="" size="8" />
-                <label>End Date </label>
+                <label>@lang('payouts.filter_end_date') </label>
                 <i class="fas fa-question-circle"
                 data-toggle="tooltip" data-placement="top" title="Add content here." data-container="body"></i>
                 <input type="text" name="dateEnd" id="dateEnd" class="datepicker" value="" size="8"/>
-                <button class="btn btn-default" id="resetPayouts">Reset</button>
-                <button class="btn btn-secondary" id="filterPayouts">Filter</button>
+                <button class="btn btn-default" id="resetPayouts">@lang('payouts.filter_reset_btn')</button>
+                <button class="btn btn-secondary" id="filterPayouts">@lang('payouts.filter_label')</button>
             </div>
           </div>
           <div class="table-responsive mt-4">
             <table class="table table-striped table-advance table-hover" id="payoutsTable">
                 <thead>
                     <tr>
-                      <th>Id</th>
-                      <th>Amount</th>
-                      <th>Currency</th>
-                      <th>Payment Type</th>
-                      <th>Card Number</th>
-                      <th>Created</th>
+                      <th>@lang('payouts.table_id_label')</th>
+                      <th>@lang('payouts.table_amount_label')</th>
+                      <th>@lang('payouts.table_currency_label')</th>
+                      <th>@lang('payouts.table_payment_type_label')</th>
+                      <th>@lang('payouts.table_card_number_label')</th>
+                      <th>@lang('payouts.table_created_label')</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,7 +48,7 @@
                           {{$payout->card_number}}
                           @endif
                         </td>
-                        <td>{{date('d/m/Y',strtotime($payout->created_at))}}</td>
+                        <td>{{date('Y-m-d',strtotime($payout->created_at))}}</td>
                       </tr>
 
                     @endforeach
@@ -56,12 +56,12 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                      <th>Transaction</th>
-                      <th>Amount</th>
-                      <th>Currency</th>
-                      <th>Payment Type</th>
-                      <th>Card Number</th>
-                      <th>Created</th>
+                      <th>@lang('payouts.table_id_label')</th>
+                      <th>@lang('payouts.table_amount_label')</th>
+                      <th>@lang('payouts.table_currency_label')</th>
+                      <th>@lang('payouts.table_payment_type_label')</th>
+                      <th>@lang('payouts.table_card_number_label')</th>
+                      <th>@lang('payouts.table_created_label')</th>
                     </tr>
                 </tfoot>
             </table>
@@ -88,27 +88,27 @@
   // Custom filtering function which will search data in column four between two values
   // The plugin function for adding a new filtering routine
     $.fn.dataTableExt.afnFiltering.push(
-        function(oSettings, aData, iDataIndex){
-            var dateStart = parseDateValue($("#dateStart").val());
-            var dateEnd = parseDateValue($("#dateEnd").val());
-            if($("#dateStart").val() || $("#dateEnd").val()){
-              // aData represents the table structure as an array of columns, so the script access the date value
-              // in the first column of the table via aData[0]
-              var evalDate= parseDateValue(aData[5]);
-
-              if (evalDate >= dateStart && evalDate <= dateEnd) {
-                console.log('inside');
-                  return true;
-              }else {
-                console.log(evalDate);
-                console.log(dateStart);
-                console.log(dateEnd);
-                  return false;
-              }
-            }else{
+      function(oSettings, aData, iDataIndex){
+          //var dateStart = parseDateValue($("#dateStart").val());
+          //var dateEnd = parseDateValue($("#dateEnd").val());
+          if($("#dateStart").val() || $("#dateEnd").val()){
+            var dateStart = new Date($("#dateStart").val());
+            var dateEnd = new Date($("#dateEnd").val());
+            var evalDate= new Date(aData[5]);
+            if (evalDate >= dateStart && evalDate <= dateEnd) {
+                return true;
+            }else if(evalDate >= dateStart){
               return true;
+            }else {
+              console.log(evalDate);
+              console.log(dateStart);
+              console.log(dateEnd);
+                return false;
             }
-        });
+          }else{
+            return true;
+          }
+      });
 
     // Function for converting a mm/dd/yyyy date value into a numeric string for comparison (example 08/12/2010 becomes 20100812
     function parseDateValue(rawDate) {
@@ -119,7 +119,8 @@
   $(document).ready( function () {
     var $dTable= $('#payoutsTable').DataTable({
       "order": [[ 5, "desc" ]],
-      dom: 'Bfrtip',
+      "lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "All"]],
+      dom: 'Blfrtip',
       buttons: [{
         extend: 'pdf',
         title: 'Payments',
@@ -129,7 +130,7 @@
     });
 
     // Implements the jQuery UI Datepicker widget on the date controls
-      $.fn.datepicker.defaults.format = "dd/mm/yyyy";
+      $.fn.datepicker.defaults.format = "yyyy-mm-dd";
         $('.datepicker').datepicker({
           showOn: 'button',
           buttonImage: 'assets/images/calendar.gif',

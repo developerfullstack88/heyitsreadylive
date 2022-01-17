@@ -58,6 +58,7 @@
           </div>
 					{{ Form::hidden('user_id','',['id'=>'userId']) }}
 					{{ Form::hidden('company_id',$companyId,['id'=>'companyId']) }}
+					{{ Form::hidden('location_id',$locationId,['id'=>'locationId']) }}
 			</div>
       <div class="form-group form-check text-center">
           {{Form::submit('Enter',["class"=>"btn btn-lg btn-primary btn-valet-submmit valet-submmit-save"])}}

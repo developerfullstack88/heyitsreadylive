@@ -16,6 +16,10 @@ class Order extends Model
       return $this->belongsTo(Company::class);
     }
 
+    public function location(){
+      return $this->belongsTo(Site::class,'location_id');
+    }
+
     public function payment(){
       return $this->hasOne(Payment::class);
     }
