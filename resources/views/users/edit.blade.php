@@ -69,7 +69,7 @@
                       </span>
                     @enderror
                   </div>
-                  {{Form::label('address', 'House #')}}
+                  {{Form::label('address', 'Street Number')}}
                   <i class="fas fa-question-circle"
       						data-toggle="tooltip" data-placement="right" title="Add content here." data-container="body"></i>
                   <div class="">
@@ -84,7 +84,7 @@
                   <div>
                     {{Form::text('country',$userInfo->country,['class'=>'form-control','autofocus'=>true,'readonly'=>true])}}
                   </div>
-                  {{Form::label('state', 'State')}}
+                  {{Form::label('state', 'State/Province')}}
                   <div>
                     {{Form::text('state',$userInfo->state,['class'=>'form-control','autofocus'=>true,'readonly'=>true])}}
                   </div>

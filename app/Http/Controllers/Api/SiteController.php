@@ -73,11 +73,8 @@ class SiteController extends Controller
           }
           $data=$rows;
           $newOrder=getLatestUserOrder($user_id);
-          /*Count current orders*/
-          $orderInfo=Order::where(['user_id'=>$user_id,'deleted'=>0,['status','<>','complete'],'cancel'=>0]);
-          /*count current orders*/
           return response()->json(['code'=>200,'status'=>true,'data'=>$rows,
-          'new_order'=>$newOrder,'current_order'=>$orderInfo->count()]);
+          'new_order'=>$newOrder,'current_order'=>getCurrentOrderCount($user_id)]);
         }
       }else{
         return response()->json(['code'=>400,'status'=>false,'message'=>'Please enter required fields']);

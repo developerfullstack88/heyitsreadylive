@@ -51,7 +51,7 @@ $(function() {
     function createToken() {
       stripe.createToken(card).then(function(result) {
         if (result.error) {
-            $('.error').removeClass('hide').find('.alert').text(response.error.message);
+            $('.error').removeClass('hide').find('.alert').text(result.error.message);
         } else {
           var token = result.token.id;
           $form.find('input[type=text]').empty();

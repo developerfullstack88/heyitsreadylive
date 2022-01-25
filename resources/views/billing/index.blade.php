@@ -250,7 +250,7 @@
               <div class="tab-pane fade" id="acceptPaymentsTab" role="tabpanel" aria-labelledby="accept-payments-tab">
                 <div class="col-lg-12 generalSettingsForm mt-2">
                   @if(!auth()->user()->connect_account_id)
-                    <a href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_KSB0YGI4UuwrjSYjU2ss6FWnmYdsyVtQ&scope=read_write" class="btn btn-primary">Add connect account</a>
+                    <a href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_KSB0Nsv1rhfQci3QkFxmg3fAGKQR9Bd0&scope=read_write" class="btn btn-primary">Add connect account</a>
                   @else
                   <p><b>@lang('setting.stripe_connect_p_label')</b></p>
                   @endif

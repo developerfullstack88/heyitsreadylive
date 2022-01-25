@@ -47,7 +47,7 @@
             @enderror
           </div>
 					<p class="mb-0">{{ __('Billing Address') }}</p>
-					<label for="address">{{ __('House #') }}</label>
+					<label for="address">{{ __('Street Number') }}</label>
           <div>
             <input type="text" class="form-control @error('address') is-invalid @enderror"
             name="address" required value="{{ old('address') }}"  autocomplete="false"
@@ -92,7 +92,7 @@
             @enderror
           </div>
 					<div>
-            {{Form::label('state', 'State')}}
+            {{Form::label('state', 'State/Province')}}
 						<input type="text" class="form-control @error('state') is-invalid @enderror"
             name="state" required value="{{ old('state') }}"  autocomplete="false"
             autofocus>

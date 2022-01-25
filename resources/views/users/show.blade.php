@@ -80,16 +80,13 @@
                           <p><span>@lang('profile.country_label')</span> : <span class="content-value">{{$userInfo->country}}</span></p>
                       </div>
                       <div class="bio-row">
-                          <p><span>State</span> : <span class="content-value">{{$userInfo->state}}</span></p>
-                      </div>
-                      <div class="bio-row">
                           <p><span>Street</span> : <span class="content-value">{{$userInfo->street_address}}</span></p>
                       </div>
                       <div class="bio-row">
                           <p><span>Line2</span> : <span class="content-value">{{$userInfo->line2_address}}</span></p>
                       </div>
                       <div class="bio-row">
-                          <p><span>State</span> : <span class="content-value">{{$userInfo->state}}</span></p>
+                          <p><span>State/Province</span> : <span class="content-value">{{$userInfo->state}}</span></p>
                       </div>
                       <div class="bio-row">
                           <p><span>City</span> : <span class="content-value">{{$userInfo->city}}</span></p>

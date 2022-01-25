@@ -2255,4 +2255,14 @@ if(! function_exists('getCompanySubscriptionInfo')){
   }
 }
 /*stripe Billing month code end*/
+
+/*get current order count*/
+if(! function_exists('getCurrentOrderCount')){
+  function getCurrentOrderCount($uid){
+    if($uid){
+      return Order::where(['user_id'=>$uid,'deleted'=>0,['status','<>','complete'],'cancel'=>0])->count();
+    }
+  }
+}
+/*get current order count*/
 ?>

@@ -314,7 +314,8 @@ class OrderController extends Controller{
                   'actual_order_time'=>($insertedOrder->actual_order_time)?convertDirectToLocal($insertedOrder->actual_order_time):null,
                   'business_name'=>getBusinessName(),
                   'business_address'=>getBusinessSiteInfo($insertedOrder->location_id)->address,
-                  'type'=>'confirm_push'
+                  'type'=>'confirm_push',
+                  'current_order'=>getCurrentOrderCount($insertedOrder->user_id)
                 );
                 if($insertedOrder->eta){
                   $now = date('Y-m-d');
@@ -447,6 +448,7 @@ class OrderController extends Controller{
             $extraData['type']='cash_payment';
             $pushMessage="Your payment for order number #".$orderInfo->order_number." at ".getBusinessName()." has been completed. Thank you for using Hey it's ready.";
           }else{
+            $extraData['current_order']=getCurrentOrderCount($orderInfo->user_id);
             if($postedData['status']=='complete'){
               $extraData['type']='order_completed';
               $pushMessage="Your order number #".$orderInfo->order_number." at ".getBusinessName()." has been completed. Thank you for using Hey it's ready.";
@@ -549,7 +551,8 @@ class OrderController extends Controller{
               $newDelayedDate=Timezone::convertToLocal($order->eta,'F d,Y');
               $newDelayedTime=Timezone::convertToLocal($order->eta,'h:i a');
               $data = array('title'=>'','body'=>'Your order number #'.$order->order_number.' at '.getBusinessName().' is delayed.Your new EPUT is '.$newDelayedDate.' at '.$newDelayedTime);
-              sendPushNotification($data,$order->user_id,array('type'=>'delayed'));
+              sendPushNotification($data,$order->user_id,array('type'=>'delayed',
+              'current_order'=>getCurrentOrderCount($order->user_id)));
             }else{
               sendPushNotification($data,$order->user_id);
             }
