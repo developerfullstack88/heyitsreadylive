@@ -82,9 +82,9 @@ $(document).ready(function(){
               $('#UploadMenuImage button').attr('disabled',false);
             }
         };*/
-        if ( /\.(jpe?g|png|gif)$/i.test(file.name) === false ) {
+        if ( /\.(jpe?g|png|gif|pdf)$/i.test(file.name) === false ) {
           $('#UploadMenuImage button').attr('disabled',true);
-          alert('please upload only jpg and png files');
+          alert('please upload only jpg,png and pdf files');
           location.reload();
         }else{
           $('#UploadMenuImage button').attr('disabled',false);

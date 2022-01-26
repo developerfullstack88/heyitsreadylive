@@ -16,6 +16,7 @@ use App\Tax;
 use App\Payment;
 use App\CompanyPayment;
 use App\Site;
+use App\QrItem;
 use Carbon\Carbon;
 
   //this will get all company from db
@@ -2265,4 +2266,18 @@ if(! function_exists('getCurrentOrderCount')){
   }
 }
 /*get current order count*/
+
+/*get menu images for company*/
+if(! function_exists('getMenuQrImages')){
+  function getMenuQrImages($cid){
+    $qrItemImages=QrItem::select(['id','image_path'])->where('company_id',$cid)->get();
+    if($qrItemImages->count()>0){
+      foreach ($qrItemImages as $key => $value) {
+        $qrItemImages[$key]->image_path=url('/').'/'.$value->image_path;
+      }
+    }
+    return $qrItemImages;
+  }
+}
+/*get menu images for company*/
 ?>

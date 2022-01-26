@@ -130,6 +130,7 @@ class SiteController extends Controller
               $sites[$key]->cover_image=url('/').'/'.$site->cover_image;
               $sites[$key]->cover_image_thumbnail=url('/').'/'.$site->cover_image_thumbnail;
             }
+            $sites[$key]->menu_qr_images=getMenuQrImages($site->company_id);
           }
           return response()->json(['code'=>200,'status'=>true,'data'=>$sites,
           'total_items'=>$cartCount,'next_page'=>$nextpage,'offset'=>$offset]);
@@ -196,6 +197,7 @@ class SiteController extends Controller
               $sites[$key]->cover_image=url('/').'/'.$site->cover_image;
               $sites[$key]->cover_image_thumbnail=url('/').'/'.$site->cover_image_thumbnail;
             }
+            $sites[$key]->menu_qr_images=getMenuQrImages($site->company_id);
           }
           return response()->json(['code'=>200,'status'=>true,'data'=>$sites]);
         }else{
