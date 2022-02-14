@@ -345,24 +345,28 @@ class HomeController extends Controller
           extract($postedData);
           $userInfo = User::find($id);
           $userInfo->password=bcrypt($password);
+          $userInfo->active=1;
           if($userInfo->save()){
-            /*$userInfo->subject='Welcome Email';
-            Mail::to($userInfo->email)->send(new SignupEmail($userInfo));*/
-            Mail::send('emails.signup',['userData' => $userInfo],function($message) use($userInfo){
-              $message->to($userInfo->email)->subject('Welcome Email');
-              //echo public_path('files/Set_up_guide_for_full_app.pdf');die;
-              $message->attach(public_path('files/Set_up_guide_for_menu_QR_Code_only.pdf'),[
-                'mime' => 'application/pdf',
-              ]);
-              $message->attach(public_path('files/setup_guide.pdf'),[
-                'mime' => 'application/pdf',
-              ]);
-            $address = env("MAIL_FROM_ADDRESS");
-            $name = "Hey It's Ready";
-            $message->from($address, $name);
-            },true);
+            if($userInfo->role!=USER){
+              Mail::send('emails.signup',['userData' => $userInfo],function($message) use($userInfo){
+                $message->to($userInfo->email)->subject('Welcome Email');
+                //echo public_path('files/Set_up_guide_for_full_app.pdf');die;
+                $message->attach(public_path('files/Set_up_guide_for_menu_QR_Code_only.pdf'),[
+                  'mime' => 'application/pdf',
+                ]);
+                $message->attach(public_path('files/setup_guide.pdf'),[
+                  'mime' => 'application/pdf',
+                ]);
+              $address = env("MAIL_FROM_ADDRESS");
+              $name = "Hey It's Ready";
+              $message->from($address, $name);
+              },true);
+            }
+
             Session::flash('success', 'Congratulations!You have successfully activate account.');
-            Auth::loginUsingId($userInfo->id);
+            if($userInfo->role!=USER){
+              Auth::loginUsingId($userInfo->id);
+            }
             return redirect()->route('login');
           }else{
             Session::flash('warning', 'There is some problem in adding password.');

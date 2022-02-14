@@ -14,6 +14,9 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Mail;
 use App\Mail\ForgotPassword;
 use App\Mail\ChangePassword;
+use App\Mail\WelcomeMobile;
+use App\Mail\ActivateMobile;
+
 
 class JWTAuthController extends Controller
 {
@@ -26,6 +29,16 @@ class JWTAuthController extends Controller
     {
         auth()->setDefaultDriver('api');
         //$this->middleware('auth:api', ['except' => ['login', 'register']]);
+    }
+
+    /*send register email*/
+    private function sendRegisterEmail($data){
+      $data->subject='WELCOME TO HEYISREADY';
+      Mail::to($data->email)->send(new WelcomeMobile($data));
+
+      $data->subject='Activate Your account';
+      $data->url=\URL::to('activate-account', array($data->id), true);
+      Mail::to($data->email)->send(new ActivateMobile($data));
     }
 
     /**
@@ -51,7 +64,7 @@ class JWTAuthController extends Controller
             $user=getNormalUserInfo($phoneUser->id);
             $token = auth()->login($user);//get jwt token
             $user->token=$token;
-            return response()->json(['code'=>200,'status'=>true,'message' => 'Regsitered successfully',
+            return response()->json(['code'=>200,'status'=>true,'message' => 'Registered successfully',
             'data' => $user,'token'=>$token]);
           }
         }else if($user!=null && $user->count()>0 && $user->disabled==1){
@@ -63,7 +76,7 @@ class JWTAuthController extends Controller
             $user=getNormalUserInfo($user->id);
             $token = auth()->login($user);//get jwt token
             $user->token=$token;
-            return response()->json(['code'=>200,'status'=>true,'message' => 'Regsitered successfully',
+            return response()->json(['code'=>200,'status'=>true,'message' => 'Registered successfully',
             'data' => $user,'token'=>$token]);
           }
         }
@@ -77,8 +90,13 @@ class JWTAuthController extends Controller
             $request->all()['role']='user';
             $user = User::create(array_merge(
               $request->all(),
-              ['password' => bcrypt($request->password)]
+              ['password' => bcrypt($request->password),'active'=>0]
             ));
+
+            /*send mobile register email*/
+            if($user){ $this->sendRegisterEmail($user); }
+            /*send mobile register email*/
+
             $token = auth()->login($user);//get jwt token
             $user->token=$token;
             $user->email_enable=1;
@@ -86,7 +104,7 @@ class JWTAuthController extends Controller
             if(!updateLoginToken($user->id,$token)) {
               return response()->json(['code'=>400,'status'=>false,'message'=>'Login token is not updated']);
             }
-            return response()->json(['code'=>200,'status'=>true,'message' => 'Regsitered successfully',
+            return response()->json(['code'=>200,'status'=>true,'message' => 'Please check your email for account activation.',
             'data' => $user,'token'=>$token]);
           }
         }
@@ -116,6 +134,9 @@ class JWTAuthController extends Controller
     		if($user==null && $user->count()==0){
     			return response()->json(['code'=>400,'status'=>false,'message'=>'Record not found for this email']);
     		}
+        if($user->active==0){
+          return response()->json(['code'=>400,'status'=>false,'message'=>'Your account is not active,Please active your account for enjoy all our services.']);
+        }
         if($tokenString=$this->createNewToken($token)){
           if($user->login_token && $request->get('login_check')===0){
             return response()->json(['code'=>700,'status'=>false,'message' => 'You already logged in from other device or same device.Do you want to continue?']);
