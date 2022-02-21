@@ -69,7 +69,9 @@
 						<div><?=$appleplay->getHtmlDiv();?></div>
 					</div>
 				</div>
-				<!--<p style="text-align:center;font-size:20px;margin-top:28px;">@lang('qr.thank_you_p')</p>-->
+				<div class="row" id="company-name-div" style="clear:both;">
+					<p style="text-align:center;font-size:20px;"><b>{{getBusinessName()}}</b></p>
+				</div>
 	    </section>
 	  </div>
 	</div>
