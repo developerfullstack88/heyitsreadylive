@@ -56,21 +56,21 @@
     </div>
 </div>
 <div class="row">
-  <div class="col-lg-12">
-    <center>
+  <div class="col-lg-6">
+    @if(currentUser() && currentUser()->delete_complete_order == 1
+    && (isset($OrdersComplete) && $OrdersComplete->count()>0) && Request::get('type')=='completed')
+      <a id="home-delete-complete-btn" class="btn btn-danger btn-lg btn-huge font-title"
+      href="{{route('orders.delete-complete')}}" onclick="return confirm('Do you want to delete complete orders?')">@lang('dashboard.delete_complete_order_btn')</a>
+    @elseif(currentUser() && currentUser()->delete_complete_order == 1 && Request::get('type')=='all')
+    <a id="home-delete-complete-btn" class="btn btn-danger btn-lg btn-huge ml-2 font-title"
+    href="{{route('orders.delete-complete')}}" onclick="return confirm('Do you want to delete complete orders?')">@lang('dashboard.delete_complete_order_btn')</a>
+    @endif
+    {{Form::button('Delete Checked',["id"=>"delete-selected-order","class"=>"btn btn-danger-red btn-lg btn-huge ml-2 font-title"])}}
+  </div>
+  <div class="col-lg-6">
       @if(getDefaultLocationLoggedUser())
         <a id="addNewOrderBtn" class="btn btn-info btn-lg btn-huge font-title" href="{{route('orders.create')}}">@lang('dashboard.add_new_order_btn')</a>
       @endif
-      @if(currentUser() && currentUser()->delete_complete_order == 1
-      && (isset($OrdersComplete) && $OrdersComplete->count()>0) && Request::get('type')=='completed')
-        <a id="home-delete-complete-btn" class="btn btn-info btn-lg btn-huge ml-2 font-title"
-        href="{{route('orders.delete-complete')}}" onclick="return confirm('Do you want to delete complete orders?')">@lang('dashboard.delete_complete_order_btn')</a>
-      @elseif(currentUser() && currentUser()->delete_complete_order == 1)
-      <a id="home-delete-complete-btn" class="btn btn-info btn-lg btn-huge ml-2 font-title" style="display:none;"
-      href="{{route('orders.delete-complete')}}" onclick="return confirm('Do you want to delete complete orders?')">@lang('dashboard.delete_complete_order_btn')</a>
-      @endif
-      {{Form::button('Delete Checked',["id"=>"delete-selected-order","class"=>"btn btn-danger-red btn-lg btn-huge ml-2 font-title"])}}
-    </center>
   </div>
 </div>
 <br/>

@@ -71,6 +71,7 @@
 				</div>
 				<div class="row" id="company-name-div" style="clear:both;">
 					<p style="text-align:center;font-size:20px;"><b>{{getBusinessName()}}</b></p>
+					<p style="text-align:center;font-size:20px;"><b>{{getBusinessInfo(auth()->user()->company_id)->address}}</b></p>
 				</div>
 	    </section>
 	  </div>

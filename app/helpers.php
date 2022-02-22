@@ -2106,7 +2106,10 @@ if(!function_exists('all_company_managers')){
 if(!function_exists('getDefaultLocationLoggedUser')){
   function getDefaultLocationLoggedUser(){
     $userInfo=User::find(auth()->user()->id);
-    return $userInfo->location_id;
+    $siteInfo=Site::find($userInfo->location_id);
+    if($siteInfo){
+      return $userInfo->location_id;
+    }
   }
 }
 

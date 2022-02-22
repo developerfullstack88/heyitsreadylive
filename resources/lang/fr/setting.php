@@ -2,7 +2,7 @@
 return [
   'general_tab'=>'Général',
   'billing_tab'=>'Facturation',
-  'delete_complete_heading'=>'Supprimer la commande complète',
+  'delete_complete_heading'=>'Supprimer les commandes complètes',
   'esiting_card_heading'=>'Détails de la carte existante',
   'empty_option_label'=>'Sélectionnez une option',
   'delete_complete_yes_option'=>'Oui',

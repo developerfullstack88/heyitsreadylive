@@ -23,7 +23,7 @@
                   <div class="row generalSettings font-title">
                     @lang('setting.delete_complete_heading')
                     <i class="fas fa-question-circle ml-1 mt-1"
-        						data-toggle="tooltip" data-placement="right" title="This is used for  button of  delete complete order used to hide and show in dashboard." data-container="body"></i>
+        						data-toggle="tooltip" data-placement="right" title="By selecting “Yes” this will display a button on your dashboard that will allow you to delete completed orders in the dashboard. If you select “No” then all you need to do is refresh the browser to remove “Completed Orders” from the dashboard." data-container="body"></i>
                   </div>
                 </div>
                 <div class="row">
@@ -234,7 +234,7 @@
           						<div class="row existingCardDetail font-title">@lang('setting.delete_account_label')</div>
                       <div class="row">
                         {{ Form::open(['route' => ['userAccountSoftDelete', auth()->user()->id],
-                        'method' => 'get','onsubmit'=>"return confirm('Do you really want to delete your account?');"]) }}
+                        'method' => 'get','onsubmit'=>"return confirm('Your account will be held securely in our data base for 90 days if you wish to re-activate your account and restore all past order history and reports. After 90 days the account will be permanently deleted?');"]) }}
                         <div class="col-md-12 ml-3 mt-3">
                           <div class="d-flex">
                             <div class="form-group ml-4">
@@ -250,7 +250,7 @@
               <div class="tab-pane fade" id="acceptPaymentsTab" role="tabpanel" aria-labelledby="accept-payments-tab">
                 <div class="col-lg-12 generalSettingsForm mt-2">
                   @if(!auth()->user()->connect_account_id)
-                    <a href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_KSB0Nsv1rhfQci3QkFxmg3fAGKQR9Bd0&scope=read_write" class="btn btn-primary">Add connect account</a>
+                    <a href="https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_KSB0YGI4UuwrjSYjU2ss6FWnmYdsyVtQ&scope=read_write" class="btn btn-primary">Add connect account</a>
                   @else
                   <p><b>@lang('setting.stripe_connect_p_label')</b></p>
                   @endif

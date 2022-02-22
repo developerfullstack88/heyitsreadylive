@@ -2,7 +2,7 @@
 return [
   'general_tab'=>'General',
   'billing_tab'=>'Billing',
-  'delete_complete_heading'=>'Delete Complete Order',
+  'delete_complete_heading'=>'Delete Complete Orders',
   'existing_card_heading'=>'Existing Card Details',
   'empty_option_label'=>'Select Option',
   'delete_complete_yes_option'=>'Yes',
