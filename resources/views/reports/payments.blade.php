@@ -1,20 +1,28 @@
 @extends('layouts.default')
 @section('content')
 <section class="card" id="payoutsSection">
-    <header class="card-header font-title">@lang('payouts.list_heading_payments')</header>
+    <header class="card-header font-title">
+      @lang('payouts.list_heading_payments')
+      <i class="fas fa-question-circle"
+      data-toggle="tooltip" data-placement="top" title="This table will show all order payments." data-container="body"></i>
+    </header>
     <div class="card-body">
         <div class="col-md-12">
           <div id="baseDateControl">
             <div class="dateControlBlock">
                 <label>@lang('payouts.filter_start_date') </label>
                 <i class="fas fa-question-circle"
-                data-toggle="tooltip" data-placement="top" title="Add content here." data-container="body"></i>
+                data-toggle="tooltip" data-placement="top" title="You can select start date for filteration here." data-container="body"></i>
                 <input type="text" name="dateStart" id="dateStart" class="datepicker" value="" size="8" />
                 <label>@lang('payouts.filter_end_date') </label>
                 <i class="fas fa-question-circle"
-                data-toggle="tooltip" data-placement="top" title="Add content here." data-container="body"></i>
+                data-toggle="tooltip" data-placement="top" title="You can select end date for filteration here." data-container="body"></i>
                 <input type="text" name="dateEnd" id="dateEnd" class="datepicker" value="" size="8"/>
-                <button class="btn btn-default" id="resetPayouts">@lang('payouts.filter_reset_btn')</button>
+                <button class="btn btn-default" id="resetPayouts">
+                  @lang('payouts.filter_reset_btn')
+                  <i class="fas fa-question-circle"
+                  data-toggle="tooltip" data-placement="top" title="This will reset all filteration form options." data-container="body"></i>
+                </button>
                 <button class="btn btn-secondary" id="filterPayouts">@lang('payouts.filter_label')</button>
             </div>
           </div>

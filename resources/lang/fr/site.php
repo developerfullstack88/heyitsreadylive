@@ -21,5 +21,7 @@ return [
   'site_category'=>'Catégorie',
   'site_manager_label'=>'Directeur',
   'site_set_default_label'=>'Définir par defaut',
+  'select_category_empty_option'=>'Choisir une catégorie',
+  'select_manager_empty_option'=>'Sélectionnez le gestionnaire'
 ];
 ?>

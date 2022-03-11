@@ -3,37 +3,47 @@
 <div class="row">
   <div class="col-lg-12">
       <section class="card">
-	        <header class="card-header font-title">@lang('report.basic_report_heading')</header>
+	        <header class="card-header font-title">
+            @lang('report.basic_report_heading')
+            <i class="fas fa-question-circle"
+            data-toggle="tooltip" data-placement="right" title="This table will show basic information about each order such as Order number,Customer name, Order time, EPUT, Order is paid or not,Total time for order ,Payment is cash or other, Order is delayed or not." data-container="body"></i>
+          </header>
           <div class="card-body">
             <div class="row">
               <div class="col-lg-6">
                 <section class="card">
                   <header class="card-header font-title">
                    @lang('report.filteration_heading')
+                   <i class="fas fa-question-circle"
+                   data-toggle="tooltip" data-placement="right" title="You can do filteration of basic reporting table with date and time." data-container="body"></i>
                   </header>
                   <div class="card-body">
                     {{ Form::open(array('action'=> 'ReportController@store','method'=>'get')) }}
                     <div class="form-group">
                       {{Form::label('date', trans('report.date_label'))}}
                       <i class="fas fa-question-circle"
-          						data-toggle="tooltip" data-placement="right" title="Add content here." data-container="body"></i>
+          						data-toggle="tooltip" data-placement="right" title="You can select one date from datepicker here." data-container="body"></i>
                       {{Form::text('date',(isset($postedData) && $postedData['date'])?$postedData['date']:'',['class'=>'form-control set-eta-date-picker'])}}
                     </div>
                     <div class="form-group">
                       {{Form::label('time_from', trans('report.time_from_label'))}}
                       <i class="fas fa-question-circle"
-          						data-toggle="tooltip" data-placement="right" title="Add content here." data-container="body"></i>
+          						data-toggle="tooltip" data-placement="right" title="You can choose order start time here." data-container="body"></i>
                       {{Form::text('time_from',(isset($postedData) && $postedData['time_from'])?$postedData['time_from']:'',['class'=>'form-control eta-time-picker'])}}
                     </div>
                     <div class="form-group">
                       {{Form::label('time_to', trans('report.time_to_label'))}}
                       <i class="fas fa-question-circle"
-          						data-toggle="tooltip" data-placement="right" title="Add content here." data-container="body"></i>
+          						data-toggle="tooltip" data-placement="right" title="You can choose order end time here." data-container="body"></i>
                       {{Form::text('time_to','',['class'=>'form-control eta-time-picker'])}}
                     </div>
                     <div class="form-group form-check">
                         {{Form::submit(trans('report.filter_btn'),["class"=>"btn btn-lg btn-primary hey-blue"])}}
-                        <a href="{{route('reports.index')}}" class="btn btn-lg btn-default"/>@lang('report.reset_btn')</a>
+                        <a href="{{route('reports.index')}}" class="btn btn-lg btn-default"/>
+                        @lang('report.reset_btn')
+                        <i class="fas fa-question-circle"
+            						data-toggle="tooltip" data-placement="top" title="You can reset all filteration form options here." data-container="body"></i>
+                      </a>
                     </div>
                   </div>
                 </section>

@@ -1,7 +1,7 @@
 <?php
 return [
-  'using_app_heading'=>"If you are using the Hey It's Ready app",
-  'not_using_app_heading'=>"If you are not using the Hey It's Ready App",
+  'using_app_heading'=>"Si está utilizando la aplicación Hey It's Ready",
+  'not_using_app_heading'=>"Si no está utilizando la aplicación Hey It's Ready",
   'step1_li_txt'=>'Paso 1',
   'step2_li_txt'=>'Paso 2',
   'step3_li_txt'=>'Paso 3',
@@ -24,7 +24,7 @@ return [
   'upload_btn'=>'Subir',
   'add_more_img_heading'=>'Agregar más imágenes de menú',
   'item_qr_code_scan_p1'=>'Escanee el código QR para ver nuestro menú',
-  'upload_item_qr_img_heading'=>'Subir imagen QR del artículo',
+  'upload_item_qr_img_heading'=>'Subir archivo con oferta de servicio, catálogo o menú',
   'reorder_photo_p1'=>'Arrastra las fotos para reordenarlas.',
   'reorder_photo_p2'=>'Haga clic en Guardar cuando termine.',
   'upload_instructions_title'=>'Instrucciones para subir imágenes',

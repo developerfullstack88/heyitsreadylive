@@ -3,7 +3,11 @@
 <div class="row">
   <div class="col-lg-12">
       <section class="card">
-	        <header class="card-header font-title">@lang('site.site_list_heading')</header>
+	        <header class="card-header font-title">
+            @lang('site.site_list_heading')
+            <i class="fas fa-question-circle ml-1 mt-1"
+            data-toggle="tooltip" data-placement="right" title="This table will show all non deleted sites which are added by you.You can use three option under `Actions` column. If You want to see detailed info about particular site then click on `eye` icon. If You want to update particular site then click on `pencil` icon. If You want to remove particular site then click on `Dustbin` icon." data-container="body"></i>
+          </header>
           <div class="card-body">
                <div class="table-responsive">
 	                 <table class="table table-bordered">

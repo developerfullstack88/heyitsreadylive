@@ -99,7 +99,11 @@
                     <div class="row CardListing">
                       <div class="col-lg-10 col-6 font-title">@lang('setting.card_listing_heading')</div>
                       <div class="col-lg-2 col-6 pull-right">
-                        <a href="javascript:void(0);" id="openNewCard" class="btn btn-primary hey-blue"><i class="fa fa-plus-circle"></i>@lang('setting.add_card_txt')</a>
+                        <a href="javascript:void(0);" id="openNewCard" class="btn btn-primary hey-blue"><i class="fa fa-plus-circle"></i>
+                          @lang('setting.add_card_txt')
+                          <i class="fas fa-question-circle"
+                          data-toggle="tooltip" data-placement="left" title="If you want to add new card then click on it." data-container="body"></i>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -238,7 +242,11 @@
                         <div class="col-md-12 ml-3 mt-3">
                           <div class="d-flex">
                             <div class="form-group ml-4">
-        				               <button class="btn btn-danger" type="submit">@lang('setting.delete_account_label')</button>
+        				               <button class="btn btn-danger" type="submit">
+                                 @lang('setting.delete_account_label')
+                                 <i class="fas fa-question-circle"
+                                 data-toggle="tooltip" data-placement="top" title="This button will delete your account but it is secure in our database." data-container="body"></i>
+                               </button>
                             </div>
                           </div>
                         </div>

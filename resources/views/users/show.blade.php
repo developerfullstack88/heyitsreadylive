@@ -49,6 +49,8 @@
                     <a href="{{route('users.edit',$userInfo->id)}}" id="show-profile-edit-profile-link"
                       class="btn btn-default btn-sm">
                       @lang('profile.edit_profile_label')
+                      <i class="fas fa-question-circle"
+                      data-toggle="tooltip" data-placement="top" title="If you want to update your profile info then click on this button." data-container="body"></i>
                     </a>
                   </div>
                 </div>

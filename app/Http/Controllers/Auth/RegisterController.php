@@ -7,6 +7,7 @@ use App\Company;
 use App\State;
 use App\City;
 use App\Country;
+use App\Country2;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -149,7 +150,18 @@ class RegisterController extends Controller
       extract($data);
       //$state=State::find($state)->name;
       ///$city=City::find($city)->name;
-      $countryCode=Country::where('countries_name',$country)->first()->country_code;
+
+      $countryCodeQuery=Country::where('countries_name',$country);
+      if($countryCodeQuery->count()>0){
+        $countryCode=$countryCodeQuery->first()->country_code;
+      }else{
+        $countryCodeQuery2=Country2::where('name',$country);
+        if($countryCodeQuery2->count()>0){
+          $countryCode=$countryCodeQuery2->first()->sortname;
+        }
+      }
+
+      https://esprit2.delfdalf.ch/vw-examregistrations/generate-examcenter-pdf/62/4
       $planId=getPlanId($countryCode);
       $stripeCustomerId=$this->CreateStripeCustomerCard($data);
       $company=Company::create([

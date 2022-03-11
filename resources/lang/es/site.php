@@ -21,5 +21,7 @@ return [
   'site_category'=>'Categoría',
   'site_manager_label'=>'Gerente',
   'site_set_default_label'=>'Establecer predeterminado',
+  'select_category_empty_option'=>'Selecciona Categoría',
+  'select_manager_empty_option'=>'Seleccionar Gerente'
 ];
 ?>

@@ -137,7 +137,8 @@ class CompanyController extends Controller
     /*generate pdf order qr code*/
     public function orderPdfQr(){
       $company_id=Auth::user()->company_id;
-      $qrUrl=url('/').'/users/order-create?company_id='.$company_id.'&type=order';
+      $locationId=getDefaultLocationLoggedUser();
+      $qrUrl=url('/').'/users/order-create?location_id='.$locationId.'&company_id='.$company_id.'&type=order';
       // instantiate the barcode class
       $barcode = new \Com\Tecnick\Barcode\Barcode();
       // generate a barcode

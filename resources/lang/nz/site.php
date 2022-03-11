@@ -21,5 +21,7 @@ return [
   'site_category'=>'Category',
   'site_manager_label'=>'Manager',
   'site_set_default_label'=>'Set Default',
+  'select_category_empty_option'=>'Select Category',
+  'select_manager_empty_option'=>'Select Manager'
 ];
 ?>

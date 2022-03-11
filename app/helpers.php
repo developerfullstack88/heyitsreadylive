@@ -2042,7 +2042,7 @@ if(!function_exists('getGeofenceCustomers')){
 }
 
 if(!function_exists('categories_options')){
-  function categories_options(){
+  function get_english_categories(){
     return array(
       'Appliances',
       'Artist',
@@ -2084,6 +2084,58 @@ if(!function_exists('categories_options')){
       'Video & Games',
       'Winery/Vineyard'
     );
+  }
+
+  function get_spanish_categories(){
+    return array(
+      'Accesorios',
+      'Artista / Arte',
+      'Automotor',
+      'Bebés y Niños',
+      'Belleza, Cosméticos, y Cuidado Personal',
+      'Librería',
+      'Cámara/ foto',
+      'Ropa',
+      'Comercial e Industrial',
+      'Tienda de Conveniencia',
+      'Cafetería',
+      'Granja',
+      'Comida y Bebidas',
+      'Calzado',
+      'Puesto de Comida',
+      'Juegos y Juguetes',
+      'hardware / Equipos Electrónicos',
+      'Salud y Bienestar',
+      'Mejoras para el Hogar',
+      'Calefacción, Ventilación y Aire Acondicionado',
+      'joyas y relojes',
+      'Cocina y baño',
+      'Almacén de madera',
+      'Biblioteca',
+      'Mercado',
+      'Médico',
+      'Material de oficina',
+      'Otro',
+      'Deportes al aire libre',
+      'Servicios para mascotas',
+      'Plomería',
+      'Alquileres',
+      'Restaurante',
+      'Revendedores',
+      'Compras y venta al por menor',
+      'Deportes y Recreación',
+      'Reparación de neumáticos',
+      'Juegos de vídeo',
+      'Bodega/Viñedo'
+    );
+  }
+  function categories_options(){
+    if(session()->get('locale')=='es'){
+      return get_spanish_categories();
+    }else{
+      return get_english_categories();
+    }
+
   }
 }
 
@@ -2276,7 +2328,9 @@ if(! function_exists('getMenuQrImages')){
     $qrItemImages=QrItem::select(['id','image_path'])->where('company_id',$cid)->get();
     if($qrItemImages->count()>0){
       foreach ($qrItemImages as $key => $value) {
-        $qrItemImages[$key]->image_path=url('/').'/'.$value->image_path;
+        $filePath=url('/').'/'.$value->image_path;
+        $qrItemImages[$key]->image_path=$filePath;
+        $qrItemImages[$key]->type=pathinfo($filePath, PATHINFO_EXTENSION);
       }
     }
     return $qrItemImages;

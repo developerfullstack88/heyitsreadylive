@@ -18,7 +18,10 @@
 	    <section class="card">
 				<header class="card-header font-title">
 						{{getBusinessName()}}
-						<a href="{{ URL::to('/company/order-qr-pdf') }}" class="btn btn-light pull-right mr-2">@lang('qr.pdf_btn')</a>
+						<a href="{{ URL::to('/company/order-qr-pdf') }}" class="btn btn-light pull-right mr-2">@lang('qr.pdf_btn')
+							<i class="fas fa-question-circle"
+							data-toggle="tooltip" data-placement="top" title="This button will  generate a PDF.In generated PDF you can get to know how you can add order If you are using mobile app or not. Also You can get two QR code for installing Android and IOS app." data-container="body"></i>
+						</a>
 				</header>
 				<div class="row">
 					<div class="col-lg-6">

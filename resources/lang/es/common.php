@@ -18,7 +18,7 @@ return [
   'top_menu_dropdown_help'=>'Ayuda',
   'top_menu_dropdown_logout'=>'Cerrar sesión',
   'table_list_actions'=>'Comportamiento',
-  'close_btn_txt'=>'Cerca',
+  'close_btn_txt'=>'Cerrar',
   'save_btn_txt'=>'Salvar',
   'common_warning'=>'advertencia',
   'sidebar_setup'=>'Preparar',

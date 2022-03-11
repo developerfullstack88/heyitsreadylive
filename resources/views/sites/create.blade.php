@@ -19,7 +19,7 @@
           <div class="form-group tooltip-wrapper">
             {{Form::label('name',trans('site.business_name_label'))}}
 						<i class="fas fa-question-circle"
-						data-toggle="tooltip" data-placement="right" title="Add content here." data-container="body"></i>
+						data-toggle="tooltip" data-placement="right" title="This will show Your company name.You can not change  bussiness name.It is read only input." data-container="body"></i>
             {{Form::text('name',getBusinessName(),
               ['class'=>'form-control','placeholder'=>'Enter business name','required'=>true,'readonly'=>true]
             )}}
@@ -27,15 +27,15 @@
 					<div class="form-group">
 						{{Form::label('cover_image',trans('site.site_cover_image'))}}
 						<i class="fas fa-question-circle"
-						data-toggle="tooltip" data-placement="top" title="Add content here." data-container="body"></i>
+						data-toggle="tooltip" data-placement="top" title="You can add here cover image for your site.It is not mandatory field." data-container="body"></i>
 						{{Form::file('cover_image',['required'=>false])}}
 					</div>
 					<div>
             {{Form::label('category', trans('site.site_category'))}}
 						<i class="fas fa-question-circle"
-						data-toggle="tooltip" data-placement="right" title="Add content here." data-container="body"></i>
+						data-toggle="tooltip" data-placement="right" title="You can choose one category for your site." data-container="body"></i>
 						<select class="form-control custom-select mb-3" name="category" required="true">
-							<option value="">Select Category</option>
+							<option value="">{{__('site.select_category_empty_option')}}</option>
 								@foreach(categories_options() as $category)
 									<option value="{{$category}}" {{ old('category') == $category ? 'selected' : '' }}>{{$category}}</option>
 								@endforeach
@@ -44,9 +44,9 @@
 					<div>
             {{Form::label('manager_id', trans('site.site_manager_label'))}}
 						<i class="fas fa-question-circle"
-						data-toggle="tooltip" data-placement="right" title="Add content here." data-container="body"></i>
+						data-toggle="tooltip" data-placement="right" title="You can choose manager for your site.It is not mandatory field." data-container="body"></i>
 						<select class="form-control custom-select mb-3" name="manager_id">
-							<option value="">Select Manager</option>
+							<option value="">{{__('site.select_manager_empty_option')}}</option>
 								@foreach(all_company_managers() as $manager)
 									<option value="{{$manager->id}}" {{ old('manager_id') == $manager->id ? 'selected' : '' }}>
 										{{$manager->name}}
@@ -63,7 +63,7 @@
           <div class="form-group">
             {{Form::label('address', trans('site.address_label'))}}
 						<i class="fas fa-question-circle"
-						data-toggle="tooltip" data-placement="right" title="Add content here." data-container="body"></i>
+						data-toggle="tooltip" data-placement="right" title="You can enter proper address for your site.Based on this address a circle will show on map.You can drag and drop circle to any location." data-container="body"></i>
             {{Form::text('address','',
               ['class'=>'form-control','placeholder'=>trans('site.placeholder_location'),'required'=>true]
             )}}

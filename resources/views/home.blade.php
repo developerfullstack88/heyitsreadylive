@@ -60,16 +60,32 @@
     @if(currentUser() && currentUser()->delete_complete_order == 1
     && (isset($OrdersComplete) && $OrdersComplete->count()>0) && Request::get('type')=='completed')
       <a id="home-delete-complete-btn" class="btn btn-danger btn-lg btn-huge font-title"
-      href="{{route('orders.delete-complete')}}" onclick="return confirm('Do you want to delete complete orders?')">@lang('dashboard.delete_complete_order_btn')</a>
+      href="{{route('orders.delete-complete')}}" onclick="return confirm('Do you want to delete complete orders?')">
+      @lang('dashboard.delete_complete_order_btn')
+      <i class="fas fa-question-circle ml-1 mt-1"
+      data-toggle="tooltip" data-placement="top" title="This button is used for deleting all Orders whose Status is completed.When You will click on it confirm box will open with two options. If You do not want delete completed orders then click on `Cancel' option otherwise click on `Ok'." data-container="body"></i>
+    </a>
     @elseif(currentUser() && currentUser()->delete_complete_order == 1 && Request::get('type')=='all')
     <a id="home-delete-complete-btn" class="btn btn-danger btn-lg btn-huge ml-2 font-title"
-    href="{{route('orders.delete-complete')}}" onclick="return confirm('Do you want to delete complete orders?')">@lang('dashboard.delete_complete_order_btn')</a>
+    href="{{route('orders.delete-complete')}}" onclick="return confirm('Do you want to delete complete orders?')">
+      @lang('dashboard.delete_complete_order_btn')
+      <i class="fas fa-question-circle ml-1 mt-1"
+      data-toggle="tooltip" data-placement="top" title="This button is used for deleting all Orders whose Status is completed.When You will click on it confirm box will open with two options. If You do not want delete completed orders then click on `Cancel' option otherwise click on `Ok'." data-container="body"></i>
+    </a>
     @endif
-    {{Form::button('Delete Checked',["id"=>"delete-selected-order","class"=>"btn btn-danger-red btn-lg btn-huge ml-2 font-title"])}}
+
+    <!---Delete checked button-->
+    <button id="delete-selected-order" class="btn btn-danger-red btn-lg btn-huge ml-2 font-title" type="button">Delete Checked <i class="fas fa-question-circle ml-1 mt-1"
+    data-toggle="tooltip" data-placement="top" title="This button is basically used for deleting all orders whose checkboxes are checked which are available on each row.When You will click on this button then confirm box is shown with two options.If You do not want delete orders then click on `Cancel' option otherwise click on `Ok'." data-container="body"></i></button>
+    <!---Delete checked button-->
   </div>
   <div class="col-lg-6">
       @if(getDefaultLocationLoggedUser())
-        <a id="addNewOrderBtn" class="btn btn-info btn-lg btn-huge font-title" href="{{route('orders.create')}}">@lang('dashboard.add_new_order_btn')</a>
+        <a id="addNewOrderBtn" class="btn btn-info btn-lg btn-huge font-title" href="{{route('orders.create')}}">
+          @lang('dashboard.add_new_order_btn')
+          <i class="fas fa-question-circle ml-1 mt-1"
+          data-toggle="tooltip" data-placement="top" title="This  is used for add new order for mobile app user by entering info like  Cell number,Name,EPUT in minutes or  EPUT with proper datetime." data-container="body"></i>
+        </a>
       @endif
   </div>
 </div>
@@ -78,7 +94,9 @@
   <div class="col-lg-12 col-12">
       <section class="card">
           <header class="card-header font-title">
-              {{ucfirst(Request::get('type'))}} Orders
+              {{ucfirst(Request::get('type')??'Active')}} Orders
+              <i class="fas fa-question-circle ml-1 mt-1"
+              data-toggle="tooltip" data-placement="right" title="This table will show proper order info ,You can use tabs to show Active,All,Completed or Future Orders. If You want to show more Detailed Order Info then You will have to click on `Detail` button. If You want to Print particular Order info then  will have to click on `Print` button available on each row.If You want to delete particular order then  will have to checked checbox available on each row and then red button `Delete Checked`  will visible to delete all checked orders.You can also reset EPUT time by clicking on `Delayed` button." data-container="body"></i>
           </header>
           <div class="card-body">
             <div class="col-lg-12">
