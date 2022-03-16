@@ -1,5 +1,8 @@
 @extends('layouts.default')
 @section('content')
+<style>
+.menu-edit-img{max-width:55rem;}
+</style>
 <div class="row justify-content-center">
 	<div class="col-lg-8 col-12 ipix-full-width-col">
 		  <section class="card">

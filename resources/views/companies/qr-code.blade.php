@@ -20,7 +20,7 @@
 						{{getBusinessName()}}
 						<a href="{{ URL::to('/company/order-qr-pdf') }}" class="btn btn-light pull-right mr-2">@lang('qr.pdf_btn')
 							<i class="fas fa-question-circle"
-							data-toggle="tooltip" data-placement="top" title="This button will  generate a PDF.In generated PDF you can get to know how you can add order If you are using mobile app or not. Also You can get two QR code for installing Android and IOS app." data-container="body"></i>
+							data-toggle="tooltip" data-placement="top" title="This button will generate a PDF of your ORDER QR Code for your specific site. When you print this off your walk in customers are able to scan the QR Code with the Hey It’s Ready mobile app and start the order for you that will appear on the admin dashboard then all you need to do is enter the “E.P.U.T.” (Estimated Pick Up Time) and add the amount of the order (This is optional)." data-container="body"></i>
 						</a>
 				</header>
 				<div class="row">

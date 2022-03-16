@@ -9,7 +9,7 @@
   				<header class="card-header">
   						@lang('qr.upload_item_qr_img_heading')
               <i class="fas fa-question-circle"
-  						data-toggle="tooltip" data-placement="right" title="The Menu QR is where you are able to add your menu items or materials or any items that you are offering to your customers. Once you add the menu items these will be displayed in the mobile app for your customers to see what your business is offering." data-container="body"></i>
+  						data-toggle="tooltip" data-placement="right" title="The Menu QR is where you are able to add your menu items or materials or any items that you are offering to your customers. Once you add the menu items these will be displayed in the mobile app for your customers to see what your business is offering. When your customers walk into your business they are able to scan the QR Code and view your materials or menu items." data-container="body"></i>
   				</header>
           <div class="card-body">
             {{ Form::open(array('action'=> 'CompanyController@UploadMenuImage','id'=>'UploadMenuImage','files'=>true)) }}

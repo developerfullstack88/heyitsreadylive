@@ -50,7 +50,7 @@
                       class="btn btn-default btn-sm">
                       @lang('profile.edit_profile_label')
                       <i class="fas fa-question-circle"
-                      data-toggle="tooltip" data-placement="top" title="If you want to update your profile info then click on this button." data-container="body"></i>
+                      data-toggle="tooltip" data-placement="top" title=" you are able to “Edit” your profile heres." data-container="body"></i>
                     </a>
                   </div>
                 </div>
