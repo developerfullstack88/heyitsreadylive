@@ -8,6 +8,7 @@
         <span class="d-none hidden-order-number">{{$order->order_number}}</span>
       </td>
       <td class="home-order-spot-number">{{$order->spot_number}}</td>
+      <td class="home-order-spot-color">{{$order->spot_color}}</td>
       <td>{{$order->user->name}}</td>
       <td>
         @if(checkPaidOrder($order->id))
@@ -77,6 +78,12 @@
        {{Form::button(trans('dashboard.table_print_btn'),["class"=>"btn btn-success btn-sm
        btn-view-print mt-btn-10","data-id"=>$order->id])}}
       </td>
+      <td id="dashboardReadyBtnText" style="display:none;">@lang('dashboard.table_ready_btn')</td>
+      <td id="dashboardCompletedBtnText" style="display:none;">@lang('dashboard.table_completed_btn')</td>
+      <td id="dashboardDelayedBtnText" style="display:none;">@lang('dashboard.table_delayed_btn')</td>
+      <td id="dashboardDetailBtnText" style="display:none;">@lang('dashboard.table_detail_btn')</td>
+      <td id="dashboardPrintBtnText" style="display:none;">@lang('dashboard.table_print_btn')</td>
+      <td id="dashboardReminderBtnText" style="display:none;">@lang('dashboard.table_reminder_btn')</td>
     </tr>
     @endforeach
   @endif

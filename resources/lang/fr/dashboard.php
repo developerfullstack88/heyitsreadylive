@@ -54,5 +54,12 @@ return [
   'completed_filter_label'=>'Complété',
   'future_filter_label'=>'Futur',
   'quick_actions_filter_label'=>'Actions rapides',
+  'delete_checked_label'=>'Supprimer coché',
+  'add_order_btn_tooltip'=>"Ceci est utilisé pour ajouter de nouvelles commandes pour informer vos clients lorsque leur commande est prête à être récupérée. C'est ici que vous ajouterez votre nom, numéro de téléphone et E.P.U.T. (Heure de ramassage estimée).Si vous avez permis à vos clients de payer par carte de crédit pour leurs commandes à l'avance, vous pouvez ajouter le montant de la commande.",
+  'active_orders_tooltip'=>"Ce tableau affiche toutes les informations de commande en cours. Vous pouvez utiliser les onglets pour afficher les commandes actives, toutes, terminées ou futures. Si vous souhaitez afficher des informations de commande plus détaillées, vous pouvez cliquer sur le bouton 'Détail' et cela s'ouvrira dans une fenêtre séparée. Si vous souhaitez imprimer les détails de la commande, vous pouvez cliquer sur le bouton 'Imprimer' pour chaque commande individuelle. Si vous souhaitez supprimer une commande particulière, vous devrez cocher la case disponible sur chaque ligne, puis le bouton rouge 'Supprimer coché' sera visible pour supprimer toutes les commandes cochées. Vous pouvez également réinitialiser l'heure EPUT en cliquant sur le bouton 'Retardé'.",
+  'delete_complete_order_tooltip'=>"Ce bouton permet de supprimer toutes les commandes dont le statut est terminé. Lorsque vous cliquerez dessus, la boîte de confirmation s'ouvrira avec deux options. Si vous ne souhaitez pas supprimer la commande terminée, cliquez sur l'option « Annuler » ou cliquez sur « OK » pour supprimer la commande.",
+  'delete_checked_tooltip'=>"Ce bouton est essentiellement utilisé pour supprimer toutes les commandes dont les cases à cocher sont cochées et disponibles dans chaque ligne. Lorsque vous cliquez sur ce bouton, la boîte de confirmation avec deux options s'affiche. Si vous ne souhaitez pas supprimer toutes les commandes marquées, veuillez cliquer sur l'option 'Annuler' ou sur 'OK' pour supprimer toutes les commandes marquées.",
+  'site_listing_tooltip'=>"Ce tableau affichera tous vos sites ajoutés. Vous pouvez utiliser trois options dans la colonne 'Actions'. Si vous souhaitez voir des informations détaillées sur un site en particulier, cliquez sur l'icône « Afficher ». Si vous souhaitez mettre à jour un site en particulier, cliquez sur l'icône 'Modifier'. Si vous souhaitez supprimer un site particulier, cliquez sur l'icône 'Supprimer'."
+
 ];
 ?>

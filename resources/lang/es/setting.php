@@ -23,5 +23,7 @@ return [
   'just_menu_qr_code_label'=>'solo el código QR del menú',
   'disable_label'=>'Desactivar',
   'enable_label'=>'Habilitar',
+  'credit_card_tooltip'=>'aquí es donde puede agregar, actualizar o cambiar la información de su tarjeta de crédito para su facturación mensual.',
+  'delete_account_tooltip'=>'¡Este botón es donde puede eliminar su cuenta! ¡Si lo haces, estaremos tristes de verte partir!'
 ];
 ?>

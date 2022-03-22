@@ -102,7 +102,7 @@
                         <a href="javascript:void(0);" id="openNewCard" class="btn btn-primary hey-blue"><i class="fa fa-plus-circle"></i>
                           @lang('setting.add_card_txt')
                           <i class="fas fa-question-circle"
-                          data-toggle="tooltip" data-placement="left" title="This is where you are able to add, update or change your credit card information for your monthly billing." data-container="body"></i>
+                          data-toggle="tooltip" data-placement="left" title="{{__('setting.credit_card_tooltip')}}" data-container="body"></i>
                         </a>
                       </div>
                     </div>
@@ -245,7 +245,7 @@
         				               <button class="btn btn-danger" type="submit">
                                  @lang('setting.delete_account_label')
                                  <i class="fas fa-question-circle"
-                                 data-toggle="tooltip" data-placement="top" title="This button is where you are able to delete your account! If you do we will be sad to see you go!" data-container="body"></i>
+                                 data-toggle="tooltip" data-placement="top" title="{{__('setting.delete_account_tooltip')}}" data-container="body"></i>
                                </button>
                             </div>
                           </div>

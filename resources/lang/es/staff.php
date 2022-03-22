@@ -19,5 +19,6 @@ return [
   'empty_country_dropdown'=>'Seleccionar país',
   'empty_phone_dropdown'=>'Seleccione',
   'empty_role_dropdown'=>'Seleccionar rol',
+  'staff_listing_tooltip'=>'Esta tabla mostrará todos los miembros del personal agregados por el administrador. Puede usar tres opciones en la columna "Acciones". Si desea ver información detallada sobre un miembro en particular, haga clic en el icono “Ver ”. Si desea actualizar la información de un miembro en particular, haga clic en el ícono " Editar". Si desea eliminar un miembro en particular, haga clic en el icono "Eliminar ".'
 ];
 ?>

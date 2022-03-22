@@ -31,5 +31,7 @@ return [
   'upload_instructions_1'=>'El tipo de imagen debe ser jpg o png.',
   'upload_instructions_2'=>'El ancho mínimo de la imagen es 1000px.',
   'upload_instructions_3'=>'La altura mínima de la imagen es 1000px.',
+  'menu_qr_item_tooltip'=>'El menú QR es donde puede agregar los elementos o materiales de su menú o cualquier elemento que ofrezca a sus clientes. Una vez que agregue los elementos del menú, estos se mostrarán en la aplicación móvil para que sus clientes vean lo que ofrece su negocio. Cuando sus clientes ingresan a su negocio, pueden escanear el código QR y ver sus materiales o elementos del menú.',
+  'order_pdf_btn_tooltip'=>"Este botón generará un PDF de su código QR de PEDIDO para su sitio específico. Cuando imprima esto de su entrada, los clientes pueden escanear el código QR con la aplicación móvil Hey It's Ready e iniciar el pedido que aparecerá en el panel de administración, luego todo lo que necesita hacer es ingresar el 'E.P.U.T.' (Hora Estimada de Retiro) y agrega el monto del pedido (Esto es opcional)."
 ];
 ?>

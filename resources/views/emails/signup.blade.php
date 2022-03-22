@@ -7,13 +7,13 @@
       @if($userData)
         <p>Hey {{ucfirst($userData->first_name)}} {{ucfirst($userData->last_name)}},</p>
       @endif
-      <p style="margin-top:50px;">Welcome to Hey It’s Ready!<p>
-      <p style="margin-top:30px;">We are excited to have you as part of our mission to enable people to connect to and support the backbone of our world “Your Business”.</p>
-      <p style="margin-top:50px;">There are two PDF setup guides attached to this email.One setup guide is to help you set up the full access use of the software and the second guide is for those companies wishing to just use the FREE Menu QR Code option.<p>
-      <p style="margin-top:30px;">Both of these PDF setup guides are also located in your Hey It's Ready welcome drop down menu.</p>
-      <p style="margin-top:30px;">If you have any questions or would like any help, please feel free to contact us at <a href="mailto:info@heyitsready.com">info@heyitsready.com</a></p>
-      <p style="margin-top:50px;">Sincerely,</p>
-      <p>The Team at Hey It’s Ready!</p>
+      <p style="margin-top:50px;">{{__('register.welcome_email_heading')}}<p>
+      <p style="margin-top:30px;">{{__('register.welcome_email_excited__mission_p')}}</p>
+      <p style="margin-top:50px;">{{__('register.welcome_email_PDF_attached_label')}}<p>
+      <p style="margin-top:30px;">{{__('register.welcome_email_both_pdf_guide_label')}}</p>
+      <p style="margin-top:30px;">{{__('register.if_you_have_questions_label')}}<a href="mailto:info@heyitsready.com">info@heyitsready.com</a></p>
+      <p style="margin-top:50px;">{{__('register.sincerely_label')}},</p>
+      <p>{{__('register.welcome_email_team_hey_its_ready_label')}}</p>
       <img src="{{asset('img/ipixup_background_image.png')}}" style="max-width:100px;margin-left:350px;"/>
   </body>
 </html>

@@ -31,5 +31,7 @@ return [
   'upload_instructions_1'=>'Image type must be jpg or png.',
   'upload_instructions_2'=>'Minimum width of image is 1000px.',
   'upload_instructions_3'=>'Minimum height of image is 1000px.',
+  'menu_qr_item_tooltip'=>'The Menu QR is where you are able to add your menu items or materials or any items that you are offering to your customers. Once you add the menu items these will be displayed in the mobile app for your customers to see what your business is offering. When your customers walk into your business they are able to scan the QR Code and view your materials or menu items.',
+  'order_pdf_btn_tooltip'=>'This button will generate a PDF of your ORDER QR Code for your specific site. When you print this off your walk in customers are able to scan the QR Code with the Hey It’s Ready mobile app and start the order for you that will appear on the admin dashboard then all you need to do is enter the “E.P.U.T.” (Estimated Pick Up Time) and add the amount of the order (This is optional).'
 ];
 ?>

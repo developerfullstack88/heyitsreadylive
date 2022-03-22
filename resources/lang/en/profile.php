@@ -20,6 +20,9 @@ return [
   'confirm_password_label'=>'Re-type New Password',
   'upload_btn_label'=>'Upload a photo',
   'change_profile_btn_label'=>'Change profile image',
-  'role_label'=>'Role'
+  'role_label'=>'Role',
+  'change_company_name_tooltip'=>'You are able to change your company name here.',
+  'street_number_tooltip'=>'You are able to change or update the street number here.',
+  'edit_profile_tooltip'=>'you are able to “Edit” your profile heres.'
 ];
 ?>

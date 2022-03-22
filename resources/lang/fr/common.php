@@ -1,7 +1,7 @@
 <?php
 return [
-  'welcome_login'=>'Login',
-  'welcome_register'=>'Register',
+  'welcome_login'=>'Connexion',
+  'welcome_register'=>"S'inscrire",
   'welcome_home'=>'Hogar',
   'sidebar_dashboard'=>'Tableau de bord',
   'sidebar_location'=>'Emplacements',

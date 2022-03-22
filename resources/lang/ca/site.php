@@ -22,6 +22,11 @@ return [
   'site_manager_label'=>'Manager',
   'site_set_default_label'=>'Set Default',
   'select_category_empty_option'=>'Select Category',
-  'select_manager_empty_option'=>'Select Manager'
+  'select_manager_empty_option'=>'Select Manager',
+  'business_name_tooltip'=>'This will display your company name. You cannot change the company name, it is read-only.',
+  'site_cover_image_tooltip'=>'You can add your business logo image for your site. It is not a mandatory field.',
+  'site_category_tooltip'=>'You can choose one category for your site that best describes your type of business.',
+  'site_manager_tooltip'=>'You can choose a manager for and assign them to each site. It is not a mandatory field.',
+  'site_address_tooltip'=>'This is where you enter the address for each site. Based on this address a circle will appear on the map showing the geo-fence for this site. You are able to drag and drop circle to any location if it is not on the correct address.'
 ];
 ?>

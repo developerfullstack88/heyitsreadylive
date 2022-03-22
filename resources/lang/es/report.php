@@ -18,5 +18,15 @@
     'filteration_heading'=>'Buscar',
     'table_payment_type'=>'Tipo de pago',
     'table_delayed_time'=>'Tiempo retrasado',
+    'basic_report_tooltip'=>'Esta tabla mostrará información básica sobre cada pedido, como Número de pedido, Nombre del cliente, Hora del pedido, EPUT, Pedido pagado o no pagado, Tiempo total del pedido versus tiempo estimado, si el pago fue en efectivo, pago con tarjeta de crédito u otro y si un el pedido se retrasó o no.',
+    'filter_tooltip'=>'Puede usar el filtro de búsqueda para la tabla de informes básica con fecha y hora para limitar su búsqueda de horas y fechas específicas.',
+    'date_tooltip'=>'Puede seleccionar fechas específicas para acotar su búsqueda.',
+    'time_from_tooltip'=>'puede elegir la hora de inicio del pedido con cada fecha.',
+    'time_to_tooltip'=>'Puede elegir la hora de finalización del pedido aquí.',
+    'reset_filter_tooltip'=>'Puede restablecer todas las opciones de formulario de búsqueda de filtro aquí.',
+    'payout_listing_tooltip'=>'Esta tabla mostrará todos los pagos de su cuenta de Stripe Connect. Cuando un cliente paga con tarjeta de crédito verás la transacción de pago aquí.',
+    'start_date_tooltip'=>'puede seleccionar la fecha de inicio en la opción de filtro aquí.',
+    'end_date_tooltip'=>'puede seleccionar la fecha de finalización en la opción de filtro aquí.',
+    'payment_listing_tooltip'=>'Esta tabla mostrará todos los pagos de pedidos.'
   ];
 ?>

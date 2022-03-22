@@ -9,6 +9,7 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link href="{{URL::asset('css/bootstrap.min.css')}}" rel="stylesheet">
+        <link href="{{URL::asset('css/style.css')}}" rel="stylesheet">
         <!-- Styles -->
         <style>
             html, body {
@@ -153,6 +154,7 @@
     </head>
     <body>
         @include('partials.flash')
+        @include('partials.header-without-login')
         <div class="flex-center position-ref full-height home-background-image">
           <div class="row">
             <div class="col-md-12">
@@ -177,3 +179,5 @@
         </div>
     </body>
 </html>
+<script src="{{URL::asset('js/jquery.js')}}"></script>
+<script src="{{URL::asset('js/bootstrap.bundle.min.js')}}"></script>

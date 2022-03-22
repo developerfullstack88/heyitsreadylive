@@ -31,5 +31,7 @@ return [
   'upload_instructions_1'=>"Le type d'image doit être jpg ou png.",
   'upload_instructions_2'=>"La largeur minimale de l'image est de 1000px.",
   'upload_instructions_3'=>"La hauteur minimale de l'image est de 1000px.",
+  'menu_qr_item_tooltip'=>"Le menu QR est l'endroit où vous pouvez ajouter vos éléments de menu ou vos matériaux ou tout élément que vous proposez à vos clients. Une fois que vous avez ajouté des éléments de menu, ils s'afficheront dans l'application mobile afin que vos clients puissent voir ce que votre entreprise a à offrir. Lorsque vos clients entrent dans votre entreprise, ils peuvent scanner le code QR et voir vos matériaux ou éléments de menu.",
+  'order_pdf_btn_tooltip'=>"Ce bouton générera un PDF de votre code QR de COMMANDE pour votre site spécifique. Lorsque vous l'imprimez sur votre billet, les clients peuvent scanner le code QR avec l'application mobile Hey It's Ready et lancer la commande qui apparaîtra dans le panneau d'administration, puis tout ce que vous avez à faire est d'entrer le 'E.P.U.T.' (Heure de ramassage estimée) et ajoutez le montant de la commande (Ceci est facultatif)."
 ];
 ?>

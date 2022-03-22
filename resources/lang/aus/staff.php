@@ -19,5 +19,6 @@ return [
   'empty_country_dropdown'=>'Select Country',
   'empty_phone_dropdown'=>'Select',
   'empty_role_dropdown'=>'Select Role',
+  'staff_listing_tooltip'=>'This table will show all all staff members which are added by the admin. You can use three option under the “Actions” column. If You want to see detailed info about particular member then click on the “View” icon. If You want to update particular member info then click on the “Edit” icon. If You want to remove particular member then click on the “Erase” icon.'
 ];
 ?>

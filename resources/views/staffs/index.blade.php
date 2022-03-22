@@ -6,7 +6,7 @@
 	        <header class="card-header font-title">
             @lang('staff.staff_list_heading')
             <i class="fas fa-question-circle"
-						data-toggle="tooltip" data-placement="right" title="This table will show all all staff members which are added by the admin. You can use three option under the “Actions” column. If You want to see detailed info about particular member then click on the“ A” icon. If You want to update particular member info then click on the “ B” icon. If You want to remove particular member then click on the “C ” icon." data-container="body"></i>
+						data-toggle="tooltip" data-placement="right" title="{{__('staff.staff_listing_tooltip')}}" data-container="body"></i>
           </header>
           <div class="card-body">
                <div class="table-responsive">

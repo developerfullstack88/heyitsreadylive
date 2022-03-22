@@ -60,7 +60,7 @@
                   </div>
                   {{Form::label('company_name', trans('profile.company_name_label'))}}
                   <i class="fas fa-question-circle"
-      						data-toggle="tooltip" data-placement="right" title="You are able to change your company name here." data-container="body"></i>
+      						data-toggle="tooltip" data-placement="right" title="{{__('profile.change_company_name_tooltip')}}" data-container="body"></i>
                   <div>
                     {{Form::text('company_name',$userInfo->company->company_name,['class'=>'form-control','required'=>true,'autofocus'=>true])}}
                     @error('company_name')
@@ -71,7 +71,7 @@
                   </div>
                   {{Form::label('address', 'Street Number')}}
                   <i class="fas fa-question-circle"
-      						data-toggle="tooltip" data-placement="right" title="You are able to change or update the street number here." data-container="body"></i>
+      						data-toggle="tooltip" data-placement="right" title="{{__('profile.street_number_tooltip')}}" data-container="body"></i>
                   <div class="">
                     {{Form::text('address',$userInfo->company->address,['class'=>'form-control','required'=>true,'autofocus'=>true,'id'=>'address'])}}
                     @error('address')

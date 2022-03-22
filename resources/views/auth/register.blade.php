@@ -9,11 +9,11 @@
   <form id="form-signin-task" role="form" class="form-signin form-signin-task"
   method="post" action="{{ route('register') }}" data-cc-on-file="false" data-stripe-publishable-key="{{ env('STRIPE_KEY') }}" data-stripe-secret="{{ env('STRIPE_SECRET') }}">
       @csrf
-      <h2 class="form-signin-heading">Hey It's Ready Business Registration Form</h2>
+      <h2 class="form-signin-heading">{{__('register.form_heading')}}</h2>
       <div class="row login-wrap">
         <div class="col-md-6">
-          <p>Enter your personal details below</p>
-          <label for="first_name">{{ __('First Name') }}</label>
+          <p>{{__('register.form_p_heading')}}</p>
+          <label for="first_name">{{ __('profile.first_name_label') }}</label>
           <div>
             <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror"
             name="first_name" required value="{{ old('first_name') }}"  autocomplete="first_name"
@@ -24,7 +24,7 @@
               </span>
             @enderror
           </div>
-          <label for="last_name">{{ __('Last Name') }}</label>
+          <label for="last_name">{{ __('profile.last_name_label') }}</label>
           <div>
             <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror"
             name="last_name" required value="{{ old('last_name') }}"  autocomplete="last_name"
@@ -35,7 +35,7 @@
               </span>
             @enderror
           </div>
-					<label for="company_name">{{ __('Company Name') }}</label>
+					<label for="company_name">{{ __('profile.company_name_label') }}</label>
           <div>
             <input id="company_name" type="text" class="form-control @error('country') is-invalid @enderror"
             name="company_name" required value="{{ old('company_name') }}"  autocomplete="company_name"
@@ -46,8 +46,8 @@
               </span>
             @enderror
           </div>
-					<p class="mb-0">{{ __('Billing Address') }}</p>
-					<label for="address">{{ __('Street Number') }}</label>
+					<p class="mb-0">{{ __('profile.billing_address_label') }}</p>
+					<label for="address">{{ __('register.street_number_label') }}</label>
           <div>
             <input type="text" class="form-control @error('address') is-invalid @enderror"
             name="address" required value="{{ old('address') }}"  autocomplete="false"
@@ -58,7 +58,7 @@
               </span>
             @enderror
           </div>
-					<label for="street_address">{{ __('Street') }}</label>
+					<label for="street_address">{{ __('register.street_label') }}</label>
           <div>
             <input type="text" class="form-control @error('street_address') is-invalid @enderror"
             name="street_address" required value="{{ old('street_address') }}"  autocomplete="false"
@@ -69,7 +69,7 @@
               </span>
             @enderror
           </div>
-					<label for="line2_address">{{ __('Line2') }}</label>
+					<label for="line2_address">{{ __('register.line2_label') }}</label>
           <div>
             <input type="text" class="form-control @error('line2_address') is-invalid @enderror"
             name="line2_address" value="{{ old('line2_address') }}"  autocomplete="false"
@@ -81,7 +81,7 @@
             @enderror
           </div>
 					<div>
-            {{Form::label('city', 'City')}}
+            {{Form::label('city', trans('register.city_label'))}}
 						<input type="text" class="form-control @error('city') is-invalid @enderror"
             name="city" required value="{{ old('city') }}"  autocomplete="false"
             autofocus>
@@ -92,7 +92,7 @@
             @enderror
           </div>
 					<div>
-            {{Form::label('state', 'State/Province')}}
+            {{Form::label('state', trans('register.state_province_label'))}}
 						<input type="text" class="form-control @error('state') is-invalid @enderror"
             name="state" required value="{{ old('state') }}"  autocomplete="false"
             autofocus>
@@ -103,17 +103,17 @@
             @enderror
           </div>
 					<div>
-            {{Form::label('country', 'Country')}}
+            {{Form::label('country', trans('profile.country_label'))}}
 						<select class="form-control custom-select mb-3" name="country" required="true"
 						id="register-select-country">
-							<option value="">Select Country</option>
+							<option value="">{{__('staff.empty_country_dropdown')}}</option>
 								@foreach(all_countries_latest() as $country)
 									<option data-code="{{$country->phonecode}}" data-id="{{$country->id}}" value="{{$country->name}}" {{ old('country') == $country->name ? 'selected' : '' }}>{{$country->name}}</option>
 								@endforeach
               </select>
           </div>
 
-					<label for="zip_code">{{ __('Zip/Postal Code') }}</label>
+					<label for="zip_code">{{ __('register.zip_postal_code_label') }}</label>
           <div>
             <input id="zip_code" type="text" class="form-control @error('zip_code') is-invalid @enderror"
             name="zip_code" required value="{{ old('zip_code') }}"  autocomplete="zip_code"
@@ -126,8 +126,8 @@
           </div>
         </div>
         <div class="col-md-6">
-          <p>Enter your account details below</p>
-          <label for="email">{{ __('E-Mail Address') }}</label>
+          <p>{{__('register.enter_below_detail_label')}}</p>
+          <label for="email">{{ __('login.login_email_label') }}</label>
           <div>
             <input id="email" type="email" required class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}"  autocomplete="email">
             @error('email')
@@ -136,7 +136,7 @@
                 </span>
             @enderror
           </div>
-					<label for="company_website">{{ __('Company Website') }}</label>
+					<label for="company_website">{{ __('profile.company_website_label') }}</label>
           <div>
             <input id="company_website" type="text" class="form-control @error('company_website') is-invalid @enderror"
             name="company_website" required value="{{ old('company_website') }}"  autocomplete="company_website"
@@ -147,13 +147,13 @@
               </span>
             @enderror
           </div>
-          <label for="phone_code">{{ __('Phone Number') }}</label>
+          <label for="phone_code">{{ __('staff.staff_list_phone_number_label') }}</label>
           <div class="row">
             <div class="col-md-3">
 							<input type="hidden" class="form-control mb-3" id="phone-code-hidden" name="phone_code"/>
 								<select class="form-control custom-select mb-3" id="phone-code-register"
 								required="true" autofocus>
-									<option value="">Select</option>
+									<option value="">{{__('staff.empty_phone_dropdown')}}</option>
 										@php
 											$phonCode=getPhoneCode();
 										@endphp
@@ -198,9 +198,9 @@
 						{{Form::hidden('timezone', fetchTimezone())}}
 					@else
 	          <div>
-	            {{Form::label('timezone', 'Timezone')}}
+	            {{Form::label('timezone', trans('profile.timezone_label'))}}
 	            <select class="form-control" id="timezone" name="timezone" required="true">
-	              <option value="">Select Timezone</option>
+	              <option value="">{{__('register.timezone_dropdown_label')}}</option>
 	                @foreach(all_timezones() as $key=>$timezone)
 	                  <option value="{{$key}}" {{ old('timezone') == $key ? 'selected' : '' }}>{{$timezone}}</option>
 	                @endforeach
@@ -216,7 +216,7 @@
             </select>
           </div>
 					<div class="register-grey-background">
-	          <p>Enter your card details below</p>
+	          <p>{{__('register.enter_card_detail_below_label')}}</p>
 						<div class="form-row">
 					    <div id="card-element" style="width: 35.5em;border: 1px solid #eaeaea;margin-bottom: 15px;padding: 10px;margin-left: 6px;">
 					      <!-- A Stripe Element will be inserted here. -->
@@ -226,25 +226,25 @@
 					    <div id="card-errors" role="alert"></div>
 	  				</div>
 						<div class="col-md-12 col-12">
-							<input type="checkbox" id="openTermsModal" class="required" required/>  <label>I have read and understand the Terms of Service</label>
+							<input type="checkbox" id="openTermsModal" class="required" required/>  <label>{{__('register.read_understand_term_service_chkbox')}}</label>
 						</div>
 	          <div class='form-row row' id="errorDiv">
 	            <div class='col-md-12 error form-group hide'>
-	              <div class='alert-danger alert'>Please correct the errors and try again.</div>
+	              <div class='alert-danger alert'>{{__('register.correct_errors_try_again_label')}}</div>
 	            </div>
 	          </div>
 	          <div>
 						<div class='form-row row' id="startFreeTrialRow">
 							<div class="col-md-12 ml-3">
-								<span>Start your 6O days free account now, we will save your credit card detail for future use</span>
+								<span>{{__('register.free_account_now_label')}}</span>
 							</div>
 						</div>
 	            <button type="submit" class="btn btn-primary hey-blue ml-3 submit-button">
-	                {{ __('Register') }}
+	                {{ __('common.welcome_register') }}
 	            </button>
 	          </div>
-	        <div class="registration ml-2 mt-2 registered-already">Already Registered.
-	          <a class="" href="{{route('login')}}">Login</a>
+	        <div class="registration ml-2 mt-2 registered-already">{{__('register.already_register_label')}}
+	          <a class="" href="{{route('login')}}">{{ __('common.welcome_login') }}</a>
 	        </div>
 				</div>
       </div>

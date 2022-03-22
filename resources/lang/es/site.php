@@ -22,6 +22,11 @@ return [
   'site_manager_label'=>'Gerente',
   'site_set_default_label'=>'Establecer predeterminado',
   'select_category_empty_option'=>'Selecciona Categoría',
-  'select_manager_empty_option'=>'Seleccionar Gerente'
+  'select_manager_empty_option'=>'Seleccionar Gerente',
+  'business_name_tooltip'=>'Esto mostrará el nombre de su empresa. No se puede cambiar el nombre de la empresa, es de solo lectura.',
+  'site_cover_image_tooltip'=>'puede agregar la imagen del logotipo de su empresa para su sitio. No es un campo obligatorio.',
+  'site_category_tooltip'=>'puede elegir una categoría para su sitio que mejor describa su tipo de negocio.',
+  'site_manager_tooltip'=>'puede elegir un administrador y asignarlo a cada sitio. No es un campo obligatorio.',
+  'site_address_tooltip'=>'aquí es donde ingresa la dirección de cada sitio. Según esta dirección, aparecerá un círculo en el mapa que muestra la geo-cerca de este sitio. Puede arrastrar y soltar círculos a cualquier ubicación si no está en la dirección correcta.'
 ];
 ?>

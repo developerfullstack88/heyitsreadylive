@@ -23,5 +23,7 @@ return [
   'just_menu_qr_code_label'=>'juste le code QR du menu',
   'disable_label'=>'Désactiver',
   'enable_label'=>'Permettre',
+  'credit_card_tooltip'=>"Vous pouvez choisir l'heure de fin de la commande ici.",
+  'delete_account_tooltip'=>'Ce bouton vous permet de supprimer votre compte ! Si vous le faites, nous serons tristes de vous voir partir !'
 ];
 ?>

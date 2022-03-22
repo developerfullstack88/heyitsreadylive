@@ -6,7 +6,7 @@
 	        <header class="card-header font-title">
             @lang('report.basic_report_heading')
             <i class="fas fa-question-circle"
-            data-toggle="tooltip" data-placement="right" title="This table will show basic information about each order such as Order Number, Customer Name, Order Time, E.P.U.T., Order Paid or not Paid, Total Time for order versus estimated time, if the payment was cash, credit card payment or other and whether an order was delayed or not." data-container="body"></i>
+            data-toggle="tooltip" data-placement="right" title="{{__('report.basic_report_tooltip')}}" data-container="body"></i>
           </header>
           <div class="card-body">
             <div class="row">
@@ -15,26 +15,26 @@
                   <header class="card-header font-title">
                    @lang('report.filteration_heading')
                    <i class="fas fa-question-circle"
-                   data-toggle="tooltip" data-placement="right" title="You are able to use the search filter for the basic reporting table with date and time to narrow down your search for specific times and dates." data-container="body"></i>
+                   data-toggle="tooltip" data-placement="right" title="{{__('report.filter_tooltip')}}" data-container="body"></i>
                   </header>
                   <div class="card-body">
                     {{ Form::open(array('action'=> 'ReportController@store','method'=>'get')) }}
                     <div class="form-group">
                       {{Form::label('date', trans('report.date_label'))}}
                       <i class="fas fa-question-circle"
-          						data-toggle="tooltip" data-placement="right" title="You are able to select specific dates to narrow down your search." data-container="body"></i>
+          						data-toggle="tooltip" data-placement="right" title="{{__('report.date_tooltip')}}" data-container="body"></i>
                       {{Form::text('date',(isset($postedData) && $postedData['date'])?$postedData['date']:'',['class'=>'form-control set-eta-date-picker'])}}
                     </div>
                     <div class="form-group">
                       {{Form::label('time_from', trans('report.time_from_label'))}}
                       <i class="fas fa-question-circle"
-          						data-toggle="tooltip" data-placement="right" title="You are able to choose the order start time with each date." data-container="body"></i>
+          						data-toggle="tooltip" data-placement="right" title="{{__('report.time_from_tooltip')}}" data-container="body"></i>
                       {{Form::text('time_from',(isset($postedData) && $postedData['time_from'])?$postedData['time_from']:'',['class'=>'form-control eta-time-picker'])}}
                     </div>
                     <div class="form-group">
                       {{Form::label('time_to', trans('report.time_to_label'))}}
                       <i class="fas fa-question-circle"
-          						data-toggle="tooltip" data-placement="right" title="You can choose order end time here." data-container="body"></i>
+          						data-toggle="tooltip" data-placement="right" title="{{__('report.time_to_tooltip')}}" data-container="body"></i>
                       {{Form::text('time_to','',['class'=>'form-control eta-time-picker'])}}
                     </div>
                     <div class="form-group form-check">
@@ -42,7 +42,7 @@
                         <a href="{{route('reports.index')}}" class="btn btn-lg btn-default"/>
                         @lang('report.reset_btn')
                         <i class="fas fa-question-circle"
-            						data-toggle="tooltip" data-placement="top" title="You can reset all filter searches form options here." data-container="body"></i>
+            						data-toggle="tooltip" data-placement="top" title="{{__('report.reset_filter_tooltip')}}" data-container="body"></i>
                       </a>
                     </div>
                   </div>

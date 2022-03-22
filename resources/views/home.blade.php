@@ -63,20 +63,20 @@
       href="{{route('orders.delete-complete')}}" onclick="return confirm('Do you want to delete complete orders?')">
       @lang('dashboard.delete_complete_order_btn')
       <i class="fas fa-question-circle ml-1 mt-1"
-      data-toggle="tooltip" data-placement="top" title="This button is used for deleting all Orders whose Status is completed.When You will click on it confirm box will open with two options. If You do not want delete completed orders then click on `Cancel' option otherwise click on `Ok'." data-container="body"></i>
+      data-toggle="tooltip" data-placement="top" title="{{__('dashboard.delete_complete_order_tooltip')}}" data-container="body"></i>
     </a>
     @elseif(currentUser() && currentUser()->delete_complete_order == 1 && Request::get('type')=='all')
     <a id="home-delete-complete-btn" class="btn btn-danger btn-lg btn-huge ml-2 font-title"
     href="{{route('orders.delete-complete')}}" onclick="return confirm('Do you want to delete complete orders?')">
       @lang('dashboard.delete_complete_order_btn')
       <i class="fas fa-question-circle ml-1 mt-1"
-      data-toggle="tooltip" data-placement="top" title="This button is used for deleting all orders whose status is completed. When You will click on it the confirm box will open with two options. If You do not want delete the completed order then click on “Cancel” option or click on `Ok' to delete the order." data-container="body"></i>
+      data-toggle="tooltip" data-placement="top" title="{{__('dashboard.delete_complete_order_tooltip')}}" data-container="body"></i>
     </a>
     @endif
 
     <!---Delete checked button-->
-    <button id="delete-selected-order" class="btn btn-danger-red btn-lg btn-huge ml-2 font-title" type="button">Delete Checked <i class="fas fa-question-circle ml-1 mt-1"
-    data-toggle="tooltip" data-placement="top" title="This button is basically used for deleting all orders whose checkboxes are checked which are available on each row. When you will click on this button then the confirm box is shown with two options. If You do not want delete all the checked orders then click on “Cancel” option or click on “OK” to delete all the checked orders." data-container="body"></i></button>
+    <button id="delete-selected-order" class="btn btn-danger-red btn-lg btn-huge ml-2 font-title" type="button"><?=__('dashboard.delete_checked_label')?> <i class="fas fa-question-circle ml-1 mt-1"
+    data-toggle="tooltip" data-placement="top" title="{{__('dashboard.delete_checked_tooltip')}}" data-container="body"></i></button>
     <!---Delete checked button-->
   </div>
   <div class="col-lg-6">
@@ -84,7 +84,7 @@
         <a id="addNewOrderBtn" class="btn btn-info btn-lg btn-huge font-title" href="{{route('orders.create')}}">
           @lang('dashboard.add_new_order_btn')
           <i class="fas fa-question-circle ml-1 mt-1"
-          data-toggle="tooltip" data-placement="top" title="This is used to add new orders to notify your customers when their order will be ready for pick up. This is where you will add their name, phone number and E.P.U.T. (Estimated Pick Up Time).If you have turned on the ability for your customers to pay by Credit Card for their orders in advance you are able to add the amount of the order." data-container="body"></i>
+          data-toggle="tooltip" data-placement="top" title="{{__('dashboard.add_order_btn_tooltip')}}" data-container="body"></i>
         </a>
       @endif
   </div>
@@ -96,7 +96,7 @@
           <header class="card-header font-title">
               {{ucfirst(Request::get('type')??'Active')}} Orders
               <i class="fas fa-question-circle ml-1 mt-1"
-              data-toggle="tooltip" data-placement="right" title="This table shows all current order information. You can use the tabs to show Active, All, Completed or Future Orders. If You want to show more detailed order info then you can click on the “Detail” button and this will open up in a separate window. If You want to Print the order details then you are able to click on the “Print” button for each individual order. If You want to delete a particular order then you will have to check the checkbox available on each row and then the red button `Delete Checked` will be visible to delete all checked orders. You can also reset EPUT time by clicking on the “Delayed” button." data-container="body"></i>
+              data-toggle="tooltip" data-placement="right" title="{{__('dashboard.active_orders_tooltip')}}" data-container="body"></i>
           </header>
           <div class="card-body">
             <div class="col-lg-12">
@@ -211,6 +211,9 @@
                                   {{Form::button(trans('dashboard.table_delayed_btn'),["class"=>"btn btn-primary btn-sm orderDelay home-btn-delayed","data-id"=>$order->id])}}
                                 @endif
                                 @if($order->eta && $order->status!='ready')
+                                  {{Form::button(trans('dashboard.table_ready_btn'),["class"=>"btn btn-info btn-sm change-status home-btn-ready","data-status"=>"ready","data-id"=>$order->id])}}
+                                @elseif($order->status=='confirm')
+                                  {{Form::button(trans('dashboard.table_delayed_btn'),["class"=>"btn btn-primary btn-sm orderDelay home-btn-delayed","data-id"=>$order->id])}}
                                   {{Form::button(trans('dashboard.table_ready_btn'),["class"=>"btn btn-info btn-sm change-status home-btn-ready","data-status"=>"ready","data-id"=>$order->id])}}
                                 @endif
                                 @if($order->status=='ready')

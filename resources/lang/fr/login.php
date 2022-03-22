@@ -1,12 +1,12 @@
 <?php
 return [
-  'login_heading'=>'Sign in now',
-  'login_email_label'=>'E-Mail Address',
-  'login_password_label'=>'Password',
-  'login_remember'=>'Remember me',
-  'login_forgot_password'=>'Forgot Password',
-  'login_dont_have_account'=>"Don't have an account yet",
-  'login_create_account_text'=>"Create an account",
-  'login_submit_btn'=>'Sign in'
+  'login_heading'=>'Connectez vous maintenant',
+  'login_email_label'=>'Adresse e-mail',
+  'login_password_label'=>'Mot de passe',
+  'login_remember'=>'Souviens-toi de moi',
+  'login_forgot_password'=>'Mot de passe oublié',
+  'login_dont_have_account'=>"Vous n'avez pas encore de compte",
+  'login_create_account_text'=>"Créer un compte",
+  'login_submit_btn'=>"S'identifier"
 ];
 ?>

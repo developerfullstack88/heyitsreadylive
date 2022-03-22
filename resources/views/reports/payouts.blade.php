@@ -4,7 +4,7 @@
     <header class="card-header font-title">
       @lang('payouts.list_heading')
       <i class="fas fa-question-circle"
-      data-toggle="tooltip" data-placement="top" title="This table will show all payouts for your stripe connect account. When a client pays by credit card you will see the payment transaction here." data-container="body"></i>
+      data-toggle="tooltip" data-placement="top" title="{{__('report.payout_listing_tooltip')}}" data-container="body"></i>
     </header>
     <div class="card-body">
         <div class="col-md-12">
@@ -12,16 +12,16 @@
             <div class="dateControlBlock">
                 <label>@lang('payouts.filter_start_date') </label>
                 <i class="fas fa-question-circle"
-                data-toggle="tooltip" data-placement="top" title="You are able to select the start date in the filter option here." data-container="body"></i>
+                data-toggle="tooltip" data-placement="top" title="{{__('report.start_date_tooltip')}}" data-container="body"></i>
                 <input type="text" name="dateStart" id="dateStart" class="datepicker" value="" size="8" />
                 <label>@lang('payouts.filter_end_date') </label>
                 <i class="fas fa-question-circle"
-                data-toggle="tooltip" data-placement="top" title="You are able to select end date in the filter option here." data-container="body"></i>
+                data-toggle="tooltip" data-placement="top" title="{{__('report.end_date_tooltip')}}" data-container="body"></i>
                 <input type="text" name="dateEnd" id="dateEnd" class="datepicker" value="" size="8"/>
                 <button class="btn btn-default" id="resetPayouts">
                   @lang('payouts.filter_reset_btn')
                   <i class="fas fa-question-circle"
-                  data-toggle="tooltip" data-placement="top" title="This will reset all filter form options." data-container="body"></i>
+                  data-toggle="tooltip" data-placement="top" title="{{__('report.reset_filter_tooltip')}}" data-container="body"></i>
                 </button>
                 <button class="btn btn-secondary" id="filterPayouts">@lang('payouts.filter_label')</button>
             </div>

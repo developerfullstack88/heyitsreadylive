@@ -19,5 +19,6 @@ return [
   'empty_country_dropdown'=>'Choisissez le pays',
   'empty_phone_dropdown'=>'Sélectionner',
   'empty_role_dropdown'=>'Sélectionnez un rôle',
+  'staff_listing_tooltip'=>"Ce tableau affichera tous les membres du personnel ajoutés par l'administrateur. Vous pouvez utiliser trois options dans la colonne 'Actions'. Si vous souhaitez voir des informations détaillées sur un membre en particulier, cliquez sur l'icône 'Afficher'. Si vous souhaitez mettre à jour les informations d'un membre en particulier, cliquez sur l'icône 'Modifier'. Si vous souhaitez supprimer un membre en particulier, cliquez sur l'icône 'Supprimer'."
 ];
 ?>

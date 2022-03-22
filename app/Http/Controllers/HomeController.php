@@ -23,7 +23,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except(['trackOrder','privacyPolicy','termsServices','activateAccount','thankyou','marketingQr','trackQr','setupGuides','testQr']);
+        $this->middleware('auth')->except(['trackOrder','privacyPolicy','termsServices','activateAccount','thankyou','marketingQr','trackQr','setupGuides','testQr','setLocaleWithoutLogin']);
     }
 
     /**
@@ -299,6 +299,15 @@ class HomeController extends Controller
       return redirect()->back();
     }
 
+    public function setLocaleWithoutLogin($locale){
+      if (! in_array($locale, ['en', 'es', 'fr','aus','ca','nz'])) {
+        abort(400);
+      }
+      Session::put('locale', $locale);
+      return redirect()->back();
+    }
+
+
     /*save token of logged business user*/
     public function saveToken (Request $request)
     {
@@ -337,13 +346,29 @@ class HomeController extends Controller
     */
     public function activateAccount($id,Request $request){
       if($id){
+        /*user account activation*/
+        $userInfo = User::find($id);
+        if($userInfo->role==USER){
+          $userInfo->active=1;
+          $request->session()->flush();
+          $request->session()->regenerate();
+          if($userInfo->save()){
+            Session::flash('success', 'Congratulations!You have successfully activate account.');
+          }else{
+            Session::flash('warning', 'There is some problem in activating account.');
+          }
+          //return redirect()->route('login');
+          return redirect()->route('heyItsReadyHome');
+        }
+        /*user account activation*/
+
         if($request->isMethod('post')){
           $request->validate([
             'password' => ['required', 'string', 'min:8', 'confirmed']
           ]);
           $postedData = $request->all();
           extract($postedData);
-          $userInfo = User::find($id);
+
           $userInfo->password=bcrypt($password);
           $userInfo->active=1;
           if($userInfo->save()){

@@ -6,7 +6,7 @@
 	        <header class="card-header font-title">
             @lang('site.site_list_heading')
             <i class="fas fa-question-circle ml-1 mt-1"
-            data-toggle="tooltip" data-placement="right" title="This table will show all of your added sites. You can use three options under the “Actions” column. If You want to see detailed info about a particular site then click on “A ” icon. If You want to update particular site then click on the “B ” icon. If You want to remove a particular site then click on the “C ” icon." data-container="body"></i>
+            data-toggle="tooltip" data-placement="right" title="{{__('dashboard.site_listing_tooltip')}}" data-container="body"></i>
           </header>
           <div class="card-body">
                <div class="table-responsive">

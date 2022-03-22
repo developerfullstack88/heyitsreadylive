@@ -8,7 +8,7 @@
 </div>
 <form class="form-signin ipixup-signin" method="POST" action="{{ route('activateAccountPost',[$id]) }}">
  @csrf
- <h2 class="form-signin-heading">Set Password</h2>
+ <h2 class="form-signin-heading">@lang('register.set_password_heading')</h2>
  <div class="login-wrap">
     <label for="password">@lang('login.login_password_label')</label>
     <div>
@@ -20,13 +20,13 @@
         </span>
         @enderror
     </div>
-    <label for="password-confirm">{{ __('Confirm Password') }}</label>
+    <label for="password-confirm">@lang('register.confirm_password_label')</label>
     <div>
         <input id="password-confirm" type="password" class="form-control"
         name="password_confirmation"  autocomplete="new-password">
     </div>
   </div>
-    <button class="btn btn-lg btn-login btn-block" type="submit">Submit</button>
+    <button class="btn btn-lg btn-login btn-block" type="submit">@lang('register.submit_label')</button>
 </div>
 
 </form>

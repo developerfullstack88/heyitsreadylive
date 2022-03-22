@@ -1156,6 +1156,32 @@ if(!function_exists('getLangHtml')){
     return $html;
   }
 }
+
+if(!function_exists('getLangHtmlWithoutLogin')){
+  function getLangHtmlWithoutLogin() {
+    switch(session()->get('locale')){
+      case 'fr':
+        $html='<li><a href="/language-without-login/es"><img src="/img/flags/es.png" alt=""> Spanish</a></li><li><a href="/language-without-login/en"><img src="/img/flags/us.png" alt=""> US</a></li><li><a href="/language-without-login/aus"><img src="/img/flags/aus.png" alt=""> Aus</a></li><li><a href="/language-without-login/ca"><img src="/img/flags/canada.png" alt=""> Canada</a></li><li><a href="/language-without-login/nz"><img src="/img/flags/nz.png" alt=""> New Zealand</a></li>';
+        break;
+      case 'es':
+        $html='<li><a href="/language-without-login/fr"><img src="/img/flags/fr.png" alt=""> French</a></li><li><a href="/language-without-login/en"><img src="/img/flags/us.png" alt=""> US</a></li><li><a href="/language-without-login/aus"><img src="/img/flags/aus.png" alt=""> Aus</a></li><li><a href="/language-without-login/ca"><img src="/img/flags/canada.png" alt=""> Canada</a></li><li><a href="/language-without-login/nz"><img src="/img/flags/nz.png" alt=""> New Zealand</a></li>';
+        break;
+      case 'aus':
+        $html='<li><a href="/language-without-login/fr"><img src="/img/flags/fr.png" alt=""> French</a></li><li><a href="/language-without-login/en"><img src="/img/flags/us.png" alt=""> US</a></li><li><a href="/language-without-login/es"><img src="/img/flags/es.png" alt=""> Spanish</a></li><li><a href="/language-without-login/ca"><img src="/img/flags/canada.png" alt=""> Canada</a></li><li><a href="/language-without-login/nz"><img src="/img/flags/nz.png" alt=""> New Zealand</a></li>';
+        break;
+      case 'ca':
+        $html='<li><a href="/language-without-login/fr"><img src="/img/flags/fr.png" alt=""> French</a></li><li><a href="/language-without-login/en"><img src="/img/flags/us.png" alt=""> US</a></li><li><a href="/language-without-login/es"><img src="/img/flags/es.png" alt=""> Spanish</a></li><li><a href="/language-without-login/aus"><img src="/img/flags/aus.png" alt=""> Aus</a></li><li><a href="/language-without-login/nz"><img src="/img/flags/nz.png" alt=""> New Zealand</a></li>';
+        break;
+      case 'nz':
+        $html='<li><a href="/language-without-login/fr"><img src="/img/flags/fr.png" alt=""> French</a></li><li><a href="/language-without-login/en"><img src="/img/flags/us.png" alt=""> US</a></li><li><a href="/language-without-login/es"><img src="/img/flags/es.png" alt=""> Spanish</a></li><li><a href="/language-without-login/aus"><img src="/img/flags/aus.png" alt=""> Aus</a></li><li><a href="/language-without-login/nz"><img src="/img/flags/nz.png" alt=""> New Zealand</a></li>';
+        break;
+      default:
+        $html='<li><a href="/language-without-login/es"><img src="/img/flags/es.png" alt=""> Spanish</a></li><li><a href="/language-without-login/fr"><img src="/img/flags/fr.png" alt=""> French</a></li><li><a href="/language-without-login/aus"><img src="/img/flags/aus.png" alt=""> Aus</a></li><li><a href="/language-without-login/aus"><img src="/img/flags/canada.png" alt=""> Canada</a></li><li><a href="/language-without-login/nz"><img src="/img/flags/nz.png" alt=""> New Zealand</a></li>';
+        break;
+    }
+    return $html;
+  }
+}
 /*Send push to web browser*/
 if(!function_exists('sendWebPushNotification')){
   function sendWebPushNotification($orderInfo,$data,$extraData=array()) {

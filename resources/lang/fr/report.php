@@ -18,5 +18,15 @@
     'filteration_heading'=>'Chercher',
     'table_payment_type'=>'Type de paiement',
     'table_delayed_time'=>'Temps de retard',
+    'basic_report_tooltip'=>"Ce tableau affichera des informations de base sur chaque commande, telles que le numéro de commande, le nom du client, l'heure de la commande, l'EPUT, la commande payée ou non, le temps total de la commande par rapport au temps estimé, si le paiement a été effectué en espèces, par carte de crédit ou autre et si une commande a été retardé ou non.",
+    'filter_tooltip'=>"Vous pouvez utiliser le filtre de recherche pour le tableau de rapport de base avec la date et l'heure pour limiter votre recherche à des heures et des dates spécifiques.",
+    'date_tooltip'=>'Vous pouvez sélectionner des dates spécifiques pour affiner votre recherche.',
+    'time_from_tooltip'=>"vous pouvez choisir l'heure de début de la commande avec chaque date.",
+    'time_to_tooltip'=>"Vous pouvez choisir l'heure de fin de la commande ici.",
+    'reset_filter_tooltip'=>'Vous pouvez réinitialiser toutes les options du formulaire de recherche de filtres ici.',
+    'payout_listing_tooltip'=>"Ce tableau affichera tous les paiements de votre compte Stripe Connect. Lorsqu'un client paie par carte de crédit, vous verrez ici la transaction de paiement.",
+    'start_dastart_date_tooltipte_tooltip'=>"vous pouvez sélectionner la date de début dans l'option de filtre ici.",
+    'end_date_tooltip'=>"vous pouvez sélectionner la date de fin dans l'option de filtre ici.",
+    'payment_listing_tooltip'=>'Ce tableau montrera tous les paiements de commande.'
   ];
 ?>

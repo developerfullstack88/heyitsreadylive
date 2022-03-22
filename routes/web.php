@@ -57,6 +57,8 @@ Route::post('admin-login', 'Admin\SuperController@login')->name('super-admin-log
 Route::post('fetch-states', 'DropdownController@fetchState')->name('fetchState');
 Route::post('fetch-cities', 'DropdownController@fetchCity')->name('fetchCity');
 
+Route::get('language-without-login/{locale}', 'HomeController@setLocaleWithoutLogin')->name('language.locale-without-login');
+
 /*AFTER LOGIN ROUTES*/
 Route::group(['middleware' => ['web','auth']], function () {
   Route::get('/home', 'HomeController@index')->name('home');

@@ -20,6 +20,9 @@ return [
   'confirm_password_label'=>'Re-taper le nouveau mot de passe',
   'upload_btn_label'=>'Télécharger une photo',
   'change_profile_btn_label'=>"Changer l'image de profil",
-  'role_label'=>'Rôle'
+  'role_label'=>'Rôle',
+  'change_company_name_tooltip'=>'Vous pouvez modifier le nom de votre entreprise ici.',
+  'street_number_tooltip'=>'Vous pouvez modifier ou mettre à jour le numéro de rue ici.',
+  'edit_profile_tooltip'=>'vous pouvez "Modifier" votre profil ici.'
 ];
 ?>
