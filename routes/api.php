@@ -23,6 +23,7 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
     Route::get('logout', 'JWTAuthController@logout');
     Route::post('refresh', 'JWTAuthController@refresh');
     Route::post('forgot-password', 'JWTAuthController@forgotPassword');
+    Route::put('account-active', 'JWTAuthController@accountActive');
 });
 Route::group(['middleware' => 'api','prefix' => 'ajax'], function ($router) {
 

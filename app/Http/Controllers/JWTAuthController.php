@@ -33,11 +33,14 @@ class JWTAuthController extends Controller
 
     /*send register email*/
     private function sendRegisterEmail($data){
+      $user=$data;
+      $user->active_code=getRandomActiveCode();
+      $user->save();
       $data->subject='WELCOME TO HEYISREADY';
       Mail::to($data->email)->send(new WelcomeMobile($data));
 
       $data->subject='Activate Your account';
-      $data->url=\URL::to('activate-account', array($data->id), true);
+      $data->active_code=$user->active_code;
       Mail::to($data->email)->send(new ActivateMobile($data));
     }
 
@@ -46,8 +49,7 @@ class JWTAuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(Request $request)
-    {
+    public function register(Request $request){
       if($request->all()){
         $user = User::where('email', '=', $request->get('email'))->first();
         $phoneUser = User::where('phone_number', '=', $request->get('phone_number'))->first();
@@ -101,9 +103,9 @@ class JWTAuthController extends Controller
             $user->token=$token;
             $user->email_enable=1;
             $user->notification=1;
-            if(!updateLoginToken($user->id,$token)) {
+            /*if(!updateLoginToken($user->id,$token)) {
               return response()->json(['code'=>400,'status'=>false,'message'=>'Login token is not updated']);
-            }
+            }*/
             return response()->json(['code'=>200,'status'=>true,'message' => 'Please check your email for account activation.',
             'data' => $user,'token'=>$token]);
           }
@@ -118,8 +120,7 @@ class JWTAuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
-    {
+    public function login(Request $request){
     	$validator = Validator::make($request->all(), ['email' => 'email']);
 
         if ($validator->fails()) {
@@ -161,6 +162,23 @@ class JWTAuthController extends Controller
             'data' => $user,'token'=>$tokenString]);
           }
         }
+    }
+
+    /*this will used for activating account*/
+    public function accountActive(Request $request){
+    	if($request->all()){
+        $userInfo = User::where('active_code', '=', $request->get('active_code'))->first();
+        if($userInfo){
+          $userInfo->active_code=null;
+          $userInfo->active=1;
+          $userInfo->save();
+          return response()->json(['code'=>200,'message' => 'Your account has been activated successfully.']);
+        }else{
+          return response()->json(['code'=>400,'status'=>false,'message'=>'Active code is not valid or expired.']);
+        }
+      }else{
+        return response()->json(['code'=>400,'status'=>false,'message'=>'Please enter required field']);
+      }
     }
 
     /**

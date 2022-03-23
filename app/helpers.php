@@ -1016,6 +1016,23 @@ if(!function_exists('getRandomOrderNumber')){
   }
 }
 
+/*this will generate 4 digit active code*/
+if(!function_exists('getRandomActiveCode')){
+  function getRandomActiveCode(){
+    $key = '';
+    $keys = array_merge(range(0, 9), range('a', 'z'));
+    for ($i = 0; $i < 4; $i++) {
+        $key .= $keys[array_rand($keys)];
+    }
+    $count=User::where('active_code',$key)->count();
+    if($count>0){
+      $this->getRandomActiveCode();
+    }
+    return $key;
+
+  }
+}
+
 /*get latest order of user*/
 if(!function_exists('getLatestUserOrder')){
   function getLatestUserOrder($uid){
