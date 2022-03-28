@@ -24,6 +24,9 @@ return [
   'disable_label'=>'Desactivar',
   'enable_label'=>'Habilitar',
   'credit_card_tooltip'=>'aquí es donde puede agregar, actualizar o cambiar la información de su tarjeta de crédito para su facturación mensual.',
-  'delete_account_tooltip'=>'¡Este botón es donde puede eliminar su cuenta! ¡Si lo haces, estaremos tristes de verte partir!'
+  'delete_account_tooltip'=>'¡Este botón es donde puede eliminar su cuenta! ¡Si lo haces, estaremos tristes de verte partir!',
+  'accept_payment_tab'=>'Aceptar pagos',
+  'language_tab'=>'Idioma',
+  'change_language_label'=>'Cambiar idioma'
 ];
 ?>

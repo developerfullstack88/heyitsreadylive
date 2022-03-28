@@ -23,10 +23,10 @@
     'date_tooltip'=>'Vous pouvez sélectionner des dates spécifiques pour affiner votre recherche.',
     'time_from_tooltip'=>"vous pouvez choisir l'heure de début de la commande avec chaque date.",
     'time_to_tooltip'=>"Vous pouvez choisir l'heure de fin de la commande ici.",
-    'reset_filter_tooltip'=>'Vous pouvez réinitialiser toutes les options du formulaire de recherche de filtres ici.',
-    'payout_listing_tooltip'=>"Ce tableau affichera tous les paiements de votre compte Stripe Connect. Lorsqu'un client paie par carte de crédit, vous verrez ici la transaction de paiement.",
-    'start_dastart_date_tooltipte_tooltip'=>"vous pouvez sélectionner la date de début dans l'option de filtre ici.",
-    'end_date_tooltip'=>"vous pouvez sélectionner la date de fin dans l'option de filtre ici.",
+    'reset_filter_tooltip'=>'Ceci réinitialisera toutes les options du formulaire de filtrage.',
+    'payout_listing_tooltip'=>"Ce tableau présente tous les paiements effectués sur votre compte stripe connect. Lorsqu'un client paie par carte de crédit, vous y verrez la transaction de paiement.",
+    'start_dastart_date_tooltipte_tooltip'=>"Vous pouvez y sélectionner la date de début dans l'option de filtre.",
+    'end_date_tooltip'=>"Vous pouvez y sélectionner la date de fin dans l'option de filtre.",
     'payment_listing_tooltip'=>'Ce tableau montrera tous les paiements de commande.'
   ];
 ?>

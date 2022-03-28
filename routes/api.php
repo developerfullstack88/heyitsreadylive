@@ -24,6 +24,7 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
     Route::post('refresh', 'JWTAuthController@refresh');
     Route::post('forgot-password', 'JWTAuthController@forgotPassword');
     Route::put('account-active', 'JWTAuthController@accountActive');
+    Route::get('account-active-email-send/{uid}', 'JWTAuthController@accountActiveEmailSend');
 });
 Route::group(['middleware' => 'api','prefix' => 'ajax'], function ($router) {
 

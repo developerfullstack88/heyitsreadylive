@@ -23,29 +23,18 @@
                       <input type="text" class="form-control search" placeholder="Search">
                   </li>-->
                   <!-- user login dropdown start-->
-                  <li class="dropdown language">
-                      <a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="true">
-                          <img src="{{getLangFlag()}}" alt="">
-                          <span class="username">{{getLangName()}}</span>
-                          <b class="caret"></b>
-                      </a>
-                      <ul class="dropdown-menu" x-placement="bottom-start">
-
-                          {!! getLangHtml() !!}
-                      </ul>
-                  </li>
                   <li class="dropdown">
                       <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                           @if(auth()->user()->profile_photo && auth()->user()->role==COMPANY)
-                          <img alt="" id="ipixupProfileIcon" width="30" height="30" src="{{asset('storage/'.Auth::user()->profile_photo)}}">
+                          <!--<img alt="" id="ipixupProfileIcon" width="30" height="30" src="{{asset('storage/'.Auth::user()->profile_photo)}}">-->
                           @elseif(auth()->user()->profile_photo)
                             <img alt="" id="ipixupProfileIcon" width="30" height="30"
                             src="{{asset(auth()->user()->profile_photo)}}">
                           @else
-                          <img alt="" id="ipixupProfileIcon" width="30" height="30" src="/img/avatar1_small.jpg">
+                          <!--<img alt="" id="ipixupProfileIcon" width="30" height="30" src="/img/avatar1_small.jpg">-->
                           @endif
                           <span class="username">
-                            {{Auth::user()->first_name}}
+                            Welcome {{Auth::user()->first_name}}
                             {{Auth::user()->last_name}}
                           </span>
                           <b class="caret"></b>

@@ -23,10 +23,11 @@ return [
   'site_set_default_label'=>'Définir par defaut',
   'select_category_empty_option'=>'Choisir une catégorie',
   'select_manager_empty_option'=>'Sélectionnez le gestionnaire',
-  'business_name_tooltip'=>"Cela affichera le nom de votre entreprise. Vous ne pouvez pas modifier le nom de l'entreprise, il est en lecture seule.",
-  'site_cover_image_tooltip'=>"vous pouvez ajouter l'image du logo de votre entreprise à votre site. Ce n'est pas un champ obligatoire.",
-  'site_category_tooltip'=>"Vous pouvez choisir une catégorie pour votre site qui décrit le mieux votre type d'entreprise.",
-  'site_manager_tooltip'=>"vous pouvez choisir un administrateur et l'affecter à chaque site. Ce n'est pas un champ obligatoire.",
-  'site_address_tooltip'=>"c'est ici que vous entrez l'adresse de chaque site. Sur la base de cette adresse, un cercle apparaîtra sur la carte indiquant la géo-clôture de ce site. Vous pouvez faire glisser et déposer des cercles à n'importe quel endroit si vous n'êtes pas dans la bonne direction."
+  'business_name_tooltip'=>"Ce champ indique le nom de votre entreprise. Vous ne pouvez pas modifier le nom de l'entreprise, il est en lecture seule.",
+  'site_cover_image_tooltip'=>"Vous pouvez ajouter l'image du logo de votre entreprise sur votre site. Ce n'est pas un champ obligatoire.",
+  'site_category_tooltip'=>"Vous pouvez choisir une catégorie pour votre site qui décrit le mieux votre type d'entreprise.
+Menu déroulant des.",
+  'site_manager_tooltip'=>"Vous pouvez choisir un gestionnaire et l'affecter à chaque site. Il ne s'agit pas d'un champ obligatoire.",
+  'site_address_tooltip'=>"C'est ici que vous saisissez l'adresse de chaque site. Sur la base de cette adresse, un cercle apparaîtra sur la carte pour montrer la géo-fence de ce site. Vous pouvez faire glisser et déposer le cercle à n'importe quel endroit s'il ne se trouve pas à la bonne adresse."
 ];
 ?>

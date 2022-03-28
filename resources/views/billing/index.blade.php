@@ -14,7 +14,10 @@
               </li>
               @endif
               <li class="nav-item font-title">
-                  <a class="nav-link" id="accept-payments-tab" data-toggle="tab" href="#acceptPaymentsTab" role="tab" aria-controls="billing" aria-selected="false">Accept Payments</a>
+                  <a class="nav-link" id="accept-payments-tab" data-toggle="tab" href="#acceptPaymentsTab" role="tab" aria-controls="billing" aria-selected="false">@lang('setting.accept_payment_tab')</a>
+              </li>
+              <li class="nav-item font-title">
+                  <a class="nav-link" id="change-language-tab" data-toggle="tab" href="#changeLanguageTab" role="tab" aria-controls="billing" aria-selected="false">@lang('setting.language_tab')</a>
               </li>
           </ul>
           <div class="tab-content" id="myTabContent">
@@ -365,6 +368,27 @@
                     </table>
                   </div>
                 </div>
+              </div>
+              <div class="tab-pane fade" id="changeLanguageTab" role="tabpanel" aria-labelledby="change-language-tab">
+                <div class="col-lg-6">
+                  <div class="row generalSettings font-title">
+                    @lang('setting.change_language_label')
+                  </div>
+                  <div class="col-lg-6">
+                    <ul>
+                      <li class="dropdown language">
+                          <a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="true">
+                              <img src="{{getLangFlag()}}" alt="">
+                              <span class="username">{{getLangName()}}</span>
+                              <!--<b class="caret"></b>-->
+                          </a>
+                          <ul class="dropdown-menu" x-placement="bottom-start">
+
+                              {!! getLangHtml() !!}
+                          </ul>
+                      </li>
+                    </ul>
+                  </div>
               </div>
           </div>
         </div>

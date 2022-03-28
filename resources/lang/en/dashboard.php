@@ -59,6 +59,10 @@ return [
   'active_orders_tooltip'=>'This table shows all current order information. You can use the tabs to show Active, All, Completed or Future Orders. If You want to show more detailed order info then you can click on the “Detail” button and this will open up in a separate window. If You want to Print the order details then you are able to click on the “Print” button for each individual order. If You want to delete a particular order then you will have to check the checkbox available on each row and then the red button `Delete Checked` will be visible to delete all checked orders. You can also reset EPUT time by clicking on the “Delayed” button.',
   'delete_complete_order_tooltip'=>"This button is used for deleting all orders whose status is completed. When You will click on it the confirm box will open with two options. If You do not want delete the completed order then click on “Cancel” option or click on `Ok' to delete the order.",
   'delete_checked_tooltip'=>'This button is basically used for deleting all orders whose checkboxes are checked which are available on each row. When you will click on this button then the confirm box is shown with two options. If You do not want delete all the checked orders then click on “Cancel” option or click on “OK” to delete all the checked orders.',
-  'site_listing_tooltip'=>'This table will show all of your added sites. You can use three options under the “Actions” column. If You want to see detailed info about a particular site then click on “View” icon. If You want to update particular site then click on the “Edit” icon. If You want to remove a particular site then click on the “Erase” icon.'
+  'site_listing_tooltip'=>'This table will show all of your added sites. You can use three options under the “Actions” column. If You want to see detailed info about a particular site then click on “View” icon. If You want to update particular site then click on the “Edit” icon. If You want to remove a particular site then click on the “Erase” icon.',
+  'orders_label'=>'Orders',
+  'all_orders_label'=>'All Orders',
+  'completed_orders_label'=>'Completed Orders',
+  'future_orders_label'=>'Future Orders',
 ];
 ?>

@@ -136,7 +136,10 @@ class JWTAuthController extends Controller
     			return response()->json(['code'=>400,'status'=>false,'message'=>'Record not found for this email']);
     		}
         if($user->active==0){
-          return response()->json(['code'=>400,'status'=>false,'message'=>'Your account is not active,Please active your account for enjoy all our services.']);
+          return response()->json(['code'=>400,
+          'status'=>false,
+          'user_id'=>$user->id,
+          'message'=>'Your account is not active,Please active your account for enjoy all our services.']);
         }
         if($tokenString=$this->createNewToken($token)){
           if($user->login_token && $request->get('login_check')===0){
@@ -178,6 +181,23 @@ class JWTAuthController extends Controller
         }
       }else{
         return response()->json(['code'=>400,'status'=>false,'message'=>'Please enter required field']);
+      }
+    }
+
+    /*this will send OTP again to email*/
+    public function accountActiveEmailSend(Request $request,$uid){
+    	if($uid){
+        $userInfo = $data=User::find($uid);
+        if($userInfo){
+          $data->subject='Activate Your account';
+          $data->active_code=$userInfo->active_code;
+          Mail::to($data->email)->send(new ActivateMobile($data));
+          return response()->json(['code'=>200,'message' => 'Please check your email for account activation.']);
+        }else{
+          return response()->json(['code'=>400,'status'=>false,'message'=>'User info has not found in DB.']);
+        }
+      }else{
+        return response()->json(['code'=>400,'status'=>false,'message'=>'User id is missing in url']);
       }
     }
 

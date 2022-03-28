@@ -94,7 +94,23 @@
   <div class="col-lg-12 col-12">
       <section class="card">
           <header class="card-header font-title">
-              {{ucfirst(Request::get('type')??'Active')}} Orders
+            @php $requestType=Request::get('type'); @endphp
+            @switch($requestType)
+              @case('active')
+                {{__('dashboard.table_active_title')}}
+              @break
+              @case('all')
+                {{__('dashboard.all_orders_label')}}
+              @break
+              @case('completed')
+                {{__('dashboard.completed_orders_label')}}
+              @break
+              @case('future')
+                {{__('dashboard.future_orders_label')}}
+              @break
+              @default
+                {{__('dashboard.table_active_title')}}
+            @endswitch
               <i class="fas fa-question-circle ml-1 mt-1"
               data-toggle="tooltip" data-placement="right" title="{{__('dashboard.active_orders_tooltip')}}" data-container="body"></i>
           </header>

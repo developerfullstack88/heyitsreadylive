@@ -31,7 +31,8 @@ return [
   'upload_instructions_1'=>"Le type d'image doit être jpg ou png.",
   'upload_instructions_2'=>"La largeur minimale de l'image est de 1000px.",
   'upload_instructions_3'=>"La hauteur minimale de l'image est de 1000px.",
-  'menu_qr_item_tooltip'=>"Le menu QR est l'endroit où vous pouvez ajouter vos éléments de menu ou vos matériaux ou tout élément que vous proposez à vos clients. Une fois que vous avez ajouté des éléments de menu, ils s'afficheront dans l'application mobile afin que vos clients puissent voir ce que votre entreprise a à offrir. Lorsque vos clients entrent dans votre entreprise, ils peuvent scanner le code QR et voir vos matériaux ou éléments de menu.",
-  'order_pdf_btn_tooltip'=>"Ce bouton générera un PDF de votre code QR de COMMANDE pour votre site spécifique. Lorsque vous l'imprimez sur votre billet, les clients peuvent scanner le code QR avec l'application mobile Hey It's Ready et lancer la commande qui apparaîtra dans le panneau d'administration, puis tout ce que vous avez à faire est d'entrer le 'E.P.U.T.' (Heure de ramassage estimée) et ajoutez le montant de la commande (Ceci est facultatif)."
+  'menu_qr_item_tooltip'=>"Le menu QR est l'endroit où vous pouvez ajouter vos articles de menu, vos matériaux ou tout autre article que vous offrez à vos clients. Une fois que vous aurez ajouté les éléments du menu, ils seront affichés dans l'application mobile pour que vos clients puissent voir ce que votre entreprise propose. Lorsque vos clients accèdent à votre entreprise, ils peuvent scanner le code QR et voir votre matériel ou les articles de votre menu.",
+  'order_pdf_btn_tooltip'=>"Cette commande générera un code QR en PDF spécifique à votre site. 
+Lorsque vous l'imprimez, vos clients peuvent scanner le code QR avec l'application mobile Hey It's Ready et lancer la commande pour vous. Celle-ci apparaîtra sur le tableau de bord de l'administrateur. Par la suite, tout ce que vous avez à faire est d'entrer l'heure de ramassage estimée et d'ajouter le montant de la commande (Ceci est optionnel)."
 ];
 ?>

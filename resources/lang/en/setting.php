@@ -24,6 +24,9 @@ return [
   'disable_label'=>'Disable',
   'enable_label'=>'Enable',
   'credit_card_tooltip'=>'This is where you are able to add, update or change your credit card information for your monthly billing.',
-  'delete_account_tooltip'=>'This button is where you are able to delete your account! If you do we will be sad to see you go!'
+  'delete_account_tooltip'=>'This button is where you are able to delete your account! If you do we will be sad to see you go!',
+  'accept_payment_tab'=>'Accept Payments',
+  'language_tab'=>'Language',
+  'change_language_label'=>'Change Language'
 ];
 ?>

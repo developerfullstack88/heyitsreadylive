@@ -23,7 +23,10 @@ return [
   'just_menu_qr_code_label'=>'juste le code QR du menu',
   'disable_label'=>'Désactiver',
   'enable_label'=>'Permettre',
-  'credit_card_tooltip'=>"Vous pouvez choisir l'heure de fin de la commande ici.",
-  'delete_account_tooltip'=>'Ce bouton vous permet de supprimer votre compte ! Si vous le faites, nous serons tristes de vous voir partir !'
+  'credit_card_tooltip'=>" c'est ici que vous pouvez ajouter, mettre à jour ou modifier les informations de votre carte de crédit pour votre facturation mensuelle.",
+  'delete_account_tooltip'=>'ce bouton vous permet de supprimer votre compte ! Si vous le faites, nous serons tristes de vous voir partir!',
+  'accept_payment_tab'=>'Accepter les paiements',
+  'language_tab'=>'Langue',
+  'change_language_label'=>'Changer de langue'
 ];
 ?>
